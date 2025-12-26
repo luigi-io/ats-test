@@ -36,7 +36,7 @@
     "@nestjs/core": "10.3.3",
     "@nestjs/platform-express": "10.3.3",
     "@nestjs/schedule": "^6.0.0",
-    "@nestjs/swagger": "^7.4.2",
+    "@nestjs/swagger": "^11.2.3",
     "@nestjs/typeorm": "11.0.0",
     "@mass-payout/sdk": "file:../../packages/mass-payout/sdk",
     "bn.js": "5.2.1",
