@@ -15,31 +15,31 @@ External Pause Lists are on-chain smart contracts that enable coordinated pausin
 
 ### Key Features
 
-- **Centralized Pause Control**: Pause multiple assets simultaneously from a single contract
-- **Institutional Use Cases**: Ideal for platforms managing multiple tokens
-- **Emergency Response**: Quick response to security incidents or regulatory requirements
-- **System Maintenance**: Coordinate upgrades across all linked assets
-- **Legal Compliance**: Meet regulatory requirements for coordinated halts
+* **Centralized Pause Control**: Pause multiple assets simultaneously from a single contract
+* **Institutional Use Cases**: Ideal for platforms managing multiple tokens
+* **Emergency Response**: Quick response to security incidents or regulatory requirements
+* **System Maintenance**: Coordinate upgrades across all linked assets
+* **Legal Compliance**: Meet regulatory requirements for coordinated halts
 
 ### Use Cases
 
 **Multi-Asset Platforms**
 
-- Tokenization platforms managing hundreds of securities
-- Institutional issuers with multiple bond series
-- Corporate entities with various equity classes
+* Tokenization platforms managing hundreds of securities
+* Institutional issuers with multiple bond series
+* Corporate entities with various equity classes
 
 **Emergency Situations**
 
-- Security vulnerabilities requiring immediate pause
-- Regulatory investigations affecting all assets
-- System-wide upgrades or maintenance
+* Security vulnerabilities requiring immediate pause
+* Regulatory investigations affecting all assets
+* System-wide upgrades or maintenance
 
 **Coordinated Operations**
 
-- Platform-wide bug fixes across all assets
-- Synchronized system updates
-- Legal requirements for simultaneous halts
+* Platform-wide bug fixes across all assets
+* Synchronized system updates
+* Legal requirements for simultaneous halts
 
 ## How External Pause Works
 
@@ -86,29 +86,29 @@ When you create an external pause list, it has a simple activated/deactivated st
 
 **Status: Activated**
 
-- All assets linked to this external pause list are **paused**
-- No transfers or operations are allowed on linked assets
-- Toggle to "Deactivated" to resume operations
+* All assets linked to this external pause list are **paused**
+* No transfers or operations are allowed on linked assets
+* Toggle to "Deactivated" to resume operations
 
 **Status: Deactivated**
 
-- All assets linked to this external pause list operate **normally**
-- Transfers and operations are allowed (subject to other restrictions)
-- Toggle to "Activated" to pause all linked assets
+* All assets linked to this external pause list operate **normally**
+* Transfers and operations are allowed (subject to other restrictions)
+* Toggle to "Activated" to pause all linked assets
 
 ## Prerequisites
 
-- ATS web application running and accessible
-- Hedera wallet connected with sufficient HBAR
-- **PAUSE_MANAGER_ROLE** on assets you want to link
-- Understanding of your pause management requirements
+* ATS web application running and accessible
+* Hedera wallet connected with sufficient HBAR
+* **PAUSE\_MANAGER\_ROLE** on assets you want to link
+* Understanding of your pause management requirements
 
 ## Accessing External Pause Lists
 
 1. Navigate to the ATS web application
 2. Click on **"External Pause"** in the sidebar menu
 
-![External Lists in Sidebar](../../images/ats-web-external-list.png)
+![External Lists in Sidebar](../../../.gitbook/assets/ats-web-external-list.png)
 
 ## Creating or Importing External Pause Lists
 
@@ -122,26 +122,26 @@ Creates a new external pause list by deploying a smart contract automatically.
 
 1. Click **"Create"** button
 2. Provide list details:
-   - **List Name**: Descriptive name (e.g., "Platform Maintenance Pause", "Emergency Stop")
-   - **Description** (optional): Purpose of this pause mechanism
+   * **List Name**: Descriptive name (e.g., "Platform Maintenance Pause", "Emergency Stop")
+   * **Description** (optional): Purpose of this pause mechanism
 3. **Configure initial status** - you will be asked to choose:
-   - **Activated**: Anything linked to this pause list will be paused immediately
-   - **Deactivated**: Assets linked to this pause list will operate normally - **Recommended for initial setup**
+   * **Activated**: Anything linked to this pause list will be paused immediately
+   * **Deactivated**: Assets linked to this pause list will operate normally - **Recommended for initial setup**
 4. Click **"Deploy"** or **"Create"**
 5. Approve the transaction in your wallet
 6. The contract is deployed and appears in your External Pause list
 
 **What happens:**
 
-- A new external pause contract is deployed on-chain
-- You become the manager of this pause contract
-- The contract address is displayed (0x... or 0.0.xxxxx)
-- You can now link assets to this pause list
+* A new external pause contract is deployed on-chain
+* You become the manager of this pause contract
+* The contract address is displayed (0x... or 0.0.xxxxx)
+* You can now link assets to this pause list
 
 **Understanding Activated vs Deactivated:**
 
-- **If created ACTIVATED**: Any asset you link to this pause list will be paused immediately. All operations on those assets will be blocked until you deactivate the pause list.
-- **If created DEACTIVATED**: Assets linked to this pause list will continue to operate normally. You can activate the pause later when needed.
+* **If created ACTIVATED**: Any asset you link to this pause list will be paused immediately. All operations on those assets will be blocked until you deactivate the pause list.
+* **If created DEACTIVATED**: Assets linked to this pause list will continue to operate normally. You can activate the pause later when needed.
 
 > **Tip**: Start with "Deactivated" status, link your assets first, then activate when needed.
 
@@ -159,9 +159,9 @@ Use an existing external pause list by importing its contract ID.
 
 **Use cases:**
 
-- Use a pause contract deployed by another team member
-- Connect to a platform-wide pause mechanism
-- Share pause controls across multiple organizations
+* Use a pause contract deployed by another team member
+* Connect to a platform-wide pause mechanism
+* Share pause controls across multiple organizations
 
 > **Note**: When importing, you may have view-only access unless you have admin permissions on the imported contract.
 
@@ -179,7 +179,7 @@ After creating or importing an external pause list, you need to link it to your 
 6. Click **"Add"** to confirm
 7. Approve the transaction in your wallet
 
-> **Required Role**: You must have **PAUSE_MANAGER_ROLE** on the token to link external pause lists.
+> **Required Role**: You must have **PAUSE\_MANAGER\_ROLE** on the token to link external pause lists.
 
 ## Managing External Pause Contracts
 
@@ -189,10 +189,10 @@ The **External Pause** dashboard displays all your pause contracts:
 
 **Table Columns:**
 
-- **Address ID**: Contract address (0x... or 0.0.xxxxx)
-- **Status**: Active (paused) or Inactive (not paused)
-- **Toggle Icon**: Click to activate/deactivate pause
-- **Delete Icon**: Remove the pause contract
+* **Address ID**: Contract address (0x... or 0.0.xxxxx)
+* **Status**: Active (paused) or Inactive (not paused)
+* **Toggle Icon**: Click to activate/deactivate pause
+* **Delete Icon**: Remove the pause contract
 
 ### Activate/Deactivate Pause
 
@@ -238,8 +238,8 @@ When creating a new equity or bond token, you can link external pause contracts:
 
 See the asset creation guides for details:
 
-- [Creating Equity Tokens](./creating-equity.md)
-- [Creating Bond Tokens](./creating-bond.md)
+* [Creating Equity Tokens](creating-equity.md)
+* [Creating Bond Tokens](creating-bond.md)
 
 ### After Asset Deployment
 
@@ -247,7 +247,7 @@ You can link external pause contracts to existing assets:
 
 **Prerequisites:**
 
-- You must have **PAUSE_MANAGER_ROLE** on the asset
+* You must have **PAUSE\_MANAGER\_ROLE** on the asset
 
 **Steps:**
 
@@ -274,31 +274,31 @@ You can link external pause contracts to existing assets:
 
 ## Roles and Permissions
 
-### PAUSE_MANAGER_ROLE
+### PAUSE\_MANAGER\_ROLE
 
 This role is required to manage external pause links on an asset:
 
 **Permissions:**
 
-- Add external pause contracts to the asset
-- Remove external pause contracts from the asset
-- View linked external pause contracts
+* Add external pause contracts to the asset
+* Remove external pause contracts from the asset
+* View linked external pause contracts
 
 **Does NOT Grant:**
 
-- Ability to activate/deactivate the external pause contract (requires pause contract ownership)
-- Ability to pause the asset internally (requires PAUSER_ROLE)
+* Ability to activate/deactivate the external pause contract (requires pause contract ownership)
+* Ability to pause the asset internally (requires PAUSER\_ROLE)
 
-### PAUSER_ROLE
+### PAUSER\_ROLE
 
 This is a **different role** that controls the asset's **internal pause**:
 
 **Permissions:**
 
-- Pause/unpause the asset individually
-- Does not affect external pause contracts
+* Pause/unpause the asset individually
+* Does not affect external pause contracts
 
-See [Roles and Permissions](./roles-and-permissions.md) for complete role details.
+See [Roles and Permissions](roles-and-permissions.md) for complete role details.
 
 ## Best Practices
 
@@ -306,10 +306,10 @@ See [Roles and Permissions](./roles-and-permissions.md) for complete role detail
 
 **Use External Pause for:**
 
-- Platform-wide emergency stops
-- Coordinated system maintenance
-- Regulatory compliance across all assets
-- Bug fixes affecting multiple tokens
+* Platform-wide emergency stops
+* Coordinated system maintenance
+* Regulatory compliance across all assets
+* Bug fixes affecting multiple tokens
 
 **Strategy:**
 
@@ -323,21 +323,21 @@ See [Roles and Permissions](./roles-and-permissions.md) for complete role detail
 
 **Access Control:**
 
-- Use multi-signature wallets for production pause contracts
-- Limit pause contract control to authorized personnel only
-- Implement time-locks for pause deactivation (if needed)
+* Use multi-signature wallets for production pause contracts
+* Limit pause contract control to authorized personnel only
+* Implement time-locks for pause deactivation (if needed)
 
 **Testing:**
 
-- Test pause activation on testnet first
-- Verify all linked assets respond correctly
-- Document rollback procedures
+* Test pause activation on testnet first
+* Verify all linked assets respond correctly
+* Document rollback procedures
 
 **Documentation:**
 
-- Maintain list of all assets linked to each pause contract
-- Document who has authority to activate pause
-- Create runbooks for emergency pause scenarios
+* Maintain list of all assets linked to each pause contract
+* Document who has authority to activate pause
+* Create runbooks for emergency pause scenarios
 
 ### Operational Guidelines
 
@@ -426,10 +426,10 @@ See [Roles and Permissions](./roles-and-permissions.md) for complete role detail
 
 **Solutions:**
 
-- Verify asset is correctly linked to the pause contract
-- Check pause contract implements `IExternalPause` interface correctly
-- Ensure `isPaused()` method returns `true` when activated
-- Verify transaction was confirmed on-chain
+* Verify asset is correctly linked to the pause contract
+* Check pause contract implements `IExternalPause` interface correctly
+* Ensure `isPaused()` method returns `true` when activated
+* Verify transaction was confirmed on-chain
 
 ### Cannot Remove External Pause
 
@@ -437,10 +437,10 @@ See [Roles and Permissions](./roles-and-permissions.md) for complete role detail
 
 **Solutions:**
 
-- Verify you have PAUSE_MANAGER_ROLE on the asset
-- Check wallet has sufficient HBAR for transaction
-- Ensure you're selecting the correct pause contract
-- Try removing one contract at a time instead of bulk removal
+* Verify you have PAUSE\_MANAGER\_ROLE on the asset
+* Check wallet has sufficient HBAR for transaction
+* Ensure you're selecting the correct pause contract
+* Try removing one contract at a time instead of bulk removal
 
 ### Asset Still Paused After Deactivation
 
@@ -448,10 +448,10 @@ See [Roles and Permissions](./roles-and-permissions.md) for complete role detail
 
 **Solutions:**
 
-- Check if asset is paused internally (separate from external pause)
-- Verify no other linked external pause contracts are active
-- Confirm deactivation transaction was successful
-- Check pause contract status in block explorer
+* Check if asset is paused internally (separate from external pause)
+* Verify no other linked external pause contracts are active
+* Confirm deactivation transaction was successful
+* Check pause contract status in block explorer
 
 ### Wrong Assets Linked
 
@@ -470,30 +470,30 @@ See [Roles and Permissions](./roles-and-permissions.md) for complete role detail
 
 **What to Monitor:**
 
-- When pause was activated/deactivated
-- Who triggered the pause
-- Which assets were affected
-- Duration of pause periods
+* When pause was activated/deactivated
+* Who triggered the pause
+* Which assets were affected
+* Duration of pause periods
 
 **Tools:**
 
-- Blockchain explorer for transaction history
-- Asset dashboard for current status
-- External monitoring systems for alerts
+* Blockchain explorer for transaction history
+* Asset dashboard for current status
+* External monitoring systems for alerts
 
 ### Alert Configuration
 
 **Recommended Alerts:**
 
-- External pause activated
-- External pause deactivated
-- Asset linked to new external pause
-- Asset unlinked from external pause
+* External pause activated
+* External pause deactivated
+* Asset linked to new external pause
+* Asset unlinked from external pause
 
 ## Next Steps
 
-- [Creating Equity Tokens](./creating-equity.md) - Link external pause during equity creation
-- [Creating Bond Tokens](./creating-bond.md) - Link external pause during bond creation
-- [Managing External KYC Lists](./managing-external-kyc-lists.md) - Investor verification lists
-- [Managing External Control Lists](./managing-external-control-lists.md) - Transfer control lists
-- [Roles and Permissions](./roles-and-permissions.md) - Understanding PAUSE_MANAGER_ROLE
+* [Creating Equity Tokens](creating-equity.md) - Link external pause during equity creation
+* [Creating Bond Tokens](creating-bond.md) - Link external pause during bond creation
+* [Managing External KYC Lists](managing-external-kyc-lists.md) - Investor verification lists
+* [Managing External Control Lists](managing-external-control-lists.md) - Transfer control lists
+* [Roles and Permissions](roles-and-permissions.md) - Understanding PAUSE\_MANAGER\_ROLE

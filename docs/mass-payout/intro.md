@@ -15,13 +15,13 @@ Mass Payout is a comprehensive payment distribution system designed for tokenize
 
 ### Key Features
 
-- **Batch Payment Processing**: Efficiently distribute payments to thousands of token holders
-- **Asset Import**: Automatically sync token holders and balances from ATS tokens
-- **Multiple Distribution Types**: Support for dividends, coupon payments, and custom distributions
-- **Scheduled Payouts**: Set up recurring distributions with cron-like scheduling
-- **Real-time Tracking**: Monitor payout status and transaction history
-- **Failure Recovery**: Automatic retry mechanism for failed payments
-- **REST API**: Complete backend API for integration
+* **Batch Payment Processing**: Efficiently distribute payments to thousands of token holders
+* **Asset Import**: Automatically sync token holders and balances from ATS tokens
+* **Multiple Distribution Types**: Support for dividends, coupon payments, and custom distributions
+* **Scheduled Payouts**: Set up recurring distributions with cron-like scheduling
+* **Real-time Tracking**: Monitor payout status and transaction history
+* **Failure Recovery**: Automatic retry mechanism for failed payments
+* **REST API**: Complete backend API for integration
 
 ## Architecture
 
@@ -90,102 +90,96 @@ Mass Payout consists of four main components:
 
 The **LifeCycle Cash Flow** contract manages all on-chain operations:
 
-- **Distribution Execution**: Batch transfer payments to multiple recipients
-- **Bond Cash-Out**: Handle bond maturity redemptions
-- **Snapshot Management**: Capture holder balances at specific points in time
-- **Role-Based Access**: Granular permissions for different operations
-- **Upgradeable**: Proxy pattern for contract upgrades
+* **Distribution Execution**: Batch transfer payments to multiple recipients
+* **Bond Cash-Out**: Handle bond maturity redemptions
+* **Snapshot Management**: Capture holder balances at specific points in time
+* **Role-Based Access**: Granular permissions for different operations
+* **Upgradeable**: Proxy pattern for contract upgrades
 
-[Learn more about contracts →](./developer-guides/contracts/index.md)
+[Learn more about contracts →](developer-guides/contracts/index.md)
 
 ### SDK
 
 TypeScript SDK for blockchain interactions:
 
-- **Command/Query Pattern**: Separation of write and read operations
-- **Transaction Adapters**: Support for DFNS, RPC, and other signers
-- **Value Objects**: Type-safe representation of blockchain entities
-- **Mirror Node Integration**: Query historical data and events
+* **Command/Query Pattern**: Separation of write and read operations
+* **Transaction Adapters**: Support for DFNS, RPC, and other signers
+* **Value Objects**: Type-safe representation of blockchain entities
+* **Mirror Node Integration**: Query historical data and events
 
-[Learn more about SDK integration →](./developer-guides/sdk-integration.md)
+[Learn more about SDK integration →](developer-guides/sdk-integration.md)
 
 ### Backend (NestJS)
 
 Domain-driven backend API with PostgreSQL:
 
-- **Domain Services**: Business logic for asset import, payout execution, and synchronization
-- **Event-Driven Sync**: Automatic blockchain event polling and processing
-- **Use Cases**: 22 use cases covering all operations
-- **Repositories**: TypeORM for data persistence
-- **Scheduled Jobs**: Cron-based automatic payout execution
+* **Domain Services**: Business logic for asset import, payout execution, and synchronization
+* **Event-Driven Sync**: Automatic blockchain event polling and processing
+* **Use Cases**: 22 use cases covering all operations
+* **Repositories**: TypeORM for data persistence
+* **Scheduled Jobs**: Cron-based automatic payout execution
 
-[Learn more about backend →](./developer-guides/backend/index.md)
+[Learn more about backend →](developer-guides/backend/index.md)
 
 ### Frontend (React)
 
 Admin panel for managing distributions:
 
-- **Asset Management**: Import assets and view holder information
-- **Distribution Creation**: Configure and execute payouts
-- **Real-time Monitoring**: Track payout status and history
-- **Chakra UI**: Modern, accessible component library
-- **React Query**: Efficient data fetching and caching
+* **Asset Management**: Import assets and view holder information
+* **Distribution Creation**: Configure and execute payouts
+* **Real-time Monitoring**: Track payout status and history
+* **Chakra UI**: Modern, accessible component library
+* **React Query**: Efficient data fetching and caching
 
-![Mass Payout Web Interface](../images/mp-web.png)
+![Mass Payout Web Interface](../../.gitbook/assets/mp-web.png)
 
-[Try the web app →](./getting-started/quick-start.md)
+[Try the web app →](getting-started/quick-start.md)
 
 ## Use Cases
 
-<div className="card-grid card-grid-2">
-  <div className="card-box card-tip">
-    <h3>💵 Dividend Distributions</h3>
-    <p>Distribute earnings to equity token holders</p>
-    <ul>
-      <li>Import equity tokens from ATS</li>
-      <li>Calculate amounts per share</li>
-      <li>Execute batch payments</li>
-      <li>Track history and reporting</li>
-    </ul>
-    <a href="./user-guides/creating-distributions" className="card-link">Learn more</a>
-  </div>
+#### 💵 Dividend Distributions
 
-  <div className="card-box card-tip">
-    <h3>📅 Coupon Payments</h3>
-    <p>Automate periodic bond interest payments</p>
-    <ul>
-      <li>Import bond tokens from ATS</li>
-      <li>Schedule periodic payments</li>
-      <li>Auto-execute on schedule</li>
-      <li>Handle proration</li>
-    </ul>
-    <a href="./user-guides/scheduled-payouts" className="card-link">Learn more</a>
-  </div>
+Distribute earnings to equity token holders
 
-  <div className="card-box card-tip">
-    <h3>🔄 Recurring Distributions</h3>
-    <p>Set up automated recurring payouts</p>
-    <ul>
-      <li>Cron-based schedules</li>
-      <li>Auto snapshot capturing</li>
-      <li>Automatic retry on failure</li>
-      <li>Email notifications</li>
-    </ul>
-    <a href="./user-guides/scheduled-payouts" className="card-link">Learn more</a>
-  </div>
+* Import equity tokens from ATS
+* Calculate amounts per share
+* Execute batch payments
+* Track history and reporting
 
-  <div className="card-box card-tip">
-    <h3>📊 Large-Scale Payouts</h3>
-    <p>Process payments to thousands of holders</p>
-    <ul>
-      <li>Efficient batch processing</li>
-      <li>Pagination support</li>
-      <li>Real-time progress tracking</li>
-      <li>Detailed transaction logs</li>
-    </ul>
-    <a href="./user-guides/managing-payouts" className="card-link">Learn more</a>
-  </div>
-</div>
+[Learn more](user-guides/creating-distributions/)
+
+#### 📅 Coupon Payments
+
+Automate periodic bond interest payments
+
+* Import bond tokens from ATS
+* Schedule periodic payments
+* Auto-execute on schedule
+* Handle proration
+
+[Learn more](user-guides/scheduled-payouts/)
+
+#### 🔄 Recurring Distributions
+
+Set up automated recurring payouts
+
+* Cron-based schedules
+* Auto snapshot capturing
+* Automatic retry on failure
+* Email notifications
+
+[Learn more](user-guides/scheduled-payouts/)
+
+#### 📊 Large-Scale Payouts
+
+Process payments to thousands of holders
+
+* Efficient batch processing
+* Pagination support
+* Real-time progress tracking
+* Detailed transaction logs
+
+[Learn more](user-guides/managing-payouts/)
 
 ## Integration with ATS
 
@@ -217,107 +211,98 @@ You can use Mass Payout independently if you have existing tokens on Hedera.
 
 ## Getting Started
 
-<div className="card-grid card-grid-2">
-  <div className="card-box card-info">
-    <h3>👤 For End Users</h3>
-    <p>Try the Mass Payout web application</p>
-    <ul>
-      <li>Quick start in minutes</li>
-      <li>Import assets from ATS</li>
-      <li>Create and manage distributions</li>
-      <li>Monitor payout status</li>
-    </ul>
-    <a href="./getting-started/quick-start" className="card-link">Quick Start Guide</a>
-  </div>
+#### 👤 For End Users
 
-  <div className="card-box card-info">
-    <h3>👨‍💻 For Developers</h3>
-    <p>Integrate Mass Payout or contribute</p>
-    <ul>
-      <li>Full development environment</li>
-      <li>Backend + Frontend setup</li>
-      <li>SDK integration</li>
-      <li>Contract deployment</li>
-    </ul>
-    <a href="./getting-started/full-setup" className="card-link">Full Development Setup</a>
-  </div>
-</div>
+Try the Mass Payout web application
+
+* Quick start in minutes
+* Import assets from ATS
+* Create and manage distributions
+* Monitor payout status
+
+[Quick Start Guide](getting-started/quick-start/)
+
+#### 👨‍💻 For Developers
+
+Integrate Mass Payout or contribute
+
+* Full development environment
+* Backend + Frontend setup
+* SDK integration
+* Contract deployment
+
+[Full Development Setup](getting-started/full-setup/)
 
 ## Documentation
 
-<div className="card-grid card-grid-3">
-  <div className="card-box">
-    <h3>📚 User Guides</h3>
-    <p>Step-by-step guides for the application</p>
-    <ul>
-      <li>Importing assets</li>
-      <li>Creating distributions</li>
-      <li>Managing payouts</li>
-      <li>Scheduled distributions</li>
-    </ul>
-    <a href="./user-guides/" className="card-link">View Guides</a>
-  </div>
+#### 📚 User Guides
 
-  <div className="card-box">
-    <h3>🛠️ Developer Guides</h3>
-    <p>Technical guides for developers</p>
-    <ul>
-      <li>Smart contract deployment</li>
-      <li>SDK integration</li>
-      <li>Backend API extension</li>
-      <li>Frontend customization</li>
-    </ul>
-    <a href="./developer-guides/" className="card-link">View Guides</a>
-  </div>
+Step-by-step guides for the application
 
-  <div className="card-box">
-    <h3>📖 API Documentation</h3>
-    <p>Technical reference documentation</p>
-    <ul>
-      <li>Smart contract functions</li>
-      <li>SDK methods</li>
-      <li>REST API endpoints</li>
-      <li>WebSocket events</li>
-    </ul>
-    <a href="./api/" className="card-link">View API Docs</a>
-  </div>
-</div>
+* Importing assets
+* Creating distributions
+* Managing payouts
+* Scheduled distributions
+
+[View Guides](user-guides/)
+
+#### 🛠️ Developer Guides
+
+Technical guides for developers
+
+* Smart contract deployment
+* SDK integration
+* Backend API extension
+* Frontend customization
+
+[View Guides](developer-guides/)
+
+#### 📖 API Documentation
+
+Technical reference documentation
+
+* Smart contract functions
+* SDK methods
+* REST API endpoints
+* WebSocket events
+
+[View API Docs](api/)
 
 ## Technical Stack
 
 ### Backend
 
-- **NestJS**: TypeScript Node.js framework
-- **PostgreSQL**: Relational database for persistence
-- **TypeORM**: Object-relational mapping
-- **Domain-Driven Design**: Clean architecture patterns
+* **NestJS**: TypeScript Node.js framework
+* **PostgreSQL**: Relational database for persistence
+* **TypeORM**: Object-relational mapping
+* **Domain-Driven Design**: Clean architecture patterns
 
 ### Frontend
 
-- **React 18**: Modern UI framework
-- **Chakra UI**: Component library
-- **React Query**: Data fetching and caching
-- **Zustand**: State management
+* **React 18**: Modern UI framework
+* **Chakra UI**: Component library
+* **React Query**: Data fetching and caching
+* **Zustand**: State management
 
 ### Blockchain
 
-- **Hedera Network**: DLT platform
-- **Solidity**: Smart contract language
-- **Hardhat**: Development environment
+* **Hedera Network**: DLT platform
+* **Solidity**: Smart contract language
+* **Hardhat**: Development environment
 
 ## System Requirements
 
-- **Node.js**: v24.0.0 or newer
-- **PostgreSQL**: 12 or newer
-- **npm**: v10.9.0 or newer
-- **Hedera Account**: With HBAR for transactions
+* **Node.js**: v24.0.0 or newer
+* **PostgreSQL**: 12 or newer
+* **npm**: v10.9.0 or newer
+* **Hedera Account**: With HBAR for transactions
 
 ## Support and Resources
 
-- [GitHub Repository](https://github.com/hashgraph/asset-tokenization-studio)
-- [Report Issues](https://github.com/hashgraph/asset-tokenization-studio/issues)
-- [Hedera Documentation](https://docs.hedera.com)
-- [Hedera Discord](https://hedera.com/discord)
+* [GitHub Repository](https://github.com/hashgraph/asset-tokenization-studio)
+* [Report Issues](https://github.com/hashgraph/asset-tokenization-studio/issues)
+* [Hedera Documentation](https://docs.hedera.com)
+* [Hedera Discord](https://hedera.com/discord)
 
 ## License
 

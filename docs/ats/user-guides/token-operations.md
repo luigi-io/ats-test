@@ -13,11 +13,11 @@ Comprehensive guide to all available operations for equity and bond security tok
 
 ATS provides comprehensive operations for managing security tokens based on ERC-1400 and ERC-3643 standards:
 
-- **Common Operations**: Mint, Force Transfer, Force Redeem, Pause
-- **ERC-3643 Operations**: Freeze
-- **ERC-1400 Operations**: Hold, Clearing, Protected Partitions, Cap
+* **Common Operations**: Mint, Force Transfer, Force Redeem, Pause
+* **ERC-3643 Operations**: Freeze
+* **ERC-1400 Operations**: Hold, Clearing, Protected Partitions, Cap
 
-![ATS Operations](../../images/ats-web-operations.png)
+![ATS Operations](../../../.gitbook/assets/ats-web-operations.png)
 
 ## Common Operations
 
@@ -29,10 +29,10 @@ Create new tokens and assign them to an account.
 
 **Requirements**:
 
-- **ISSUER_ROLE** permission
-- Recipient must have valid KYC
-- Recipient must pass control list checks
-- Must not exceed max supply (if set)
+* **ISSUER\_ROLE** permission
+* Recipient must have valid KYC
+* Recipient must pass control list checks
+* Must not exceed max supply (if set)
 
 **How to**:
 
@@ -50,15 +50,15 @@ Transfer tokens from one account to another on behalf of the source account.
 
 **Requirements**:
 
-- **CONTROLLER_ROLE** or **PARTICIPANT_ROLE** or **PARTITION_RESTRICTION_WILD_CARD_ROLE**
-- Both sender and receiver must have valid KYC
-- Must pass control list checks
+* **CONTROLLER\_ROLE** or **PARTICIPANT\_ROLE** or **PARTITION\_RESTRICTION\_WILD\_CARD\_ROLE**
+* Both sender and receiver must have valid KYC
+* Must pass control list checks
 
 **Form Fields**:
 
-- **Source Account\*** - Hedera account ID (0.0.xxxxx) or EVM address (0x...) from which tokens will be transferred
-- **Account to Transfer\*** - Destination account that will receive tokens
-- **Amount\*** - Number of tokens to transfer
+* **Source Account\*** - Hedera account ID (0.0.xxxxx) or EVM address (0x...) from which tokens will be transferred
+* **Account to Transfer\*** - Destination account that will receive tokens
+* **Amount\*** - Number of tokens to transfer
 
 **How to**:
 
@@ -66,9 +66,9 @@ Transfer tokens from one account to another on behalf of the source account.
 2. Select **Admin View (green)**
 3. Go to **Operations** → **Force Transfer**
 4. Fill in the form:
-   - Enter the **Source Account** to transfer from
-   - Enter the **Account to Transfer** (destination)
-   - Enter the **Amount** of tokens
+   * Enter the **Source Account** to transfer from
+   * Enter the **Account to Transfer** (destination)
+   * Enter the **Amount** of tokens
 5. Click **"Submit"** or **"Transfer"**
 6. Approve the transaction in your wallet
 
@@ -82,14 +82,14 @@ Redeem (burn) tokens from a specific account.
 
 **Requirements**:
 
-- **CONTROLLER_ROLE** or **PARTICIPANT_ROLE** or **PARTITION_RESTRICTION_WILD_CARD_ROLE**
-- Target account must exist
+* **CONTROLLER\_ROLE** or **PARTICIPANT\_ROLE** or **PARTITION\_RESTRICTION\_WILD\_CARD\_ROLE**
+* Target account must exist
 
 **Form Fields**:
 
-- **Source Account\*** - Hedera account ID (0.0.xxxxx) or EVM address (0x...) from which tokens will be redeemed
-- **Amount\*** - Number of tokens to redeem
-- **Redeem all amount after maturity date** (Checkbox) - For bond tokens, redeem all tokens after the bond's maturity date
+* **Source Account\*** - Hedera account ID (0.0.xxxxx) or EVM address (0x...) from which tokens will be redeemed
+* **Amount\*** - Number of tokens to redeem
+* **Redeem all amount after maturity date** (Checkbox) - For bond tokens, redeem all tokens after the bond's maturity date
 
 **How to**:
 
@@ -97,9 +97,9 @@ Redeem (burn) tokens from a specific account.
 2. Select **Admin View (green)**
 3. Go to **Operations** → **Force Redeem**
 4. Fill in the form:
-   - Enter the **Source Account** to redeem from
-   - Enter the **Amount** of tokens to redeem
-   - (Optional) Check **"Redeem all amount after maturity date"** for bonds
+   * Enter the **Source Account** to redeem from
+   * Enter the **Amount** of tokens to redeem
+   * (Optional) Check **"Redeem all amount after maturity date"** for bonds
 5. Click **"Submit"** or **"Redeem"**
 6. Approve the transaction in your wallet
 
@@ -113,7 +113,7 @@ Temporarily halt all token transfers globally.
 
 **Requirements**:
 
-- **PAUSER_ROLE** permission
+* **PAUSER\_ROLE** permission
 
 **How to pause**:
 
@@ -141,7 +141,7 @@ Prevent an account from transferring or receiving tokens.
 
 **Requirements**:
 
-- **FREEZE_ROLE** permission
+* **FREEZE\_ROLE** permission
 
 **How to freeze** (Option 1 - via Operations):
 
@@ -179,9 +179,9 @@ Create temporary locks on tokens that can be executed or released.
 
 **Requirements**:
 
-- Holder must initiate
-- Sufficient unfrozen balance
-- Hold must specify notary (can execute hold)
+* Holder must initiate
+* Sufficient unfrozen balance
+* Hold must specify notary (can execute hold)
 
 **How to create a hold**:
 
@@ -189,11 +189,11 @@ Create temporary locks on tokens that can be executed or released.
 2. Select **Holder View (blue)**
 3. Go to **Operations** → **Hold**
 4. Enter:
-   - Recipient address
-   - Notary address (who can execute)
-   - Amount
-   - Lock time (seconds)
-   - Partition (default or custom)
+   * Recipient address
+   * Notary address (who can execute)
+   * Amount
+   * Lock time (seconds)
+   * Partition (default or custom)
 5. Approve transaction
 
 **Hold lifecycle**:
@@ -203,7 +203,7 @@ Create temporary locks on tokens that can be executed or released.
 3. **Released**: Notary returns tokens to holder
 4. **Expired**: Hold expires, tokens automatically released
 
-See [Hold Operations Guide](./hold-operations.md) for details.
+See [Hold Operations Guide](hold-operations.md) for details.
 
 ### Clearing Operations
 
@@ -213,27 +213,25 @@ Two-step transfer process requiring approval from a designated clearing agent.
 
 **Requirements**:
 
-- **Clearing mode** must be activated
-- **CLEARING_VALIDATOR_ROLE** assigned to clearing agents
-- Sender initiates, validator approves
+* **Clearing mode** must be activated
+* **CLEARING\_VALIDATOR\_ROLE** assigned to clearing agents
+* Sender initiates, validator approves
 
 **How to use clearing**:
 
 1. **Activate clearing mode** (one-time setup):
-   - Go to **Management** → **Danger Zone**
-   - Click **"Activate Clearing"**
-   - Approve transaction
-
+   * Go to **Management** → **Danger Zone**
+   * Click **"Activate Clearing"**
+   * Approve transaction
 2. **Create clearing transfer**:
-   - Go to **Operations** → **Clearing**
-   - Enter recipient and amount
-   - Submit for clearing
-
+   * Go to **Operations** → **Clearing**
+   * Enter recipient and amount
+   * Submit for clearing
 3. **Approve clearing** (clearing agent):
-   - Clearing agent reviews request
-   - Approves or cancels the transfer
+   * Clearing agent reviews request
+   * Approves or cancels the transfer
 
-See [Clearing Operations Guide](./clearing-operations.md) for details.
+See [Clearing Operations Guide](clearing-operations.md) for details.
 
 ### Cap Management
 
@@ -243,7 +241,7 @@ Set maximum token supply to prevent over-issuance.
 
 **Requirements**:
 
-- **ISSUER_ROLE** or **DEFAULT_ADMIN_ROLE**
+* **ISSUER\_ROLE** or **DEFAULT\_ADMIN\_ROLE**
 
 **How to set cap**:
 
@@ -256,38 +254,38 @@ Set maximum token supply to prevent over-issuance.
 
 **How to view cap**:
 
-- Go to token details
-- Check **"Maximum Supply"** field
+* Go to token details
+* Check **"Maximum Supply"** field
 
 ## Permission Requirements
 
-| Operation                | Required Role                                                              |
-| ------------------------ | -------------------------------------------------------------------------- |
-| Mint                     | ISSUER_ROLE                                                                |
-| Force Transfer           | CONTROLLER_ROLE, PARTICIPANT_ROLE, or PARTITION_RESTRICTION_WILD_CARD_ROLE |
-| Force Redeem             | CONTROLLER_ROLE, PARTICIPANT_ROLE, or PARTITION_RESTRICTION_WILD_CARD_ROLE |
-| Freeze Account           | FREEZE_ROLE                                                                |
-| Pause Token              | PAUSER_ROLE                                                                |
-| Create Hold              | Token holder (self)                                                        |
-| Execute Hold             | Notary address                                                             |
-| Create Clearing Transfer | Token holder (self)                                                        |
-| Approve Clearing         | CLEARING_VALIDATOR_ROLE                                                    |
-| Set Cap                  | ISSUER_ROLE or DEFAULT_ADMIN_ROLE                                          |
-| Activate Clearing        | ISSUER_ROLE or DEFAULT_ADMIN_ROLE                                          |
+| Operation                | Required Role                                                                    |
+| ------------------------ | -------------------------------------------------------------------------------- |
+| Mint                     | ISSUER\_ROLE                                                                     |
+| Force Transfer           | CONTROLLER\_ROLE, PARTICIPANT\_ROLE, or PARTITION\_RESTRICTION\_WILD\_CARD\_ROLE |
+| Force Redeem             | CONTROLLER\_ROLE, PARTICIPANT\_ROLE, or PARTITION\_RESTRICTION\_WILD\_CARD\_ROLE |
+| Freeze Account           | FREEZE\_ROLE                                                                     |
+| Pause Token              | PAUSER\_ROLE                                                                     |
+| Create Hold              | Token holder (self)                                                              |
+| Execute Hold             | Notary address                                                                   |
+| Create Clearing Transfer | Token holder (self)                                                              |
+| Approve Clearing         | CLEARING\_VALIDATOR\_ROLE                                                        |
+| Set Cap                  | ISSUER\_ROLE or DEFAULT\_ADMIN\_ROLE                                             |
+| Activate Clearing        | ISSUER\_ROLE or DEFAULT\_ADMIN\_ROLE                                             |
 
-See [Roles and Permissions Guide](./roles-and-permissions.md) for more details on role management.
+See [Roles and Permissions Guide](roles-and-permissions.md) for more details on role management.
 
 ## Operation Guides
 
 For detailed step-by-step instructions:
 
-- [Hold Operations](./hold-operations.md) - Detailed hold lifecycle management
-- [Clearing Operations](./clearing-operations.md) - Two-step transfer process
-- [Corporate Actions](./corporate-actions.md) - Dividends, coupons, splits, voting
-- [Managing KYC & Compliance](./managing-compliance.md) - KYC verification
+* [Hold Operations](hold-operations.md) - Detailed hold lifecycle management
+* [Clearing Operations](clearing-operations.md) - Two-step transfer process
+* [Corporate Actions](corporate-actions.md) - Dividends, coupons, splits, voting
+* [Managing KYC & Compliance](managing-compliance.md) - KYC verification
 
 ## Next Steps
 
-- [Roles and Permissions](./roles-and-permissions.md) - Grant access to team members
-- [Corporate Actions](./corporate-actions.md) - Execute dividends and coupons
-- [Updating Configuration](./updating-configuration.md) - Upgrade token functionality
+* [Roles and Permissions](roles-and-permissions.md) - Grant access to team members
+* [Corporate Actions](corporate-actions.md) - Execute dividends and coupons
+* [Updating Configuration](updating-configuration.md) - Upgrade token functionality

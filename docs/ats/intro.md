@@ -15,12 +15,12 @@ Asset Tokenization Studio (ATS) is a comprehensive platform for issuing, managin
 
 ### Key Features
 
-- **Security Token Issuance**: Create equity and bond tokens compliant with ERC-1400 and ERC-3643 (T-REX) standards
-- **Compliance Management**: Built-in KYC/AML verification and transfer restrictions
-- **Corporate Actions**: Execute dividends, coupon payments, and token lifecycle events
-- **Token Lifecycle Management**: Full control over token supply, transfers, freezing, and redemption
-- **Diamond Pattern Architecture**: Modular, upgradeable smart contracts using EIP-2535
-- **Multi-Custody Support**: Integration with DFNS, Fireblocks, AWS KMS, and WalletConnect
+* **Security Token Issuance**: Create equity and bond tokens compliant with ERC-1400 and ERC-3643 (T-REX) standards
+* **Compliance Management**: Built-in KYC/AML verification and transfer restrictions
+* **Corporate Actions**: Execute dividends, coupon payments, and token lifecycle events
+* **Token Lifecycle Management**: Full control over token supply, transfers, freezing, and redemption
+* **Diamond Pattern Architecture**: Modular, upgradeable smart contracts using EIP-2535
+* **Multi-Custody Support**: Integration with DFNS, Fireblocks, AWS KMS, and WalletConnect
 
 ## Architecture
 
@@ -121,161 +121,146 @@ graph LR
 
 :::info Key Benefits
 
-- **Modularity**: Each layer has a specific responsibility
-- **Upgradeability**: Facets can be upgraded independently
-- **Data Isolation**: Layer 0 separates storage from logic
-- **Flexibility**: Easy to add new features or jurisdictions
-  :::
+* **Modularity**: Each layer has a specific responsibility
+* **Upgradeability**: Facets can be upgraded independently
+* **Data Isolation**: Layer 0 separates storage from logic
+* **Flexibility**: Easy to add new features or jurisdictions :::
 
-[Learn more about contracts →](./developer-guides/contracts/index.md)
+[Learn more about contracts →](developer-guides/contracts/index.md)
 
 ### SDK
 
 TypeScript SDK with hexagonal architecture and CQRS pattern:
 
-- **Adapters**: Support for multiple transaction signers (RPC, WalletConnect, DFNS, Fireblocks, AWS KMS)
-- **Command/Query Bus**: Separation of write and read operations
-- **Feature Handlers**: 25+ domain handlers for all token operations
-- **Dependency Injection**: Modular, testable architecture using tsyringe
+* **Adapters**: Support for multiple transaction signers (RPC, WalletConnect, DFNS, Fireblocks, AWS KMS)
+* **Command/Query Bus**: Separation of write and read operations
+* **Feature Handlers**: 25+ domain handlers for all token operations
+* **Dependency Injection**: Modular, testable architecture using tsyringe
 
-[Learn more about SDK integration →](./developer-guides/sdk-integration.md)
+[Learn more about SDK integration →](developer-guides/sdk-integration.md)
 
 ### Web Application
 
 React-based dApp for end users:
 
-- **Token Creation**: Intuitive UI for creating equity and bond tokens
-- **Compliance Dashboard**: Manage KYC and transfer restrictions
-- **Corporate Actions**: Execute dividends and coupon payments
-- **Token Management**: Transfer, freeze, pause, and redeem tokens
-- **Wallet Integration**: HashPack, Blade, and WalletConnect support
+* **Token Creation**: Intuitive UI for creating equity and bond tokens
+* **Compliance Dashboard**: Manage KYC and transfer restrictions
+* **Corporate Actions**: Execute dividends and coupon payments
+* **Token Management**: Transfer, freeze, pause, and redeem tokens
+* **Wallet Integration**: HashPack, Blade, and WalletConnect support
 
-![ATS Web Application](../images/ats-web.png)
+![ATS Web Application](../../.gitbook/assets/ats-web.png)
 
-[Try the web app →](./getting-started/quick-start.md)
+[Try the web app →](getting-started/quick-start.md)
 
 ## Use Cases
 
-<div className="card-grid card-grid-3">
-  <div className="card-box card-tip">
-    <h3>📈 Equity Tokenization</h3>
-    <p>Create and manage company shares on blockchain</p>
-    <ul>
-      <li>Create shares representing ownership</li>
-      <li>Configure dividend distributions</li>
-      <li>Manage voting rights and governance</li>
-      <li>Enforce transfer restrictions</li>
-    </ul>
-    <a href="./user-guides/creating-equity" className="card-link">Learn more</a>
-  </div>
+#### 📈 Equity Tokenization
 
-  <div className="card-box card-tip">
-    <h3>💰 Bond Tokenization</h3>
-    <p>Issue debt securities with automated payments</p>
-    <ul>
-      <li>Issue bonds with custom terms</li>
-      <li>Automate coupon payments</li>
-      <li>Handle maturity redemption</li>
-      <li>Track bondholder registry</li>
-    </ul>
-    <a href="./user-guides/creating-bond" className="card-link">Learn more</a>
-  </div>
+Create and manage company shares on blockchain
 
-  <div className="card-box card-tip">
-    <h3>🔒 Regulated Securities</h3>
-    <p>Full compliance with global standards</p>
-    <ul>
-      <li>ERC-3643 (T-REX) compliance</li>
-      <li>Identity verification and KYC</li>
-      <li>Transfer rules by jurisdiction</li>
-      <li>Accredited investor checks</li>
-    </ul>
-    <a href="./user-guides/managing-compliance" className="card-link">Learn more</a>
-  </div>
-</div>
+* Create shares representing ownership
+* Configure dividend distributions
+* Manage voting rights and governance
+* Enforce transfer restrictions
+
+[Learn more](user-guides/creating-equity/)
+
+#### 💰 Bond Tokenization
+
+Issue debt securities with automated payments
+
+* Issue bonds with custom terms
+* Automate coupon payments
+* Handle maturity redemption
+* Track bondholder registry
+
+[Learn more](user-guides/creating-bond/)
+
+#### 🔒 Regulated Securities
+
+Full compliance with global standards
+
+* ERC-3643 (T-REX) compliance
+* Identity verification and KYC
+* Transfer rules by jurisdiction
+* Accredited investor checks
+
+[Learn more](user-guides/managing-compliance/)
 
 ## Getting Started
 
-<div className="card-grid card-grid-2">
-  <div className="card-box card-info">
-    <h3>👤 For End Users</h3>
-    <p>Want to try the ATS web application and create tokens?</p>
-    <ul>
-      <li>Quick start in minutes</li>
-      <li>No coding required</li>
-      <li>Create and manage tokens</li>
-      <li>Execute corporate actions</li>
-    </ul>
-    <a href="./getting-started/quick-start" className="card-link">Quick Start Guide</a>
-  </div>
+#### 👤 For End Users
 
-  <div className="card-box card-info">
-    <h3>👨‍💻 For Developers</h3>
-    <p>Integrate ATS or contribute to the codebase</p>
-    <ul>
-      <li>Full development environment</li>
-      <li>SDK integration</li>
-      <li>Contract deployment</li>
-      <li>Custom facet development</li>
-    </ul>
-    <a href="./getting-started/full-setup" className="card-link">Full Development Setup</a>
-  </div>
-</div>
+Want to try the ATS web application and create tokens?
+
+* Quick start in minutes
+* No coding required
+* Create and manage tokens
+* Execute corporate actions
+
+[Quick Start Guide](getting-started/quick-start/)
+
+#### 👨‍💻 For Developers
+
+Integrate ATS or contribute to the codebase
+
+* Full development environment
+* SDK integration
+* Contract deployment
+* Custom facet development
+
+[Full Development Setup](getting-started/full-setup/)
 
 ## Documentation
 
-<div className="card-grid card-grid-3">
-  <div className="card-box">
-    <h3>📚 User Guides</h3>
-    <p>Step-by-step guides for using the ATS web application</p>
-    <ul>
-      <li>Creating equity and bond tokens</li>
-      <li>Managing compliance and KYC</li>
-      <li>Executing corporate actions</li>
-      <li>Token lifecycle management</li>
-    </ul>
-    <a href="./user-guides/" className="card-link">View Guides</a>
-  </div>
+#### 📚 User Guides
 
-  <div className="card-box">
-    <h3>🛠️ Developer Guides</h3>
-    <p>Technical guides for developers</p>
-    <ul>
-      <li>Smart contract deployment</li>
-      <li>SDK integration and usage</li>
-      <li>Architecture patterns</li>
-      <li>Adding custom facets</li>
-    </ul>
-    <a href="./developer-guides/" className="card-link">View Guides</a>
-  </div>
+Step-by-step guides for using the ATS web application
 
-  <div className="card-box">
-    <h3>📖 API Documentation</h3>
-    <p>Technical reference for contracts and SDK</p>
-    <ul>
-      <li>Smart contract interfaces</li>
-      <li>SDK classes and methods</li>
-      <li>Code examples</li>
-      <li>Usage patterns</li>
-    </ul>
-    <a href="./api/" className="card-link">View API Docs</a>
-  </div>
-</div>
+* Creating equity and bond tokens
+* Managing compliance and KYC
+* Executing corporate actions
+* Token lifecycle management
+
+[View Guides](user-guides/)
+
+#### 🛠️ Developer Guides
+
+Technical guides for developers
+
+* Smart contract deployment
+* SDK integration and usage
+* Architecture patterns
+* Adding custom facets
+
+[View Guides](developer-guides/)
+
+#### 📖 API Documentation
+
+Technical reference for contracts and SDK
+
+* Smart contract interfaces
+* SDK classes and methods
+* Code examples
+* Usage patterns
+
+[View API Docs](api/)
 
 ## Standards and Compliance
 
 ATS implements the following token standards:
 
-- **ERC-1400**: Security Token Standard for regulated securities
-- **ERC-3643 (T-REX)**: Token for Regulated EXchanges with on-chain compliance
-- **EIP-2535**: Diamond Standard for upgradeable smart contracts
+* **ERC-1400**: Security Token Standard for regulated securities
+* **ERC-3643 (T-REX)**: Token for Regulated EXchanges with on-chain compliance
+* **EIP-2535**: Diamond Standard for upgradeable smart contracts
 
 ## Support and Resources
 
-- [GitHub Repository](https://github.com/hashgraph/asset-tokenization-studio)
-- [Report Issues](https://github.com/hashgraph/asset-tokenization-studio/issues)
-- [Hedera Documentation](https://docs.hedera.com)
-- [Hedera Discord](https://hedera.com/discord)
+* [GitHub Repository](https://github.com/hashgraph/asset-tokenization-studio)
+* [Report Issues](https://github.com/hashgraph/asset-tokenization-studio/issues)
+* [Hedera Documentation](https://docs.hedera.com)
+* [Hedera Discord](https://hedera.com/discord)
 
 ## License
 

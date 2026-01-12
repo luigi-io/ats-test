@@ -13,40 +13,40 @@ Learn how to configure and manage external control lists (whitelists and blackli
 
 External control lists are on-chain smart contracts that manage transfer permissions for your security tokens. They allow you to:
 
-- Create reusable whitelists and blacklists across multiple tokens
-- Implement geographic restrictions and regulatory compliance
-- Centralize transfer control management
-- Maintain compliance lists independently from token contracts
+* Create reusable whitelists and blacklists across multiple tokens
+* Implement geographic restrictions and regulatory compliance
+* Centralize transfer control management
+* Maintain compliance lists independently from token contracts
 
 ## What are External Control Lists?
 
 External control lists manage who can hold and transfer tokens:
 
-- **Purpose**: Centralized transfer permission control for multiple tokens
-- **Benefits**: Reusable across different securities, easier to maintain
-- **Interface**: Implements `IExternalControlList.isAuthorized(address)`
-- **Use case**: Geographic restrictions, regulatory blacklists, approved investor lists
+* **Purpose**: Centralized transfer permission control for multiple tokens
+* **Benefits**: Reusable across different securities, easier to maintain
+* **Interface**: Implements `IExternalControlList.isAuthorized(address)`
+* **Use case**: Geographic restrictions, regulatory blacklists, approved investor lists
 
 ### Types of Control Lists
 
 #### Whitelists
 
-- **Definition**: Only approved addresses can hold/receive tokens
-- **Use case**: Accredited investor-only tokens, jurisdiction-specific offerings
-- **Behavior**: Address must be on the list to pass validation
+* **Definition**: Only approved addresses can hold/receive tokens
+* **Use case**: Accredited investor-only tokens, jurisdiction-specific offerings
+* **Behavior**: Address must be on the list to pass validation
 
 #### Blacklists
 
-- **Definition**: Restricted addresses cannot hold/receive tokens
-- **Use case**: Regulatory sanctions lists, blocked jurisdictions
-- **Behavior**: Address must NOT be on the list to pass validation
+* **Definition**: Restricted addresses cannot hold/receive tokens
+* **Use case**: Regulatory sanctions lists, blocked jurisdictions
+* **Behavior**: Address must NOT be on the list to pass validation
 
 ## Accessing External Control Lists
 
 1. Navigate to the ATS web application
 2. Click on **"Control Lists"** in the sidebar menu
 
-![External Lists Configuration](../../images/ats-web-external-list.png)
+![External Lists Configuration](../../../.gitbook/assets/ats-web-external-list.png)
 
 ## Creating or Importing External Control Lists
 
@@ -60,20 +60,20 @@ Creates a new external control list by deploying a smart contract automatically.
 
 1. Click **"Create"** button
 2. Select list type:
-   - **Whitelist**: Approved addresses only
-   - **Blacklist**: Blocked addresses
+   * **Whitelist**: Approved addresses only
+   * **Blacklist**: Blocked addresses
 3. Provide list details:
-   - **List Name**: Descriptive name (e.g., "OFAC Sanctions List")
+   * **List Name**: Descriptive name (e.g., "OFAC Sanctions List")
 4. Click **"Deploy"** or **"Create"**
 5. Approve the transaction in your wallet
 6. The contract is deployed and appears in your External Control Lists
 
 **What happens:**
 
-- A new external control list contract is deployed on-chain
-- You become the manager of this control list
-- The contract address is displayed (0x... or 0.0.xxxxx)
-- You can now add addresses and link this list to your tokens
+* A new external control list contract is deployed on-chain
+* You become the manager of this control list
+* The contract address is displayed (0x... or 0.0.xxxxx)
+* You can now add addresses and link this list to your tokens
 
 ### Option 2: Import Existing Control List
 
@@ -89,9 +89,9 @@ Use an existing external control list by importing its contract ID.
 
 **Use cases:**
 
-- Use a control list deployed by another team member
-- Connect to a third-party compliance provider's list
-- Share blacklists/whitelists across multiple organizations
+* Use a control list deployed by another team member
+* Connect to a third-party compliance provider's list
+* Share blacklists/whitelists across multiple organizations
 
 > **Note**: When importing, you may have view-only access unless you have admin permissions on the imported contract.
 
@@ -109,7 +109,7 @@ After creating or importing an external control list, you need to link it to you
 6. Click **"Add"** to confirm
 7. Approve the transaction in your wallet
 
-> **Required Role**: You must have **CONTROL_LIST_MANAGER_ROLE** on the token to link external control lists.
+> **Required Role**: You must have **CONTROL\_LIST\_MANAGER\_ROLE** on the token to link external control lists.
 
 ## Managing Control List Members
 
@@ -195,36 +195,36 @@ Transfer blocked if:
 
 A token can use multiple external control lists simultaneously:
 
-- **Multiple whitelists**: Address must be in ALL whitelists
-- **Multiple blacklists**: Address must NOT be in ANY blacklist
-- **Mixed**: Can use both whitelists and blacklists together
+* **Multiple whitelists**: Address must be in ALL whitelists
+* **Multiple blacklists**: Address must NOT be in ANY blacklist
+* **Mixed**: Can use both whitelists and blacklists together
 
 ### Example Scenarios
 
 **Scenario 1: Geographic Restrictions**
 
-- Whitelist 1: US investors
-- Whitelist 2: EU investors
-- Result: Only US AND EU approved investors can hold tokens
+* Whitelist 1: US investors
+* Whitelist 2: EU investors
+* Result: Only US AND EU approved investors can hold tokens
 
 **Scenario 2: Regulatory Compliance**
 
-- Blacklist 1: OFAC sanctions list
-- Blacklist 2: Local regulatory blacklist
-- Result: Any address on either list is blocked
+* Blacklist 1: OFAC sanctions list
+* Blacklist 2: Local regulatory blacklist
+* Result: Any address on either list is blocked
 
 ## Required Roles
 
 To manage external control lists:
 
-- **CONTROL_LIST_MANAGER_ROLE**: Add/remove external control lists from token
-- **DEFAULT_ADMIN_ROLE**: Full administrative access
+* **CONTROL\_LIST\_MANAGER\_ROLE**: Add/remove external control lists from token
+* **DEFAULT\_ADMIN\_ROLE**: Full administrative access
 
 For the external control list contract itself:
 
-- Contract deployer controls who can add/remove addresses
+* Contract deployer controls who can add/remove addresses
 
-See the [Roles and Permissions Guide](./roles-and-permissions.md) for details.
+See the [Roles and Permissions Guide](roles-and-permissions.md) for details.
 
 ## Smart Contract Interface
 
@@ -238,30 +238,30 @@ interface IExternalControlList {
 
 Returns:
 
-- `true`: Address is whitelisted (or not blacklisted)
-- `false`: Address is not whitelisted (or blacklisted)
+* `true`: Address is whitelisted (or not blacklisted)
+* `false`: Address is not whitelisted (or blacklisted)
 
 ## Best Practices
 
 ### Security
 
-- **Regular audits**: Review list members periodically
-- **Role separation**: Different admins for different control lists
-- **Transaction verification**: Always verify addresses before adding
-- **Backup lists**: Maintain off-chain backups of list members
+* **Regular audits**: Review list members periodically
+* **Role separation**: Different admins for different control lists
+* **Transaction verification**: Always verify addresses before adding
+* **Backup lists**: Maintain off-chain backups of list members
 
 ### Compliance
 
-- **Documentation**: Maintain records of why addresses are added/removed
-- **Update frequency**: Establish procedures for regular list updates
-- **Regulatory alignment**: Ensure lists match regulatory requirements
-- **Audit trail**: All changes are on-chain and immutable
+* **Documentation**: Maintain records of why addresses are added/removed
+* **Update frequency**: Establish procedures for regular list updates
+* **Regulatory alignment**: Ensure lists match regulatory requirements
+* **Audit trail**: All changes are on-chain and immutable
 
 ### Performance
 
-- **Batch operations**: Use bulk import for large lists
-- **Pagination**: Query large lists in pages to avoid timeouts
-- **Shared lists**: Reuse control lists across multiple tokens to reduce costs
+* **Batch operations**: Use bulk import for large lists
+* **Pagination**: Query large lists in pages to avoid timeouts
+* **Shared lists**: Reuse control lists across multiple tokens to reduce costs
 
 ## Troubleshooting
 
@@ -269,26 +269,26 @@ Returns:
 
 If your token doesn't recognize an external control list:
 
-- Verify the list contract address is correct
-- Ensure the list is properly linked to the token
-- Check that you have CONTROL_LIST_MANAGER_ROLE
-- Verify the list contract implements `IExternalControlList` interface
+* Verify the list contract address is correct
+* Ensure the list is properly linked to the token
+* Check that you have CONTROL\_LIST\_MANAGER\_ROLE
+* Verify the list contract implements `IExternalControlList` interface
 
 ### Transfer Blocked Unexpectedly
 
 If a valid transfer is being blocked:
 
-- Check if address is on any blacklist
-- Verify address is on all required whitelists
-- Ensure external control lists are correctly configured
-- Check both sender and receiver addresses
+* Check if address is on any blacklist
+* Verify address is on all required whitelists
+* Ensure external control lists are correctly configured
+* Check both sender and receiver addresses
 
 ### Transaction Failed
 
-- **Insufficient HBAR**: Ensure wallet has enough for gas fees
-- **Permission denied**: Verify you have the required role (CONTROL_LIST_MANAGER_ROLE)
-- **Invalid address**: Check address format and checksum
-- **Already added**: Address may already be on the list
+* **Insufficient HBAR**: Ensure wallet has enough for gas fees
+* **Permission denied**: Verify you have the required role (CONTROL\_LIST\_MANAGER\_ROLE)
+* **Invalid address**: Check address format and checksum
+* **Already added**: Address may already be on the list
 
 ## Use Cases
 
@@ -298,9 +298,9 @@ If a valid transfer is being blocked:
 
 **Solution**:
 
-- Create whitelist for US investors
-- Link to token
-- Only US-approved addresses can hold
+* Create whitelist for US investors
+* Link to token
+* Only US-approved addresses can hold
 
 **Benefits**: Automatic geographic compliance
 
@@ -310,9 +310,9 @@ If a valid transfer is being blocked:
 
 **Solution**:
 
-- Create blacklist with OFAC addresses
-- Link to all tokens
-- Update list as OFAC updates
+* Create blacklist with OFAC addresses
+* Link to all tokens
+* Update list as OFAC updates
 
 **Benefits**: Centralized compliance, automatic enforcement
 
@@ -322,9 +322,9 @@ If a valid transfer is being blocked:
 
 **Solution**:
 
-- Create whitelist for verified accredited investors
-- Link to token
-- Non-accredited investors cannot receive tokens
+* Create whitelist for verified accredited investors
+* Link to token
+* Non-accredited investors cannot receive tokens
 
 **Benefits**: Regulatory compliance, automatic enforcement
 
@@ -334,10 +334,10 @@ If a valid transfer is being blocked:
 
 **Solution**:
 
-- Create whitelist 1: US approved investors
-- Create whitelist 2: EU approved investors
-- Link both to token
-- Investor must be on both lists
+* Create whitelist 1: US approved investors
+* Create whitelist 2: EU approved investors
+* Link both to token
+* Investor must be on both lists
 
 **Benefits**: Multi-jurisdiction compliance
 
@@ -355,25 +355,25 @@ Control lists work alongside KYC:
 
 Control lists complement SSI:
 
-- **SSI**: Verifies identity
-- **Control lists**: Controls transfer permissions
-- **Independent**: Each operates separately
+* **SSI**: Verifies identity
+* **Control lists**: Controls transfer permissions
+* **Independent**: Each operates separately
 
 ### Control Lists + ERC-3643
 
 For ERC-3643 tokens:
 
-- **External control lists**: ATS-specific feature
-- **ERC-3643 compliance**: T-REX compliance module
-- **Can combine**: Use both for comprehensive compliance
+* **External control lists**: ATS-specific feature
+* **ERC-3643 compliance**: T-REX compliance module
+* **Can combine**: Use both for comprehensive compliance
 
 ## Next Steps
 
-- [Managing External KYC Lists](./managing-external-kyc-lists.md) - Investor verification
-- [Roles and Permissions](./roles-and-permissions.md) - Understand access control
-- [Managing Compliance](./managing-compliance.md) - Overall compliance strategy
+* [Managing External KYC Lists](managing-external-kyc-lists.md) - Investor verification
+* [Roles and Permissions](roles-and-permissions.md) - Understand access control
+* [Managing Compliance](managing-compliance.md) - Overall compliance strategy
 
 ## Related Resources
 
-- [Developer Guide: Smart Contracts](../developer-guides/contracts/index.md)
-- [API Documentation](../api/index.md)
+* [Developer Guide: Smart Contracts](../developer-guides/contracts/index.md)
+* [API Documentation](../api/index.md)
