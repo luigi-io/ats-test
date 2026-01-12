@@ -34,7 +34,7 @@ This monorepo is structured with **npm workspaces** and is designed for scalabil
   - Gas-optimized operations and proxy-based upgradeable contracts.
 
 - **Enterprise Development Practices**
-  - **Domain-Driven Design (DDD)**, **Hexagonal Architecture**, and **CQS pattern**.
+  - **Domain-Driven Design (DDD)**, **Hexagonal Architecture**, and **CQRS pattern**.
   - Separation of concerns across smart contracts, SDKs, frontends, and backends.
   - Strong CI/CD workflows with conditional builds and tests for each module.
   - Custodian integration at the SDK level (Dfns, Fireblocks, AWS KMS).
@@ -43,86 +43,40 @@ This monorepo is structured with **npm workspaces** and is designed for scalabil
 
 ```
 ├── packages/
-│ ├── ats/
-│ │ ├── contracts # Solidity smart contracts for ATS
-│ │ └── sdk # TypeScript SDK for ATS contracts
-│ └── mass-payout/
-│ ├── contracts # Solidity smart contracts for payout flows
-│ └── sdk # TypeScript SDK for payout flows
+│   ├── ats/
+│   │   ├── contracts         # Solidity smart contracts for ATS
+│   │   └── sdk               # TypeScript SDK for ATS contracts
+│   └── mass-payout/
+│       ├── contracts         # Solidity smart contracts for payout flows
+│       └── sdk               # TypeScript SDK for payout flows
 ├── apps/
-│ ├── ats/
-│ │ └── web # Frontend dApp for Asset Tokenization Studio
-│ ├── mass-payout/
-│ │ ├── backend # API backend for payout orchestration
-│ │ └── frontend # Admin panel for managing payouts
-│ └── docs # Documentation site (Docusaurus)
-├── docs/ # Technical documentation
-│ ├── adr/ # Architecture Decision Records
-│ ├── proposals/ # Enhancement Proposals
-│ ├── guides/ # Developer Guides
-│ └── workflows/ # CI/CD Documentation
-└── package.json # Workspace configuration and root scripts
+│   ├── ats/
+│   │   └── web               # Frontend dApp for Asset Tokenization Studio
+│   ├── mass-payout/
+│   │   ├── backend           # API backend for payout orchestration
+│   │   └── frontend          # Admin panel for managing payouts
+│   └── docs                  # Documentation site (Docusaurus)
+├── docs/                     # Technical documentation
+│   ├── ats/                  # ATS documentation
+│   ├── mass-payout/          # Mass Payout documentation
+│   └── references/           # Cross-product documentation
+│       ├── adr/              # Architecture Decision Records
+│       ├── proposals/        # Enhancement Proposals
+│       └── guides/           # General Guides
+└── package.json              # Workspace configuration and root scripts
 ```
 
 ## Documentation
 
-This project follows a **"Docs-as-Code"** philosophy, treating documentation with the same rigor as software. We maintain three distinct documentation layers:
+**Complete documentation:** [docs/index.md](docs/index.md)
 
-### Layer 1: Technical Documentation (Target: Developers)
+This project follows a **"Docs-as-Code"** philosophy, treating documentation with the same rigor as software. We maintain comprehensive documentation organized by product.
 
-Located in the repository root and co-located within packages:
-
-- **Root README.md**: High-level project overview
-- **Module READMEs**: Package-specific documentation in `packages/` and `apps/`
-- **CONTRIBUTING.md**: Engineer's handbook covering GitFlow, environment setup, and release processes
-- **Developer Guides** (`docs/guides/`): Step-by-step tutorials for complex tasks
-- **Architecture Decision Records** (`docs/adr/`): Historical record of architectural decisions
-- **Enhancement Proposals** (`docs/proposals/`): Feature specifications and design proposals
-
-### Layer 2: Documentation Hub (Target: All Users)
-
-A public-facing Docusaurus site located at `apps/docs` that aggregates:
-
-- **Product Manuals**: End-user guides and tutorials
-- **Developer Guides**: Synced from Layer 1
-- **API Reference**: Auto-generated from TypeScript (TypeDoc) and Solidity (solidity-docgen)
-- **Architecture Documentation**: System design and patterns
-
-### Layer 3: Internal Documentation (Target: Employees)
-
-Sensitive information kept in Confluence (restricted access):
-
-- Credentials and client data
-- HR processes and meeting minutes
-- Strategic roadmap discussions (pre-public phase)
-
-### ADRs vs. Enhancement Proposals
-
-We distinguish between two types of decision documents:
-
-- **ADRs (Architecture Decision Records)**: Document decisions **already made**, providing historical context and consequences
-- **EPs (Enhancement Proposals)**: Propose **new features or changes** before implementation, enabling community discussion via Pull Requests
-
-This approach is inspired by industry standards like Kubernetes KEPs, Ethereum EIPs, and Hedera HIPs.
-
-### Documentation Commands
+You can also run the documentation site locally:
 
 ```bash
-# Start documentation site locally
 npm run docs:dev
-
-# Build documentation site
-npm run docs:build
-
-# Serve built documentation
-npm run docs:serve
 ```
-
-For more details, see:
-
-- [How to Create an ADR](docs/adr/README.md)
-- [How to Submit an Enhancement Proposal](docs/proposals/README.md)
-- [Developer Guides](docs/guides/README.md)
 
 ## Architecture
 
@@ -183,17 +137,43 @@ flowchart TD
 From the monorepo root:
 
 ```bash
-
 # Install all dependencies
 npm ci
-```
 
-```bash
 # Build all packages and applications
 npm run setup
 ```
 
 This command will compile contracts, build SDKs, and set up web and backend environments.
+
+### Selective Setup (ATS or Mass Payout only)
+
+You can set up only the product you need without installing all dependencies:
+
+```bash
+# Setup only ATS (contracts, SDK, and web app)
+npm run ats:setup
+
+# Setup only Mass Payout (contracts, SDK, backend, and frontend)
+npm run mass-payout:setup
+```
+
+### Clean Installation
+
+If you had a previous installation and want to start fresh:
+
+```bash
+# Clean install for ATS
+npm run ats:setup:clean
+
+# Clean install for Mass Payout
+npm run mass-payout:setup:clean
+
+# Clean install for everything
+npm run setup:clean
+```
+
+This will remove previous build artifacts and reinstall dependencies before building.
 
 ### Environment Configuration
 
@@ -279,9 +259,12 @@ The project uses separate GitHub Actions workflows for different components:
 
 - **ATS Tests** (`.github/workflows/test-ats.yml`): Runs when ATS-related files change
 - **Mass Payout Tests** (`.github/workflows/test-mp.yml`): Runs when Mass Payout files change
-- **Publishing** (`.github/workflows/publish.yml`): Handles publishing to npm with conditional logic based on release tags
+- **ATS Release** (`.github/workflows/ats.release.yml`): Semi-automated release workflow (manual version bump + automated tag/release)
+- **Mass Payout Release** (`.github/workflows/mp.release.yml`): Semi-automated release workflow (manual version bump + automated tag/release)
+- **ATS Publish** (`.github/workflows/ats.publish.yml`): Automatically publishes ATS packages to npm when release tags are pushed
+- **Mass Payout Publish** (`.github/workflows/mp.publish.yml`): Automatically publishes Mass Payout packages to npm when release tags are pushed
 
-Tests are automatically triggered only when relevant files are modified, improving CI efficiency.
+Tests are automatically triggered only when relevant files are modified, improving CI efficiency. For detailed release process documentation, see [`.github/WORKFLOWS.md`](.github/WORKFLOWS.md).
 
 ## Support
 

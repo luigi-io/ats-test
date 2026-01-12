@@ -6,7 +6,7 @@ const sidebars: SidebarsConfig = {
     {
       type: "category",
       label: "Getting Started",
-      collapsed: false,
+      collapsed: true,
       link: {
         type: "doc",
         id: "getting-started/index",
@@ -16,7 +16,7 @@ const sidebars: SidebarsConfig = {
     {
       type: "category",
       label: "User Guides",
-      collapsed: false,
+      collapsed: true,
       link: {
         type: "doc",
         id: "user-guides/index",
@@ -32,17 +32,49 @@ const sidebars: SidebarsConfig = {
     {
       type: "category",
       label: "Developer Guides",
-      collapsed: false,
+      collapsed: true,
       link: {
         type: "doc",
         id: "developer-guides/index",
       },
-      items: ["developer-guides/contracts/index", "developer-guides/sdk-integration", "developer-guides/backend/index"],
+      items: [
+        {
+          type: "category",
+          label: "SDK",
+          collapsed: true,
+          items: ["developer-guides/sdk-integration", "developer-guides/sdk-overview"],
+        },
+        {
+          type: "category",
+          label: "Smart Contracts",
+          collapsed: true,
+          link: {
+            type: "doc",
+            id: "developer-guides/contracts/index",
+          },
+          items: ["developer-guides/contracts/deployment", "developer-guides/contracts/overview"],
+        },
+        {
+          type: "category",
+          label: "Backend",
+          collapsed: true,
+          link: {
+            type: "doc",
+            id: "developer-guides/backend/index",
+          },
+          items: [
+            "developer-guides/backend/architecture",
+            "developer-guides/backend/database",
+            "developer-guides/backend/blockchain-integration",
+            "developer-guides/backend/running-and-testing",
+          ],
+        },
+      ],
     },
     {
       type: "category",
       label: "API Documentation",
-      collapsed: false,
+      collapsed: true,
       link: {
         type: "doc",
         id: "api/index",

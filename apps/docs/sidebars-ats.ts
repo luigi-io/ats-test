@@ -6,7 +6,7 @@ const sidebars: SidebarsConfig = {
     {
       type: "category",
       label: "Getting Started",
-      collapsed: false,
+      collapsed: true,
       link: {
         type: "doc",
         id: "getting-started/index",
@@ -16,7 +16,7 @@ const sidebars: SidebarsConfig = {
     {
       type: "category",
       label: "User Guides",
-      collapsed: false,
+      collapsed: true,
       link: {
         type: "doc",
         id: "user-guides/index",
@@ -24,29 +24,45 @@ const sidebars: SidebarsConfig = {
       items: [
         "user-guides/creating-equity",
         "user-guides/creating-bond",
-        "user-guides/managing-compliance",
+        "user-guides/token-operations",
+        "user-guides/updating-configuration",
         "user-guides/corporate-actions",
-        "user-guides/token-lifecycle",
+        "user-guides/managing-compliance",
+        "user-guides/managing-external-kyc-lists",
+        "user-guides/managing-external-control-lists",
+        "user-guides/managing-external-pause-lists",
+        "user-guides/hold-operations",
+        "user-guides/clearing-operations",
+        "user-guides/ssi-integration",
+        "user-guides/roles-and-permissions",
       ],
     },
     {
       type: "category",
       label: "Developer Guides",
-      collapsed: false,
+      collapsed: true,
       link: {
         type: "doc",
         id: "developer-guides/index",
       },
       items: [
-        "developer-guides/sdk-integration",
+        {
+          type: "category",
+          label: "SDK",
+          collapsed: true,
+          items: ["developer-guides/sdk-integration", "developer-guides/sdk-overview"],
+        },
         {
           type: "category",
           label: "Smart Contracts",
+          collapsed: true,
           link: {
             type: "doc",
             id: "developer-guides/contracts/index",
           },
           items: [
+            "developer-guides/contracts/overview",
+            "developer-guides/contracts/deployed-addresses",
             "developer-guides/contracts/deployment",
             "developer-guides/contracts/adding-facets",
             "developer-guides/contracts/upgrading",
@@ -58,15 +74,17 @@ const sidebars: SidebarsConfig = {
     {
       type: "category",
       label: "API Documentation",
-      collapsed: false,
+      collapsed: true,
       link: {
         type: "doc",
         id: "api/index",
       },
       items: [
+        "api/sdk-reference",
         {
           type: "category",
-          label: "Contracts",
+          label: "Smart Contracts",
+          collapsed: true,
           link: {
             type: "doc",
             id: "api/contracts/index",
