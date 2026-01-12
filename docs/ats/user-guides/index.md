@@ -14,7 +14,7 @@ Step-by-step guides for using the Asset Tokenization Studio web application.
 
 Before following these guides, make sure you have:
 
-1. [Set up the ATS web application](../getting-started/quick-start.md)
+1. [Set up the ATS web application](../getting-started/index/quick-start.md)
 2. Connected your Hedera wallet (HashPack, Blade, or WalletConnect)
 3. Sufficient HBAR for transaction fees
 

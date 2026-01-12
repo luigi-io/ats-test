@@ -151,7 +151,7 @@ React-based dApp for end users:
 
 ![ATS Web Application](../../.gitbook/assets/ats-web.png)
 
-[Try the web app →](getting-started/quick-start.md)
+[Try the web app →](getting-started/index/quick-start.md)
 
 ## Use Cases
 

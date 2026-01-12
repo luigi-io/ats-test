@@ -13,18 +13,18 @@ Complete guide for setting up the Asset Tokenization Studio development environm
 
 This guide covers the complete setup process for developers who want to:
 
-- Build and deploy smart contracts
-- Integrate the ATS SDK into their projects
-- Contribute to the ATS codebase
-- Customize contract functionality
+* Build and deploy smart contracts
+* Integrate the ATS SDK into their projects
+* Contribute to the ATS codebase
+* Customize contract functionality
 
 ## Prerequisites
 
-- **Node.js**: v20.19.4 or newer
-- **npm**: v10.9.0 or newer
-- **Git**: For cloning the repository
-- **Hedera Account**: Testnet or mainnet account with HBAR
-- **Code Editor**: VS Code recommended with Solidity extensions
+* **Node.js**: v20.19.4 or newer
+* **npm**: v10.9.0 or newer
+* **Git**: For cloning the repository
+* **Hedera Account**: Testnet or mainnet account with HBAR
+* **Code Editor**: VS Code recommended with Solidity extensions
 
 ## Step 1: Clone and Install
 
@@ -83,7 +83,7 @@ JSON_RPC_RELAY_URL=https://testnet.hashio.io/api
 
 ### Deploy Contracts
 
-See the [Contract Deployment Guide](../developer-guides/contracts/deployment.md) for detailed instructions on deploying the Business Logic Resolver, Diamond Proxy, and Factory contracts.
+See the [Contract Deployment Guide](../../developer-guides/contracts/deployment.md) for detailed instructions on deploying the Business Logic Resolver, Diamond Proxy, and Factory contracts.
 
 ## Step 4: SDK Setup
 
@@ -93,7 +93,7 @@ The SDK is built as part of step 2. To use it in your own project:
 npm install @hashgraph/asset-tokenization-contracts @hashgraph/asset-tokenization-sdk
 ```
 
-See the [SDK Integration Guide](../developer-guides/sdk-integration.md) for usage examples.
+See the [SDK Integration Guide](../../developer-guides/sdk-integration.md) for usage examples.
 
 ## Step 5: Web Application Setup
 
@@ -185,10 +185,10 @@ npm run format
 
 ## Next Steps
 
-- [Developer Guides](../developer-guides/index.md) - Learn about architecture and patterns
-- [Contract Development](../developer-guides/contracts/index.md) - Deploy and customize contracts
-- [SDK Integration](../developer-guides/sdk-integration.md) - Integrate ATS into your project
-- [API Documentation](../api/index.md) - Technical reference
+* [Developer Guides](../../developer-guides/index.md) - Learn about architecture and patterns
+* [Contract Development](../../developer-guides/contracts/index.md) - Deploy and customize contracts
+* [SDK Integration](../../developer-guides/sdk-integration.md) - Integrate ATS into your project
+* [API Documentation](../../api/index.md) - Technical reference
 
 ## Troubleshooting
 
@@ -228,6 +228,6 @@ npm list @hashgraph/asset-tokenization-sdk
 
 ## Need Help?
 
-- [GitHub Issues](https://github.com/hashgraph/asset-tokenization-studio/issues)
-- [Developer Guides](../developer-guides/index.md)
-- [Hedera Discord](https://hedera.com/discord)
+* [GitHub Issues](https://github.com/hashgraph/asset-tokenization-studio/issues)
+* [Developer Guides](../../developer-guides/index.md)
+* [Hedera Discord](https://hedera.com/discord)

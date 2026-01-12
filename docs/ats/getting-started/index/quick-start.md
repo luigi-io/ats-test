@@ -89,7 +89,7 @@ VITE_BUSINESS_LOGIC_RESOLVER_ID=0.0.12345678
 VITE_TREX_FACTORY_ID=0.0.87654321
 ```
 
-> **Note**: Replace the contract IDs with your deployed contract addresses. See the [Deployment Guide](../developer-guides/contracts/deployment.md) for instructions on deploying contracts.
+> **Note**: Replace the contract IDs with your deployed contract addresses. See the [Deployment Guide](../../developer-guides/contracts/deployment.md) for instructions on deploying contracts.
 
 #### Optional Configuration
 
@@ -122,7 +122,7 @@ The application will be available at **http://localhost:5173**
 
 Once running, you'll see the ATS web application:
 
-![ATS Web Application Home](../../../.gitbook/assets/ats-web.png)
+![ATS Web Application Home](../../../../.gitbook/assets/ats-web.png)
 
 ## First Steps
 
@@ -148,7 +148,7 @@ You can switch between views from the dashboard by clicking the view selector.
 * Navigate to "Create Token"
 * Choose token type: **Equity** or **Bond**
 
-![Create Security Token](../../../.gitbook/assets/ats-web-create-security.png)
+![Create Security Token](../../../../.gitbook/assets/ats-web-create-security.png)
 
 * Fill in token details (name, symbol, supply)
 * Configure compliance settings (KYC, transfer restrictions)
@@ -158,7 +158,7 @@ You can switch between views from the dashboard by clicking the view selector.
 
 Once you've created tokens, you can manage them from the dashboard:
 
-![ATS Dashboard](../../../.gitbook/assets/ats-web-dashboard.png)
+![ATS Dashboard](../../../../.gitbook/assets/ats-web-dashboard.png)
 
 #### Selecting a Security Token
 
@@ -177,7 +177,7 @@ Once security is selected, you can:
 
 Available operations appear in tabs. The tabs you see depend on your assigned role:
 
-![Available Operations Tabs](../../../.gitbook/assets/ats-web-tabs.png)
+![Available Operations Tabs](../../../../.gitbook/assets/ats-web-tabs.png)
 
 ## Troubleshooting
 
@@ -244,12 +244,12 @@ If you see this error when connecting MetaMask, you need to add the Hedera netwo
 
 ## Next Steps
 
-* [User Guides](../user-guides/index.md) - Learn how to create tokens and manage corporate actions
-* [Developer Guides](../developer-guides/index.md) - Learn about the architecture and advanced features
-* [API Documentation](../api/index.md) - Explore contract APIs
+* [User Guides](../../user-guides/index.md) - Learn how to create tokens and manage corporate actions
+* [Developer Guides](../../developer-guides/index.md) - Learn about the architecture and advanced features
+* [API Documentation](../../api/index.md) - Explore contract APIs
 
 ## Need Help?
 
 * [GitHub Issues](https://github.com/hashgraph/asset-tokenization-studio/issues)
 * [Hedera Discord](https://hedera.com/discord)
-* [Documentation](../intro.md)
+* [Documentation](../../intro.md)
