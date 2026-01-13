@@ -5,7 +5,7 @@ sidebar_position: 0
 slug: /
 ---
 
-# Asset Tokenization Studio (ATS)
+# 🪙 Asset Tokenization Studio (ATS)
 
 Create and manage tokenized securities (equities and bonds) on the Hedera network with full compliance and regulatory features.
 

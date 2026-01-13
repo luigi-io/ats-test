@@ -5,7 +5,7 @@ sidebar_position: 0
 slug: /
 ---
 
-# Mass Payout
+# 💸 Mass Payout
 
 Manage large-scale payment distributions for tokenized securities with automated batch processing and scheduling capabilities.
 

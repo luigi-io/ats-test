@@ -1,4 +1,4 @@
-# 🏭 Asset Tokenization Studio Documentation
+# Asset Tokenization Studio Documentation
 
 Welcome to the Asset Tokenization Studio documentation. This covers both **Asset Tokenization Studio (ATS)** and **Mass Payout** systems.
 
