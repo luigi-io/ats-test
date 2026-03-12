@@ -9,9 +9,9 @@ const sidebars: SidebarsConfig = {
       collapsed: true,
       link: {
         type: "doc",
-        id: "getting-started/index",
+        id: "getting-started/index/index",
       },
-      items: ["getting-started/quick-start", "getting-started/full-setup"],
+      items: ["getting-started/index/quick-start", "getting-started/index/full-setup"],
     },
     {
       type: "category",
