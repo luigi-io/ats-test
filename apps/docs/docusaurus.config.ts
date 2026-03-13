@@ -136,19 +136,19 @@ const config: Config = {
           items: [
             {
               label: "ATS Getting Started",
-              to: "/asset-tokenization-studio/ats/getting-started/quick-start",
+              to: "/ats/getting-started/index/quick-start",
             },
             {
               label: "MP Getting Started",
-              to: "/asset-tokenization-studio/mass-payout/getting-started/quick-start",
+              to: "/mass-payout/getting-started/quick-start",
             },
             {
               label: "Architecture Decisions",
-              to: "/asset-tokenization-studio/references/adr/",
+              to: "/references/adr/",
             },
             {
               label: "Enhancement Proposals",
-              to: "/asset-tokenization-studio/references/proposals/",
+              to: "/references/proposals/",
             },
           ],
         },

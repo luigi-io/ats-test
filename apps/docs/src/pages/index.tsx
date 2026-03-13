@@ -18,10 +18,7 @@ function HomepageHeader() {
         </Heading>
         <p className="hero__subtitle">{siteConfig.tagline}</p>
         <div className={styles.buttons}>
-          <Link
-            className="button button--secondary button--lg"
-            to="/asset-tokenization-studio/ats/getting-started/quick-start"
-          >
+          <Link className="button button--secondary button--lg" to="/ats/getting-started/index/quick-start">
             Get Started
           </Link>
         </div>
