@@ -1,13 +1,9 @@
-/*
- * Copyright (c) 2024 IOB - Todos los derechos reservados.
- * Este archivo es parte del software propietario de IOB.
- * Queda prohibida su distribución, copia o uso no autorizado.
- */
+// SPDX-License-Identifier: Apache-2.0
 
-import { Box, Stack } from '@chakra-ui/react';
-import { Breadcrumb, Text } from 'io-bricks-ui';
-import { useTranslation } from 'react-i18next';
-import { Link as RouterLink } from 'react-router-dom';
+import { Box, Stack } from "@chakra-ui/react";
+import { Breadcrumb, Text } from "io-bricks-ui";
+import { useTranslation } from "react-i18next";
+import { Link as RouterLink } from "react-router-dom";
 
 interface BreadcrumbItem {
   label: string;
@@ -23,14 +19,14 @@ interface ImportHeaderProps {
 }
 
 export const ImportHeader = ({ breadcrumbs }: ImportHeaderProps) => {
-  const { t } = useTranslation('assets');
+  const { t } = useTranslation("assets");
 
   return (
     <Box>
       <Stack spacing={4}>
         <Breadcrumb items={breadcrumbs} />
         <Text fontSize="2xl" fontWeight="bold">
-          {t('importAsset')}
+          {t("importAsset")}
         </Text>
       </Stack>
     </Box>

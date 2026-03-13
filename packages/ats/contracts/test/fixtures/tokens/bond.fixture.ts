@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 import { deployAtsInfrastructureFixture } from "../infrastructure.fixture";
 import { CURRENCIES, DeepPartial, TIME_PERIODS_S, BOND_CONFIG_ID } from "../../../scripts";
 import {
@@ -10,6 +12,7 @@ import { DeployBondFromFactoryParams, deployBondFromFactory } from "@scripts/dom
 import { BondDetailsDataParams, FactoryRegulationDataParams } from "@scripts/domain";
 import { getRegulationData, getSecurityData } from "./common.fixture";
 import { getDltTimestamp } from "@test";
+import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 /**
  * Default bond token parameters.
@@ -53,11 +56,15 @@ export async function getBondDetails(params?: DeepPartial<BondDetailsDataParams>
 export async function deployBondTokenFixture({
   bondDataParams,
   regulationTypeParams,
+  useLoadFixture = true,
 }: {
   bondDataParams?: DeepPartial<DeployBondFromFactoryParams>;
   regulationTypeParams?: DeepPartial<FactoryRegulationDataParams>;
+  useLoadFixture?: boolean;
 } = {}) {
-  const infrastructure = await deployAtsInfrastructureFixture();
+  const infrastructure = useLoadFixture
+    ? await loadFixture(deployAtsInfrastructureFixture)
+    : await deployAtsInfrastructureFixture();
   const { factory, blr, deployer } = infrastructure;
 
   const securityData = getSecurityData(blr, {
@@ -86,17 +93,17 @@ export async function deployBondTokenFixture({
   );
 
   // Connect commonly used facets to diamond
-  const accessControlFacet = AccessControlFacet__factory.connect(diamond.address, deployer);
-  const pauseFacet = PauseFacet__factory.connect(diamond.address, deployer);
-  const kycFacet = KycFacet__factory.connect(diamond.address, deployer);
-  const controlListFacet = ControlListFacet__factory.connect(diamond.address, deployer);
+  const accessControlFacet = AccessControlFacet__factory.connect(diamond.target as string, deployer);
+  const pauseFacet = PauseFacet__factory.connect(diamond.target as string, deployer);
+  const kycFacet = KycFacet__factory.connect(diamond.target as string, deployer);
+  const controlListFacet = ControlListFacet__factory.connect(diamond.target as string, deployer);
 
   return {
     ...infrastructure,
 
     // Token
     diamond,
-    tokenAddress: diamond.address,
+    tokenAddress: diamond.target as string,
 
     // Connected facets (most commonly used)
     accessControlFacet,

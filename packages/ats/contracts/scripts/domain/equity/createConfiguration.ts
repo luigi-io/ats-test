@@ -12,7 +12,6 @@
  * @module domain/equity/createConfiguration
  */
 
-import { Contract } from "ethers";
 import {
   ConfigurationData,
   ConfigurationError,
@@ -20,7 +19,9 @@ import {
   createBatchConfiguration,
   DEFAULT_BATCH_SIZE,
 } from "@scripts/infrastructure";
-import { EQUITY_CONFIG_ID, atsRegistry } from "@scripts/domain";
+import { BusinessLogicResolver } from "@contract-types";
+import { EQUITY_CONFIG_ID } from "../constants";
+import { atsRegistry } from "../atsRegistry";
 
 /**
  * Equity-specific facets list (41 facets total).
@@ -45,6 +46,7 @@ const EQUITY_FACETS = [
   "KycFacet",
   "PauseFacet",
   "SnapshotsFacet",
+  "TotalBalanceFacet",
 
   // ERC Standards (13)
   "ERC1410IssuerFacet",
@@ -55,6 +57,7 @@ const EQUITY_FACETS = [
   "ERC1643Facet",
   "ERC1644Facet",
   "ERC20PermitFacet",
+  "NoncesFacet",
   "ERC20VotesFacet",
   "ERC3643BatchFacet",
   "ERC3643ManagementFacet",
@@ -79,7 +82,6 @@ const EQUITY_FACETS = [
   // Advanced Features (9)
   "AdjustBalancesFacet",
   "LockFacet",
-  "ProceedRecipientsFacet",
   "ProtectedPartitionsFacet",
   "ScheduledBalanceAdjustmentsFacet",
   "ScheduledCrossOrderedTasksFacet",
@@ -140,7 +142,7 @@ const EQUITY_FACETS = [
  * ```
  */
 export async function createEquityConfiguration(
-  blrContract: Contract,
+  blrContract: BusinessLogicResolver,
   facetAddresses: Record<string, string>,
   useTimeTravel: boolean = false,
   partialBatchDeploy: boolean = false,

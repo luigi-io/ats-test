@@ -34,8 +34,8 @@ const initRequest = new InitializationRequest({
     headerName: "",
   },
   configuration: {
-    resolverAddress: "0.0.7511642", // See deployed-addresses.md
-    factoryAddress: "0.0.7512002",
+    resolverAddress: "0.0.7707874", // See deployed-addresses.md
+    factoryAddress: "0.0.7708432",
   },
 });
 
@@ -43,6 +43,8 @@ await Network.init(initRequest);
 ```
 
 ### 2. Connect a Wallet
+
+#### Hedera WalletConnect 2.0 (HashPack, Blade, and other WC-compatible wallets)
 
 ```typescript
 import { ConnectRequest, SupportedWallets } from "@hashgraph/asset-tokenization-sdk";
@@ -59,7 +61,27 @@ const connectRequest = new ConnectRequest({
     apiKey: "",
     headerName: "",
   },
-  wallet: SupportedWallets.HASHPACK, // or BLADE, METAMASK, HWALLETCONNECT
+  wallet: SupportedWallets.HWALLETCONNECT,
+  hwcSettings: {
+    projectId: "your_walletconnect_project_id", // from https://cloud.walletconnect.com
+    dappName: "My ATS App",
+    dappDescription: "Asset Tokenization Studio dApp",
+    dappURL: "https://example.com",
+    dappIcons: ["https://example.com/icon.png"],
+  },
+});
+
+const walletData = await Network.connect(connectRequest);
+```
+
+> **Note**: HashPack and Blade wallets connect via Hedera WalletConnect 2.0 (`SupportedWallets.HWALLETCONNECT`). You need a WalletConnect `projectId` from [cloud.walletconnect.com](https://cloud.walletconnect.com).
+
+#### MetaMask
+
+```typescript
+const connectRequest = new ConnectRequest({
+  // ...network config...
+  wallet: SupportedWallets.METAMASK,
 });
 
 const walletData = await Network.connect(connectRequest);
@@ -122,14 +144,17 @@ REACT_APP_MIRROR_NODE=https://testnet.mirrornode.hedera.com/api/v1/
 REACT_APP_RPC_NODE=https://testnet.hashio.io/api
 
 # Contract addresses (see deployed-addresses.md)
-REACT_APP_RPC_RESOLVER=0.0.7511642
-REACT_APP_RPC_FACTORY=0.0.7512002
+REACT_APP_RPC_RESOLVER=0.0.7707874
+REACT_APP_RPC_FACTORY=0.0.7708432
 
 # Token configuration
 REACT_APP_EQUITY_CONFIG_ID=0x0000000000000000000000000000000000000000000000000000000000000001
-REACT_APP_EQUITY_CONFIG_VERSION=0
+REACT_APP_EQUITY_CONFIG_VERSION=1
 REACT_APP_BOND_CONFIG_ID=0x0000000000000000000000000000000000000000000000000000000000000002
-REACT_APP_BOND_CONFIG_VERSION=0
+REACT_APP_BOND_CONFIG_VERSION=1
+REACT_APP_BOND_FIXED_RATE_CONFIG_ID=0x0000000000000000000000000000000000000000000000000000000000000003
+REACT_APP_BOND_KPI_LINKED_RATE_CONFIG_ID=0x0000000000000000000000000000000000000000000000000000000000000004
+REACT_APP_BOND_SUSTAINABILITY_CONFIG_ID=0x0000000000000000000000000000000000000000000000000000000000000005
 ```
 
 ## Next Steps

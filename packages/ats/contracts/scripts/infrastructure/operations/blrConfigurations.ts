@@ -9,6 +9,22 @@
  * These are generic operations that work with any configuration ID and facet set.
  * Domain-specific configuration creation (equity, bond) is handled by modules.
  *
+ * ## Performance Note: Dynamic Imports
+ *
+ * This file uses dynamic imports (`await import()`) for some `@scripts/infrastructure`
+ * modules instead of static imports. This is intentional for parallel test performance.
+ *
+ * **Why:** The barrel export (`@scripts/infrastructure/index.ts`) re-exports from files
+ * that import `@contract-types` (typechain). When Node.js loads the barrel, it eagerly
+ * loads ALL re-exported modules, triggering typechain loading (~400 generated files).
+ *
+ * In parallel tests, each worker loads modules independently:
+ * - Static imports: N workers × full module graph = 4x+ slowdown
+ * - Dynamic imports: Modules loaded only when functions are called (lazy)
+ *
+ * **Measured impact:** Static imports caused tests to run in 8+ minutes vs 2 minutes.
+ *
+ * @see README.md "Troubleshooting > Parallel Tests Running Slowly" for details
  * @module core/operations/blrConfigurations
  */
 
@@ -28,62 +44,8 @@ import {
   isInstantMiningNetwork,
 } from "@scripts/infrastructure";
 
-/**
- * Facet configuration for BLR.
- */
-export interface FacetConfiguration {
-  /** Facet name */
-  facetName: string;
-
-  /** Function selectors this facet handles */
-  selectors: string[];
-}
-
-/**
- * Batch facet configuration structure for contract calls.
- * This matches the IDiamondCutManager.FacetConfigurationStruct interface.
- */
-export interface BatchFacetConfiguration {
-  /** Facet ID (keccak256 hash of facet name) */
-  id: string;
-
-  /** Facet version */
-  version: number;
-}
-
-/**
- * Result of BLR configuration.
- *
- * Used by the deployBlrWithFacets workflow helper.
- */
-export interface CreateBlrConfigurationResult {
-  /** Whether configuration succeeded */
-  success: boolean;
-
-  /** BLR address */
-  blrAddress: string;
-
-  /** Configuration ID */
-  configurationId: string;
-
-  /** Configuration version created */
-  version?: number;
-
-  /** Number of facets configured */
-  facetCount: number;
-
-  /** Transaction hash (only if success=true) */
-  transactionHash?: string;
-
-  /** Block number (only if success=true) */
-  blockNumber?: number;
-
-  /** Gas used (only if success=true) */
-  gasUsed?: number;
-
-  /** Error message (only if success=false) */
-  error?: string;
-}
+// Types imported from centralized types module
+import type { BatchFacetConfiguration, ConfigurationData, ConfigurationError, FacetConfigurationData } from "../types";
 
 /**
  * Get the latest configuration version for a configuration ID.
@@ -108,7 +70,7 @@ export async function getConfigurationVersion(blr: BusinessLogicResolver, config
     validateBytes32(configurationId, "configuration ID");
 
     const version = await blr.getLatestVersionByConfiguration(configurationId);
-    return version.toNumber();
+    return Number(version);
   } catch (err) {
     logError(`Error getting configuration version: ${extractRevertReason(err)}`);
     throw err;
@@ -137,45 +99,6 @@ export async function configurationExists(blr: BusinessLogicResolver, configurat
   } catch {
     return false;
   }
-}
-
-// ============================================================================
-// Configuration Creation (Generic Operation for BLR Configurations)
-// ============================================================================
-
-/**
- * Error types for configuration operations.
- */
-export type ConfigurationError =
-  | "EMPTY_FACET_LIST"
-  | "INVALID_ADDRESS"
-  | "INVALID_CONFIG_ID"
-  | "FACET_NOT_FOUND"
-  | "TRANSACTION_FAILED"
-  | "EVENT_PARSE_FAILED";
-
-/**
- * Configuration data returned on success.
- */
-export interface ConfigurationData {
-  /** Configuration ID */
-  configurationId: string;
-
-  /** Configuration version */
-  version: number;
-
-  /** Facet keys and addresses */
-  facetKeys: Array<{
-    facetName: string;
-    key: string;
-    address: string;
-  }>;
-
-  /** Transaction hash */
-  transactionHash: string;
-
-  /** Block number */
-  blockNumber: number;
 }
 
 // ============================================================================
@@ -237,7 +160,7 @@ export async function processFacetLists(
   configId: string,
   facetIdList: string[],
   facetVersionList: number[],
-  blrContract: Contract,
+  blrContract: BusinessLogicResolver,
   partialBatchDeploy: boolean,
   batchSize: number = DEFAULT_BATCH_SIZE,
   gasLimit?: number,
@@ -327,7 +250,7 @@ export async function sendBatchConfiguration(
   configId: string,
   configurations: BatchFacetConfiguration[],
   isFinalBatch: boolean,
-  blrContract: Contract,
+  blrContract: BusinessLogicResolver,
   partialBatchDeploy: boolean,
   gasLimit?: number,
   confirmations: number = 0,
@@ -342,7 +265,7 @@ export async function sendBatchConfiguration(
   info(`  Confirmations to wait: ${confirmations}`);
 
   try {
-    // Import GAS_LIMIT constants
+    // Dynamic import for parallel test performance (see module JSDoc for explanation)
     const { GAS_LIMIT } = await import("@scripts/infrastructure");
 
     const txResponse = await blrContract.createBatchConfiguration(configId, configurations, finalBatch, {
@@ -358,7 +281,7 @@ export async function sendBatchConfiguration(
     debug(gasUsed);
 
     success(`Batch configuration ${finalBatch ? "(final)" : "(partial)"} completed successfully`);
-    info(`  Transaction: ${receipt.transactionHash}`);
+    info(`  Transaction: ${receipt.hash}`);
     info(`  Block: ${receipt.blockNumber}`);
   } catch (err) {
     const errorMessage = extractRevertReason(err);
@@ -408,22 +331,8 @@ export async function sendBatchConfiguration(
  * })
  * ```
  */
-/**
- * Facet data for configuration creation.
- */
-export interface FacetConfigurationData {
-  /** Base facet name (e.g., 'AccessControlFacet') */
-  facetName: string;
-
-  /** Resolver key (bytes32) for the facet */
-  resolverKey: string;
-
-  /** Deployed facet address */
-  address: string;
-}
-
 export async function createBatchConfiguration(
-  blrContract: Contract,
+  blrContract: BusinessLogicResolver,
   options: {
     /** Configuration ID (bytes32) */
     configurationId: string;
@@ -453,6 +362,7 @@ export async function createBatchConfiguration(
     confirmations = 0,
   } = options;
 
+  // Dynamic imports for parallel test performance (see module JSDoc for explanation)
   const { info } = await import("@scripts/infrastructure");
   const { ok, err } = await import("@scripts/infrastructure");
 
@@ -461,7 +371,7 @@ export async function createBatchConfiguration(
   }
 
   try {
-    const blrAddress = blrContract.address;
+    const blrAddress = await blrContract.getAddress();
 
     info("Creating Batch BLR Configuration", {
       blrAddress,
@@ -484,7 +394,7 @@ export async function createBatchConfiguration(
     info(`Resolved ${facetKeys.length} facets with addresses`, {});
 
     const latestVersion = await blrContract.getLatestVersion();
-    const version = latestVersion.toNumber();
+    const version = Number(latestVersion);
 
     info("Retrieved latest version from BLR", { version });
 
@@ -511,8 +421,9 @@ export async function createBatchConfiguration(
 
     // Query the actual configuration-specific version after batch processing
     const configVersion = await blrContract.getLatestVersionByConfiguration(configurationId);
-    const actualVersion = configVersion.toNumber();
+    const actualVersion = Number(configVersion);
 
+    // Dynamic import for parallel test performance (see module JSDoc)
     const { success: logSuccess } = await import("../utils/logging");
     logSuccess("Batch configuration completed successfully", {
       configurationId,
@@ -529,6 +440,7 @@ export async function createBatchConfiguration(
       blockNumber: 0,
     });
   } catch (error) {
+    // Dynamic import for parallel test performance (see module JSDoc)
     const { error: logError } = await import("../utils/logging");
     const errorMessage = error instanceof Error ? error.message : String(error);
 
@@ -539,6 +451,3 @@ export async function createBatchConfiguration(
     return err("TRANSACTION_FAILED", errorMessage, error);
   }
 }
-
-// Re-export Contract type for convenience
-type Contract = import("ethers").Contract;

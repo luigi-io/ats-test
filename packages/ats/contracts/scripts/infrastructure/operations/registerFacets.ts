@@ -9,7 +9,7 @@
  * @module core/operations/registerFacets
  */
 
-import { Overrides } from "ethers";
+import { Overrides, Provider } from "ethers";
 import { BusinessLogicResolver } from "@contract-types";
 import {
   DEFAULT_TRANSACTION_TIMEOUT,
@@ -23,7 +23,9 @@ import {
   validateAddress,
   waitForTransaction,
   warn,
+  GAS_LIMIT,
 } from "@scripts/infrastructure";
+import { FACET_REGISTRATION_BATCH_SIZE } from "../../domain/constants";
 
 /**
  * Facet data for registration in BLR.
@@ -70,13 +72,13 @@ export interface RegisterFacetsResult {
   failed: string[];
 
   /** Transaction hash (only if success=true) */
-  transactionHash?: string;
+  transactionHashes?: string[];
 
   /** Block number (only if success=true) */
-  blockNumber?: number;
+  blockNumbers?: number[];
 
   /** Gas used (only if success=true) */
-  gasUsed?: number;
+  transactionGas?: number[];
 
   /** Error message (only if success=false) */
   error?: string;
@@ -130,7 +132,7 @@ export async function registerFacets(
   const { facets, overrides = {}, verify = true } = options;
 
   // Get BLR address from contract instance
-  const blrAddress = blr.address;
+  const blrAddress = await blr.getAddress();
 
   const registered: string[] = [];
   const failed: string[] = [];
@@ -139,14 +141,13 @@ export async function registerFacets(
     section(`Registering Facets in BLR`);
 
     // Get provider from BLR contract
-    if (!blr.provider) {
+    const provider = blr.runner?.provider as Provider | undefined;
+    if (!provider) {
       throw new Error(
         "BusinessLogicResolver must be connected to a signer with a provider. " +
           "Use BusinessLogicResolver__factory.connect(address, signer) where signer has a provider.",
       );
     }
-
-    const provider = blr.provider;
 
     // Validate BLR address
     validateAddress(blrAddress, "BusinessLogicResolver address");
@@ -209,22 +210,39 @@ export async function registerFacets(
     const businessLogics = validFacets.map((facet) => ({
       businessLogicKey: facet.resolverKey,
       businessLogicAddress: facet.address,
+      businessLogicName: facet.name,
     }));
 
-    const tx = await blr.registerBusinessLogics(businessLogics, overrides);
+    const iterations = businessLogics.length / FACET_REGISTRATION_BATCH_SIZE;
+    const transactionHashes = [];
+    const blockNumbers = [];
+    const transactionGas = [];
 
-    info(`Registration transaction sent: ${tx.hash}`);
+    for (let i = 0; i <= iterations; i++) {
+      const businessLogicsSlice = businessLogics.slice(
+        i * FACET_REGISTRATION_BATCH_SIZE,
+        (i + 1) * FACET_REGISTRATION_BATCH_SIZE,
+      );
+      const tx = await blr.registerBusinessLogics(businessLogicsSlice, { gasLimit: GAS_LIMIT.high, ...overrides });
 
-    const receipt = await waitForTransaction(tx, 1, DEFAULT_TRANSACTION_TIMEOUT);
+      info(`Registration transaction sent: ${tx.hash}`);
 
-    const gasUsed = formatGasUsage(receipt, tx.gasLimit);
-    debug(gasUsed);
+      const receipt = await waitForTransaction(tx, 1, DEFAULT_TRANSACTION_TIMEOUT);
+      transactionHashes.push(receipt.hash);
+      blockNumbers.push(receipt.blockNumber);
+      transactionGas.push(Number(receipt.gasUsed));
 
-    registered.push(...validFacets.map((f) => f.name));
+      const gasUsed = formatGasUsage(receipt, tx.gasLimit);
+      debug(gasUsed);
 
-    success(`Successfully registered ${registered.length} facets`);
-    for (const facetName of registered) {
-      info(`  ✓ ${facetName}`);
+      const registeredSlice = businessLogicsSlice.map((f) => f.businessLogicName);
+
+      registered.push(...registeredSlice);
+
+      success(`Successfully registered ${registeredSlice.length} facets`);
+      for (const facetName of registeredSlice) {
+        info(`  ✓ ${facetName}`);
+      }
     }
 
     if (failed.length > 0) {
@@ -239,9 +257,9 @@ export async function registerFacets(
       blrAddress,
       registered,
       failed,
-      transactionHash: receipt.transactionHash,
-      blockNumber: receipt.blockNumber,
-      gasUsed: receipt.gasUsed.toNumber(),
+      transactionHashes,
+      blockNumbers,
+      transactionGas,
     };
   } catch (err) {
     const errorMessage = extractRevertReason(err);
@@ -255,55 +273,4 @@ export async function registerFacets(
       error: errorMessage,
     };
   }
-}
-
-/**
- * Register a single facet in BLR.
- *
- * Convenience function for registering one facet at a time.
- *
- * **Note:** Caller must provide the resolver key for the facet.
- *
- * @param blr - Typed BusinessLogicResolver contract instance
- * @param facetName - Facet name
- * @param facetAddress - Facet deployed address
- * @param resolverKey - Resolver key (bytes32) for the facet
- * @param overrides - Transaction overrides
- * @returns Registration result
- *
- * @example
- * ```typescript
- * import { BusinessLogicResolver__factory } from '@contract-types'
- * import { atsRegistry } from '@scripts/domain'
- *
- * const blr = BusinessLogicResolver__factory.connect('0x123...', signer)
- *
- * // Look up resolver key from registry
- * const resolverKey = atsRegistry.getFacetDefinition('AccessControlFacet').resolverKey.value
- *
- * const result = await registerFacet(
- *   blr,
- *   'AccessControlFacet',
- *   '0xabc...',
- *   resolverKey
- * )
- * ```
- */
-export async function registerFacet(
-  blr: BusinessLogicResolver,
-  facetName: string,
-  facetAddress: string,
-  resolverKey: string,
-  overrides: Overrides = {},
-): Promise<RegisterFacetsResult> {
-  return registerFacets(blr, {
-    facets: [
-      {
-        name: facetName,
-        address: facetAddress,
-        resolverKey,
-      },
-    ],
-    overrides,
-  });
 }

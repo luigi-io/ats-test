@@ -118,6 +118,37 @@ npm run deploy:hardhat -- --network hedera-testnet
 npm run deploy
 ```
 
+## Deployment Failures & Recovery
+
+If deployment fails or is interrupted, the checkpoint system automatically saves your progress:
+
+```bash
+# Resume from where it failed
+npm run deploy:newBlr
+```
+
+The checkpoint system:
+
+- ✅ Automatically resumes from failures
+- ✅ Skips completed steps (saves time and gas)
+- ✅ Allows safe interruption (Ctrl+C)
+- ✅ Provides detailed failure diagnostics
+
+**Checkpoint management:**
+
+```bash
+# List all checkpoints
+npm run checkpoint:list -- hedera-testnet
+
+# Show failure details
+npm run checkpoint:show -- <checkpoint-id>
+
+# Clean up old checkpoints
+npm run checkpoint:cleanup -- hedera-testnet 30
+```
+
+For comprehensive checkpoint documentation including troubleshooting, scenarios, and best practices, see the **[Checkpoint Guide](./scripts/CHECKPOINT_GUIDE.md)**.
+
 # Using ATS Deployment Utilities in Downstream Projects
 
 The ATS contracts package exports framework-agnostic deployment file management utilities that can be used by downstream projects (like GBP). These utilities provide standardized file organization, type-safe operations, and zero runtime dependencies on Hardhat or ethers.
@@ -418,21 +449,21 @@ The ATS contracts implement a **4-layer hierarchical design** using the **Diamon
 - Central registry mapping Business Logic Keys (BLK) to versioned facet addresses
 - Manages global version counter across all facets
 - Provides configuration management for token types
-- Location: `contracts/resolver/BusinessLogicResolver.sol`
+- Location: `contracts/infrastructure/diamond/BusinessLogicResolver.sol`
 
 **Diamond Proxy (ResolverProxy)**
 
 - EIP-2535 compliant proxy routing function calls to appropriate facets
 - Each token is a proxy instance
 - Routes via BLR resolution
-- Location: `contracts/resolverProxy/ResolverProxy.sol`
+- Location: `contracts/infrastructure/proxy/ResolverProxy.sol`
 
 **TREXFactory**
 
 - Factory pattern for deploying complete token ecosystems
 - Creates tokens with specific configurations (Equity/Bond)
 - Handles initialization of all required facets
-- Location: `contracts/factory/TREXFactory.sol`
+- Location: `contracts/factory/ERC3643/TREXFactory.sol`
 
 ### Core Facet Categories
 

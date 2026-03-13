@@ -11,8 +11,13 @@
 
 import { promises as fs } from "fs";
 import { join } from "path";
-import type { DeploymentCheckpoint, CheckpointStatus } from "../types/checkpoint";
-import { warn } from "../utils/logging";
+// Import directly from source files to avoid circular dependency with NullCheckpointManager
+// (barrel export @scripts/infrastructure includes NullCheckpointManager which imports CheckpointManager)
+import type { DeploymentCheckpoint, CheckpointStatus, WorkflowType } from "../types/checkpoint";
+import { CHECKPOINT_SCHEMA_VERSION } from "../types/checkpoint";
+import { warn, info } from "../utils/logging";
+import { getDeploymentsDir, getCheckpointsDir, getTestCheckpointsDir } from "../paths";
+import { generateTimestamp } from "../utils/time";
 
 /**
  * Parameters for creating a new checkpoint.
@@ -20,7 +25,7 @@ import { warn } from "../utils/logging";
 export interface CreateCheckpointParams {
   network: string;
   deployer: string;
-  workflowType: "newBlr" | "existingBlr";
+  workflowType: WorkflowType;
   options: Record<string, unknown>;
 }
 
@@ -36,12 +41,25 @@ export class CheckpointManager {
   /**
    * Create a checkpoint manager instance.
    *
-   * @param checkpointsDir - Optional custom checkpoints directory path
+   * @param network - Network name for network-specific checkpoint directories
+   * @param checkpointsDir - Optional custom checkpoints directory path (overrides network-based path)
    */
-  constructor(checkpointsDir?: string) {
-    // Default: deployments/.checkpoints relative to this file
-    // scripts/infrastructure/checkpoint/CheckpointManager.ts -> ../../../deployments/.checkpoints
-    this.checkpointsDir = checkpointsDir || join(__dirname, "../../../deployments/.checkpoints");
+  constructor(network?: string, checkpointsDir?: string) {
+    // Determine checkpoint directory:
+    // 1. If checkpointsDir is provided, use it (explicit override)
+    // 2. If network is "hardhat", use deployments/test/hardhat/.checkpoints (test isolation)
+    // 3. If network is provided, use deployments/{network}/.checkpoints
+    // 4. Otherwise, fall back to deployments/.checkpoints (backward compatibility)
+    if (checkpointsDir) {
+      this.checkpointsDir = checkpointsDir;
+    } else if (network === "hardhat") {
+      // Test isolation: hardhat network always uses test checkpoint directory
+      this.checkpointsDir = getTestCheckpointsDir("hardhat");
+    } else if (network) {
+      this.checkpointsDir = getCheckpointsDir(network);
+    } else {
+      this.checkpointsDir = join(getDeploymentsDir(), ".checkpoints");
+    }
 
     // Warn if checkpoint directory is inside node_modules (will be deleted on npm install)
     if (this.checkpointsDir.includes("node_modules")) {
@@ -72,9 +90,10 @@ export class CheckpointManager {
   createCheckpoint(params: CreateCheckpointParams): DeploymentCheckpoint {
     const { network, deployer, workflowType, options } = params;
     const now = new Date().toISOString();
-    const timestamp = Date.now();
+    const timestamp = generateTimestamp();
 
     return {
+      schemaVersion: CHECKPOINT_SCHEMA_VERSION,
       checkpointId: `${network}-${timestamp}`,
       network,
       deployer,
@@ -116,7 +135,7 @@ export class CheckpointManager {
       const filepath = join(this.checkpointsDir, filename);
 
       // Serialize with Map support
-      const json = JSON.stringify(checkpoint, this.mapReplacer, 2);
+      const json = JSON.stringify(checkpoint, CheckpointManager.mapReplacer, 2);
 
       // Write to file
       await fs.writeFile(filepath, json, "utf-8");
@@ -137,7 +156,7 @@ export class CheckpointManager {
    *
    * @example
    * ```typescript
-   * const checkpoint = await manager.loadCheckpoint('hedera-testnet-1731085200000')
+   * const checkpoint = await manager.loadCheckpoint('hedera-testnet-2025-02-04T10-15-30-456')
    * if (checkpoint) {
    *   console.log(`Loaded checkpoint from ${checkpoint.startTime}`)
    * }
@@ -149,7 +168,12 @@ export class CheckpointManager {
       const filepath = join(this.checkpointsDir, filename);
 
       const content = await fs.readFile(filepath, "utf-8");
-      return JSON.parse(content, this.mapReviver) as DeploymentCheckpoint;
+      const checkpoint = JSON.parse(content, CheckpointManager.mapReviver) as DeploymentCheckpoint;
+
+      // Validate and migrate schema if needed
+      this.validateAndMigrateSchema(checkpoint);
+
+      return checkpoint;
     } catch (error) {
       if (error instanceof Error && "code" in error && error.code === "ENOENT") {
         return null; // File not found
@@ -158,6 +182,57 @@ export class CheckpointManager {
         `Failed to load checkpoint ${checkpointId}: ${error instanceof Error ? error.message : String(error)}`,
       );
     }
+  }
+
+  /**
+   * Validate checkpoint schema version and apply migrations if needed.
+   *
+   * @param checkpoint - Checkpoint to validate and migrate
+   * @throws Error if checkpoint schema version is newer than supported
+   * @private
+   */
+  private validateAndMigrateSchema(checkpoint: DeploymentCheckpoint): void {
+    // Handle legacy checkpoints (pre-versioning)
+    if (!checkpoint.schemaVersion) {
+      checkpoint.schemaVersion = 1;
+      info(`Migrating legacy checkpoint ${checkpoint.checkpointId} to schema v1`);
+    }
+
+    // Check for unsupported future versions
+    if (checkpoint.schemaVersion > CHECKPOINT_SCHEMA_VERSION) {
+      throw new Error(
+        `Checkpoint ${checkpoint.checkpointId} has schema version ${checkpoint.schemaVersion}, ` +
+          `but this version of ATS only supports up to v${CHECKPOINT_SCHEMA_VERSION}. ` +
+          `Please upgrade your @hashgraph/asset-tokenization-contracts package.`,
+      );
+    }
+
+    // Apply migrations for older schemas
+    if (checkpoint.schemaVersion < CHECKPOINT_SCHEMA_VERSION) {
+      this.migrateCheckpoint(checkpoint);
+    }
+  }
+
+  /**
+   * Apply schema migrations to bring checkpoint up to current version.
+   *
+   * @param checkpoint - Checkpoint to migrate
+   * @private
+   */
+  private migrateCheckpoint(checkpoint: DeploymentCheckpoint): void {
+    // Version 1 -> 2 migration
+    // Currently no structural changes needed, just update version
+    if (checkpoint.schemaVersion === 1) {
+      info(`Migrating checkpoint ${checkpoint.checkpointId} from v1 to v2`);
+      checkpoint.schemaVersion = 2;
+      // Future: Add any v1 -> v2 data transformations here
+    }
+
+    // Add more migrations as needed when CHECKPOINT_SCHEMA_VERSION increases
+    // if (checkpoint.schemaVersion === 2) {
+    //   checkpoint.schemaVersion = 3;
+    //   // v2 -> v3 migrations
+    // }
   }
 
   /**
@@ -180,35 +255,34 @@ export class CheckpointManager {
    */
   async findCheckpoints(network: string, status?: CheckpointStatus): Promise<DeploymentCheckpoint[]> {
     try {
-      // Ensure directory exists
+      // Ensure checkpoints directory exists
       await fs.mkdir(this.checkpointsDir, { recursive: true });
 
+      // Read all checkpoint files for this network
       const files = await fs.readdir(this.checkpointsDir);
-
-      // Filter files matching network pattern: network-timestamp.json
       const networkFiles = files.filter((file) => file.startsWith(`${network}-`) && file.endsWith(".json"));
 
-      // Load all matching checkpoints
       const checkpoints: DeploymentCheckpoint[] = [];
       for (const file of networkFiles) {
-        const checkpointId = file.replace(".json", "");
-        const checkpoint = await this.loadCheckpoint(checkpointId);
+        const checkpointPath = join(this.checkpointsDir, file);
+        try {
+          const content = await fs.readFile(checkpointPath, "utf-8");
+          const checkpoint = JSON.parse(content, CheckpointManager.mapReviver) as DeploymentCheckpoint;
 
-        if (checkpoint) {
-          // Apply status filter if provided
+          // Validate and migrate schema for consistency with loadCheckpoint
+          this.validateAndMigrateSchema(checkpoint);
+
           if (!status || checkpoint.status === status) {
             checkpoints.push(checkpoint);
           }
+        } catch (_err) {
+          // Skip invalid checkpoint files
+          continue;
         }
       }
 
-      // Sort by timestamp (newest first)
-      // Extract timestamp from checkpointId: network-timestamp
-      return checkpoints.sort((a, b) => {
-        const tsA = parseInt(a.checkpointId.split("-").pop() || "0");
-        const tsB = parseInt(b.checkpointId.split("-").pop() || "0");
-        return tsB - tsA; // Descending order
-      });
+      // Sort by lastUpdate field (newest first)
+      return checkpoints.sort((a, b) => new Date(b.lastUpdate).getTime() - new Date(a.lastUpdate).getTime());
     } catch (error) {
       if (error instanceof Error && "code" in error && error.code === "ENOENT") {
         return []; // Directory doesn't exist yet
@@ -247,6 +321,75 @@ export class CheckpointManager {
   }
 
   /**
+   * Find checkpoints that can be resumed (in-progress or failed).
+   *
+   * Returns checkpoints sorted by timestamp (newest first).
+   * Used by workflows to auto-detect resumable deployments.
+   *
+   * @param network - Network name to filter by
+   * @param workflowType - Optional workflow type filter
+   * @returns Array of resumable checkpoints (in-progress and failed)
+   *
+   * @example
+   * ```typescript
+   * // Find all resumable checkpoints for testnet
+   * const resumable = await manager.findResumableCheckpoints('hedera-testnet')
+   *
+   * // Find resumable checkpoints for specific workflow
+   * const newBlrResumable = await manager.findResumableCheckpoints(
+   *   'hedera-testnet',
+   *   'newBlr'
+   * )
+   *
+   * if (resumable.length > 0) {
+   *   const checkpoint = resumable[0] // Newest
+   *   if (checkpoint.status === 'failed') {
+   *     // Prompt user to confirm resume from failed checkpoint
+   *   }
+   * }
+   * ```
+   */
+  async findResumableCheckpoints(network: string, workflowType?: WorkflowType): Promise<DeploymentCheckpoint[]> {
+    // Read all checkpoints once, then filter in memory
+    const all = await this.findCheckpoints(network);
+    let resumable = all.filter((cp) => cp.status === "in-progress" || cp.status === "failed");
+
+    // Filter by workflow type if specified
+    if (workflowType) {
+      resumable = resumable.filter((cp) => cp.workflowType === workflowType);
+    }
+
+    // Already sorted by lastUpdate (newest first) from findCheckpoints
+    return resumable;
+  }
+
+  /**
+   * Prepare a checkpoint for resume.
+   *
+   * Resets status to in-progress and clears failure info.
+   * Call this before resuming from a failed checkpoint.
+   *
+   * @param checkpoint - Checkpoint to prepare for resume
+   *
+   * @example
+   * ```typescript
+   * if (checkpoint.status === 'failed') {
+   *   await manager.prepareForResume(checkpoint)
+   *   // checkpoint.status is now 'in-progress'
+   *   // checkpoint.failure is now undefined
+   * }
+   * ```
+   */
+  async prepareForResume(checkpoint: DeploymentCheckpoint): Promise<void> {
+    if (checkpoint.status === "failed") {
+      warn(`Clearing failure status from checkpoint: ${checkpoint.checkpointId}`);
+      checkpoint.status = "in-progress";
+      checkpoint.failure = undefined;
+      await this.saveCheckpoint(checkpoint);
+    }
+  }
+
+  /**
    * Clean up old completed checkpoints.
    *
    * Deletes completed checkpoints older than specified days.
@@ -269,10 +412,9 @@ export class CheckpointManager {
 
     let deleted = 0;
     for (const checkpoint of checkpoints) {
-      // Extract timestamp from checkpointId
-      const timestamp = parseInt(checkpoint.checkpointId.split("-").pop() || "0");
+      const lastUpdateTime = new Date(checkpoint.lastUpdate).getTime();
 
-      if (timestamp < cutoffTime) {
+      if (lastUpdateTime < cutoffTime) {
         await this.deleteCheckpoint(checkpoint.checkpointId);
         deleted++;
       }
@@ -288,7 +430,7 @@ export class CheckpointManager {
    *
    * @private
    */
-  private mapReplacer(key: string, value: unknown): unknown {
+  private static mapReplacer(_key: string, value: unknown): unknown {
     if (value instanceof Map) {
       return {
         __type: "Map",
@@ -305,7 +447,7 @@ export class CheckpointManager {
    *
    * @private
    */
-  private mapReviver(key: string, value: unknown): unknown {
+  private static mapReviver(_key: string, value: unknown): unknown {
     if (typeof value === "object" && value !== null && "__type" in value && value.__type === "Map") {
       // First cast to unknown, then to the expected type to handle the conversion safely
       const mapValue = value as unknown as { __value: Array<[string, unknown]> };

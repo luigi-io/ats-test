@@ -12,7 +12,6 @@
  * @module domain/bond/createConfiguration
  */
 
-import { Contract } from "ethers";
 import {
   ConfigurationData,
   ConfigurationError,
@@ -20,7 +19,9 @@ import {
   OperationResult,
   DEFAULT_BATCH_SIZE,
 } from "@scripts/infrastructure";
-import { BOND_CONFIG_ID, atsRegistry } from "@scripts/domain";
+import { BOND_CONFIG_ID } from "../constants";
+import { atsRegistry } from "../atsRegistry";
+import { BusinessLogicResolver } from "@contract-types";
 
 /**
  * Bond-specific facets list (41 facets total).
@@ -45,6 +46,7 @@ const BOND_FACETS = [
   "KycFacet",
   "PauseFacet",
   "SnapshotsFacet",
+  "TotalBalanceFacet",
 
   // ERC Standards
   "ERC1410IssuerFacet",
@@ -55,6 +57,7 @@ const BOND_FACETS = [
   "ERC1643Facet",
   "ERC1644Facet",
   "ERC20PermitFacet",
+  "NoncesFacet",
   "ERC20VotesFacet",
   "ERC3643BatchFacet",
   "ERC3643ManagementFacet",
@@ -83,6 +86,7 @@ const BOND_FACETS = [
   "ProtectedPartitionsFacet",
   "ScheduledBalanceAdjustmentsFacet",
   "ScheduledCrossOrderedTasksFacet",
+  "ScheduledCouponListingFacet",
   "ScheduledSnapshotsFacet",
   "SsiManagementFacet",
   "TransferAndLockFacet",
@@ -140,7 +144,7 @@ const BOND_FACETS = [
  * ```
  */
 export async function createBondConfiguration(
-  blrContract: Contract,
+  blrContract: BusinessLogicResolver,
   facetAddresses: Record<string, string>,
   useTimeTravel: boolean = false,
   partialBatchDeploy: boolean = false,

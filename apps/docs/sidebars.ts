@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 import type { SidebarsConfig } from "@docusaurus/plugin-content-docs";
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
@@ -141,35 +143,6 @@ const sidebars: SidebarsConfig = {
             title: "Mass Payout API",
             description: "API documentation for Mass Payout contracts and SDK.",
             slug: "/api/mass-payout",
-          },
-          items: [],
-        },
-      ],
-    },
-    {
-      type: "category",
-      label: "References",
-      collapsed: false,
-      link: {
-        type: "doc",
-        id: "references/index",
-      },
-      items: [
-        {
-          type: "category",
-          label: "Architecture Decision Records",
-          link: {
-            type: "doc",
-            id: "references/adr/index",
-          },
-          items: ["references/adr/0001-adopt-docs-as-code-philosophy"],
-        },
-        {
-          type: "category",
-          label: "Enhancement Proposals",
-          link: {
-            type: "doc",
-            id: "references/proposals/index",
           },
           items: [],
         },

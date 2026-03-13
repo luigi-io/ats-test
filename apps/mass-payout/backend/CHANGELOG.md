@@ -1,0 +1,19 @@
+# @hashgraph/mass-payout-backend
+
+## 1.1.0
+
+### Patch Changes
+
+- Updated dependencies [5ba3560]
+- Updated dependencies [8d98313]
+  - @hashgraph/asset-tokenization-sdk@4.3.0
+  - @hashgraph/mass-payout-sdk@1.1.0
+
+## 1.0.1
+
+### Patch Changes
+
+- 8ffc87f: Fixed all linting issues and applied code formatting across the codebase. Updated license headers in all source files to use standardized SPDX format (`// SPDX-License-Identifier: Apache-2.0`). Added automated license header validation script (`check-license.js`) that runs during pre-commit to ensure all `.sol`, `.ts`, and `.tsx` files include the required SPDX license identifier.
+- Updated dependencies [8ffc87f]
+  - @hashgraph/mass-payout-sdk@1.0.1
+  - @hashgraph/asset-tokenization-sdk@4.1.0

@@ -43,7 +43,7 @@ Copy and configure environment files:
 
 ```bash
 # ATS Web App
-cp apps/ats/web/.env.example apps/ats/web/.env.local
+cp apps/ats/web/.env.example apps/ats/web/.env
 
 # Mass Payout Backend
 cp apps/mass-payout/backend/.env.example apps/mass-payout/backend/.env
@@ -98,13 +98,105 @@ Follow [Conventional Commits](https://www.conventionalcommits.org/):
 
 **Types:** `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`
 
+**Requirements:**
+
+- **DCO Sign-off**: All commits must include a sign-off (`--signoff` or `-s`)
+- **GPG Signature**: All commits must be GPG-signed (`-S`)
+
 **Examples:**
 
 ```bash
-git commit -m "feat(ats:sdk): add batch transfer support"
-git commit -m "fix(mp:backend): resolve payout calculation error"
-git commit -m "docs: update quick start guide"
+git commit --signoff -S -m "feat(ats:sdk): add batch transfer support"
+git commit --signoff -S -m "fix(mp:backend): resolve payout calculation error"
+git commit --signoff -S -m "docs: update quick start guide"
 ```
+
+### Automatic Setup (Recommended)
+
+Run the setup script to configure automatic DCO and GPG signing:
+
+```bash
+bash .github/scripts/setup-git.sh
+```
+
+This script will:
+
+1. Verify your Git identity
+2. Enable automatic DCO sign-off (`format.signoff = true`)
+3. Enable automatic GPG signing (`commit.gpgsign = true`)
+4. Guide you through GPG key creation if needed
+
+### Manual Configuration
+
+If you prefer manual setup:
+
+```bash
+git config --global user.signingkey YOUR_GPG_KEY_ID
+git config --global commit.gpgsign true
+git config format.signoff true
+```
+
+### Enforcement Architecture
+
+This project uses a three-layer enforcement system:
+
+| Layer | Hook         | Purpose                                   |
+| ----- | ------------ | ----------------------------------------- |
+| 1     | `pre-commit` | Runs lint-staged for code quality         |
+| 2     | `commit-msg` | Verifies/auto-adds DCO, runs commitlint   |
+| 3     | `pre-push`   | Final gate: blocks push without DCO + GPG |
+
+The `commit-msg` hook will automatically add DCO sign-off if missing. However, the `pre-push` hook requires both DCO and GPG signatures, blocking any push that doesn't comply.
+
+### Troubleshooting
+
+**Push blocked due to missing signatures:**
+
+```bash
+# Fix recent commits with missing DCO/GPG
+git rebase -i HEAD~N  # N = number of commits to fix
+# Mark commits as 'edit', then for each:
+git commit --amend --no-edit --signoff -S
+git rebase --continue
+```
+
+**GPG signing not working:**
+
+```bash
+# Add to your shell profile (~/.zshrc or ~/.bashrc)
+export GPG_TTY=$(tty)
+
+# Verify GPG works
+echo "test" | gpg --clearsign
+```
+
+## Creating a Changeset (Required)
+
+**All changes to packages must include a changeset.** This is required for version management and changelog generation.
+
+```bash
+npm run changeset
+```
+
+Follow the prompts to:
+
+1. Select which packages changed
+2. Choose version bump type:
+   - **patch** (1.0.x): Bug fixes, minor improvements
+   - **minor** (1.x.0): New features, non-breaking changes
+   - **major** (x.0.0): Breaking changes
+3. Describe your changes (this will appear in the changelog)
+
+Commit the generated changeset file:
+
+```bash
+git add .changeset/*.md
+git commit --signoff -S -m "chore: add changeset"
+```
+
+> **Note**: Changesets accumulate in the `.changeset` folder. During the release process, these changesets are consumed to automatically calculate the new version and update the changelog.
+
+**Bypass Labels**: For non-feature changes (docs, chores, hotfixes), you can skip the changeset requirement by adding one of these labels to your PR: `no-changeset`, `docs-only`, `chore`, or `hotfix`.
 
 ## Pull Requests
 
@@ -113,7 +205,8 @@ git commit -m "docs: update quick start guide"
 1. Ensure code builds and tests pass
 2. Run `npm run lint:fix`
 3. Update relevant documentation
-4. Create meaningful commit messages
+4. **Create a changeset** (required for all package changes)
+5. Create meaningful commit messages
 
 ### Submitting
 
@@ -126,11 +219,19 @@ git commit -m "docs: update quick start guide"
    - Related issues
 4. Request reviews from maintainers
 
+### Automated Checks
+
+PRs are validated automatically for:
+
+- ✅ Tests pass (only for changed modules)
+- ✅ Changeset exists (or bypass label applied)
+- ✅ DCO compliance (sign-off present)
+
 ### PR Title Format
 
 ```
-feat(ats:sdk): add batch transfer functionality
-fix(mp:backend): resolve race condition in scheduler
+feat: add batch transfer functionality
+fix: resolve race condition in scheduler
 docs: add deployment guide
 ```
 
@@ -166,18 +267,16 @@ npm run docs:dev
 
 ## Release Process (Maintainers Only)
 
-When making changes to packages, create a changeset:
+Releases follow this workflow:
 
-```bash
-npm run changeset
-```
-
-Follow the prompts to document your changes. Commit the generated changeset file:
-
-```bash
-git add .changeset/*.md
-git commit -m "chore: add changeset for feature"
-```
+1. **Accumulation Phase**: Contributors add changesets with their PRs to `develop` branch
+2. **Release Preparation**: When ready to release, run:
+   ```bash
+   npm run changeset:version
+   ```
+   This consumes all changesets, updates package versions, and generates changelogs
+3. **Release PR**: Create a PR from `develop` to `main` with the version changes
+4. **Merge and Tag**: After approval, merge the PR and the release workflow will create tags and publish to npm
 
 ## Getting Help
 

@@ -1,5 +1,110 @@
 # @hashgraph/asset-tokenization-dapp
 
+## 5.0.0
+
+### Major Changes
+
+- 77aa333: Migrate to HWC 2
+
+### Minor Changes
+
+- 77aa333: Implement comprehensive bond tokenization SDK with KPI-linked rates and coupon management:
+  - Add CreateBondFixedRate and CreateBondKpiLinkedRate commands for bond creation
+  - Implement setInterestRate, setRate, getRate, and getInterestRate for rate management
+  - Add KPI data infrastructure: addKpiData, getLatestKpiData, getMinDate, getIsCheckPointDate, setImpactData
+  - Implement coupon management: getCouponsOrdered, GetCouponFromOrderedListAt, getOrderedLiistTotal
+  - Add scheduled coupon distribution: GetScheduledCouponListing, getScheduledCouponListingCount
+  - Enhance RPC and Hedera transaction adapters for bond operations
+
+### Patch Changes
+
+- 77aa333: Fix failing tests in web app and SDK:
+  - Mock ESM-only packages (@hashgraph/hedera-wallet-connect, @reown/appkit) in web jest config to resolve CJS/ESM incompatibility
+  - Fix HederaWalletConnectTransactionAdapter unit test: use jest.spyOn for read-only rpcProvider property
+  - Update environmentMock paths for custodial adapters (hs/hts/custodial → hs/custodial) following file restructure
+  - Remove mocks for deleted HederaTransactionAdapter and abstract CustodialTransactionAdapter
+  - Add register() and createBond() mocks to DFNS, Fireblocks, and AWSKMS custodial adapter mocks
+  - Grant \_KPI_MANAGER_ROLE to bond creator in createBond mock to enable addKpiData tests
+
+- Updated dependencies [77aa333]
+- Updated dependencies [77aa333]
+- Updated dependencies [77aa333]
+  - @hashgraph/asset-tokenization-sdk@5.0.0
+
+## 4.3.0
+
+### Minor Changes
+
+- 5ba3560: Implement comprehensive bond tokenization SDK with KPI-linked rates and coupon management:
+  - Add CreateBondFixedRate and CreateBondKpiLinkedRate commands for bond creation
+  - Implement setInterestRate, setRate, getRate, and getInterestRate for rate management
+  - Add KPI data infrastructure: addKpiData, getLatestKpiData, getMinDate, getIsCheckPointDate, setImpactData
+  - Implement coupon management: getCouponsOrdered, GetCouponFromOrderedListAt, getOrderedLiistTotal
+  - Add scheduled coupon distribution: GetScheduledCouponListing, getScheduledCouponListingCount
+  - Enhance RPC and Hedera transaction adapters for bond operations
+
+### Patch Changes
+
+- 9ef7139: Add loading overlay in security's details page and a fill form button in create security page
+- Updated dependencies [5ba3560]
+  - @hashgraph/asset-tokenization-sdk@4.3.0
+
+## 4.2.0
+
+### Patch Changes
+
+- 9f22ba7: Fix select all roles in edit roles page
+- Updated dependencies [c5b2a50]
+- Updated dependencies [2a26b41]
+  - @hashgraph/asset-tokenization-sdk@4.2.0
+
+## 4.1.1
+
+### Patch Changes
+
+- @hashgraph/asset-tokenization-sdk@4.1.1
+
+## 4.1.0
+
+### Patch Changes
+
+- 8ffc87f: Fixed all linting issues and applied code formatting across the codebase. Updated license headers in all source files to use standardized SPDX format (`// SPDX-License-Identifier: Apache-2.0`). Added automated license header validation script (`check-license.js`) that runs during pre-commit to ensure all `.sol`, `.ts`, and `.tsx` files include the required SPDX license identifier.
+- Updated dependencies [8ffc87f]
+  - @hashgraph/asset-tokenization-sdk@4.1.0
+
+## 4.0.1
+
+### Patch Changes
+
+- @hashgraph/asset-tokenization-sdk@4.0.1
+
+## 4.0.0
+
+### Major Changes
+
+- 6950d41: Code refactor plus Coupon fixing, start and end date added. Four type of bonds exist : standard, fixed rate, kpi linked rate and sustainability performance target rate
+
+### Minor Changes
+
+- 902fea1: Added Docusaurus and project documentation, renamed the MP package organization, and added a Claude documentation command.
+
+### Patch Changes
+
+- Updated dependencies [3ba32c9]
+- Updated dependencies [902fea1]
+- Updated dependencies [650874b]
+- Updated dependencies [6950d41]
+- Updated dependencies [8f7487a]
+- Updated dependencies [c10a8ee]
+- Updated dependencies [cbcc1db]
+  - @hashgraph/asset-tokenization-sdk@4.0.0
+
+## 3.1.0
+
+### Patch Changes
+
+- @hashgraph/asset-tokenization-sdk@3.1.0
+
 ## 3.0.0
 
 ### Minor Changes

@@ -18,20 +18,12 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
-import {
-  deployContract,
-  registerFacets,
-  registerAdditionalFacets,
-  configureLogger,
-  LogLevel,
-} from "@scripts/infrastructure";
+import { deployContract, registerFacets, registerAdditionalFacets } from "@scripts/infrastructure";
 import { atsRegistry } from "@scripts/domain";
-import { TEST_SIZES, BLR_VERSIONS, deployBlrFixture } from "@test";
+import { TEST_SIZES, BLR_VERSIONS, deployBlrFixture, silenceScriptLogging } from "@test";
 
 describe("registerAdditionalFacets - Integration Tests", () => {
-  before(() => {
-    configureLogger({ level: LogLevel.SILENT });
-  });
+  before(silenceScriptLogging);
 
   // Fixture that deploys BLR with 3 initial facets registered
   async function setupWithInitialFacets() {
@@ -108,9 +100,9 @@ describe("registerAdditionalFacets - Integration Tests", () => {
       // Verify success
       expect(result.success).to.be.true;
       expect(result.blrAddress).to.equal(blrAddress);
-      expect(result.transactionHash).to.exist;
-      expect(result.blockNumber).to.be.greaterThan(0);
-      expect(result.gasUsed).to.be.greaterThan(0);
+      expect(result.transactionHashes).to.exist;
+      expect(result.blockNumbers).to.exist;
+      expect(result.transactionGas).to.exist;
 
       // Verify registered count includes new facets
       expect(result.registered.length).to.equal(TEST_SIZES.DUAL);
@@ -739,7 +731,7 @@ describe("registerAdditionalFacets - Integration Tests", () => {
         const facetDefinition = atsRegistry.getFacetDefinition(name);
         const key = facetDefinition!.resolverKey!.value;
         const address = await blr.resolveLatestBusinessLogic(key);
-        expect(address).to.not.equal(ethers.constants.AddressZero);
+        expect(address).to.not.equal(ethers.ZeroAddress);
       }
     });
   });

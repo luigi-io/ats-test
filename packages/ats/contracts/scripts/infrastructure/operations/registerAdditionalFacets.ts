@@ -30,6 +30,7 @@ import {
 } from "@scripts/infrastructure";
 import { BusinessLogicResolver__factory } from "@contract-types";
 import type { RegisterFacetsResult, FacetRegistrationData } from "./registerFacets";
+import { FACET_REGISTRATION_BATCH_SIZE } from "../../domain/constants";
 
 /**
  * Options for registering additional facets.
@@ -161,7 +162,7 @@ export async function registerAdditionalFacets(
 
     // Get total count of registered facets
     const facetCountBN = await blr.getBusinessLogicCount();
-    const facetCount = facetCountBN.toNumber();
+    const facetCount = Number(facetCountBN);
     info(`   Found ${facetCount} existing facets in BLR`);
 
     if (facetCount > maxExistingFacets) {
@@ -305,21 +306,44 @@ export async function registerAdditionalFacets(
     const businessLogics = Array.from(mergedFacetsMap.values()).map((facet) => ({
       businessLogicKey: facet.key,
       businessLogicAddress: facet.address,
+      businessLogicName: facet.name,
     }));
 
-    const tx = await blr.registerBusinessLogics(businessLogics, overrides);
+    const iterations = businessLogics.length / FACET_REGISTRATION_BATCH_SIZE;
+    const transactionHashes = [];
+    const blockNumbers = [];
+    const transactionGas = [];
 
-    info(`   Registration transaction sent: ${tx.hash}`);
+    for (let i = 0; i <= iterations; i++) {
+      const businessLogicsSlice = businessLogics.slice(
+        i * FACET_REGISTRATION_BATCH_SIZE,
+        (i + 1) * FACET_REGISTRATION_BATCH_SIZE,
+      );
+      const tx = await blr.registerBusinessLogics(businessLogicsSlice, overrides);
 
-    const receipt = await waitForTransaction(tx, 1, DEFAULT_TRANSACTION_TIMEOUT);
+      info(`Registration transaction sent: ${tx.hash}`);
 
-    const gasUsed = formatGasUsage(receipt, tx.gasLimit);
-    debug(`   ${gasUsed}`);
+      const receipt = await waitForTransaction(tx, 1, DEFAULT_TRANSACTION_TIMEOUT);
+      transactionHashes.push(receipt.hash);
+      blockNumbers.push(receipt.blockNumber);
+      transactionGas.push(Number(receipt.gasUsed));
 
-    // Track registered facets
-    for (const facet of mergedFacetsMap.values()) {
-      if (facet.name) {
-        registered.push(facet.name);
+      const gasUsed = formatGasUsage(receipt, tx.gasLimit);
+      debug(gasUsed);
+
+      const registeredSlice = businessLogicsSlice.map((f) => f.businessLogicName);
+
+      for (const facetName of registeredSlice.values()) {
+        if (facetName) {
+          registered.push(facetName);
+        }
+      }
+
+      success(`Successfully registered ${registeredSlice.length} facets`);
+      for (const facetName of registeredSlice) {
+        if (facetName) {
+          info(`  ✓ ${facetName}`);
+        }
       }
     }
 
@@ -349,9 +373,9 @@ export async function registerAdditionalFacets(
       blrAddress,
       registered,
       failed,
-      transactionHash: receipt.transactionHash,
-      blockNumber: receipt.blockNumber,
-      gasUsed: receipt.gasUsed.toNumber(),
+      transactionHashes,
+      blockNumbers,
+      transactionGas,
     };
   } catch (err) {
     const errorMessage = extractRevertReason(err);

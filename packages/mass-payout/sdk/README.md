@@ -17,13 +17,13 @@ The Mass Payout SDK provides a simple and efficient way to execute bulk payment 
 ## Installation
 
 ```bash
-npm install @mass-payout/sdk
+npm install @hashgraph/mass-payout-sdk
 ```
 
 ## Quick Start
 
 ```typescript
-import { MassPayoutSDK } from "@mass-payout/sdk";
+import { MassPayoutSDK } from "@hashgraph/mass-payout-sdk";
 
 // Initialize the SDK
 const sdk = new MassPayoutSDK({
@@ -77,7 +77,7 @@ The SDK follows Domain-Driven Design principles with a clean hexagonal architect
 
 ## Dependencies
 
-- @hashgraph/sdk: Hedera SDK for blockchain interactions
+- @hiero-ledger/sdk: Hedera SDK for blockchain interactions
 - @nestjs/common & @nestjs/core: Framework components
 - class-validator & class-transformer: Data validation and transformation
 - rxjs: Reactive programming support

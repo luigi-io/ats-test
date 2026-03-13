@@ -1,9 +1,11 @@
-import { Control } from 'react-hook-form';
-import { NavigateFunction } from 'react-router-dom';
-import { ColumnDef } from '@tanstack/react-table';
-import { TFunction } from 'i18next';
-import { UseTableReturn } from '@/hooks/useTable';
-import { Asset } from '@/services/AssetService';
+// SPDX-License-Identifier: Apache-2.0
+
+import { Control } from "react-hook-form";
+import { NavigateFunction } from "react-router-dom";
+import { ColumnDef } from "@tanstack/react-table";
+import { TFunction } from "i18next";
+import { UseTableReturn } from "@/hooks/useTable";
+import { Asset } from "@/services/AssetService";
 
 export interface AssetDistributionData {
   id: string;
@@ -29,7 +31,7 @@ export interface AssetDistributionData {
 
 export type AssetDistributionColumn = ColumnDef<AssetDistributionData, any>;
 
-export type DistributionFilterType = 'upcoming' | 'ongoing' | 'completed';
+export type DistributionFilterType = "upcoming" | "ongoing" | "completed";
 
 export interface AssetDistributionsProps {
   assetId: string;
@@ -57,10 +59,7 @@ export interface TabTitleMap {
   completed: string;
 }
 
-export type ColumnsByTab = Record<
-  DistributionFilterType,
-  AssetDistributionColumn[]
->;
+export type ColumnsByTab = Record<DistributionFilterType, AssetDistributionColumn[]>;
 
 export interface DistributionTabContent {
   title: string;
@@ -76,7 +75,7 @@ export interface FilteredDistributionsResult {
 }
 
 export interface TabContentProps {
-  filterType: 'upcoming' | 'ongoing' | 'completed';
+  filterType: "upcoming" | "ongoing" | "completed";
   control: Control<AssetDistributionsFormValues>;
   navigate: NavigateFunction;
   table: UseTableReturn;

@@ -24,9 +24,10 @@
  */
 
 // ============================================================================
-// Types
+// Types (consolidated in types/ folder)
 // ============================================================================
 
+// Core types
 export type {
   RegistryProvider,
   FacetDefinition,
@@ -36,10 +37,16 @@ export type {
   DeploymentResult,
   UpgradeProxyOptions,
   UpgradeProxyResult,
-  CreateConfigOptions,
-  CreateConfigResult,
   OperationResult,
   SignerOptions,
+  AnyDeploymentOutput,
+  SaveDeploymentOptions,
+  SaveResult,
+  LoadDeploymentOptions,
+  DeploymentOutputType,
+  DeploymentWithExistingBlrOutputType,
+  UpgradeConfigurationsOutputType,
+  UpgradeTupProxiesOutputType,
 } from "./types";
 
 export { ok, err, createSigner, createSignerFromEnv } from "./types";
@@ -51,8 +58,24 @@ export type {
   ConfigurationResult,
   CheckpointStatus,
   WorkflowType,
+  AtsWorkflowType,
   ResumeOptions,
-} from "./types/checkpoint";
+} from "./types";
+
+export { CHECKPOINT_SCHEMA_VERSION } from "./types";
+
+// Type guards
+export { isSaveSuccess, isSaveFailure, isAtsWorkflow } from "./types";
+
+// BLR configuration types
+export type {
+  FacetConfiguration,
+  BatchFacetConfiguration,
+  CreateBlrConfigurationResult,
+  ConfigurationError,
+  ConfigurationData,
+  FacetConfigurationData,
+} from "./types";
 
 // ============================================================================
 // Constants
@@ -76,7 +99,9 @@ export {
   PROXY_CONTRACTS,
   ENV_VAR_PATTERNS,
   DEPLOYMENT_OUTPUT_DIR,
-  DEPLOYMENT_OUTPUT_PATTERN,
+  ATS_WORKFLOW_DESCRIPTORS,
+  WORKFLOW_DESCRIPTORS,
+  registerWorkflowDescriptor,
 } from "./constants";
 
 export type { Network } from "./constants";
@@ -97,10 +122,23 @@ export {
 // Configuration
 // ============================================================================
 
-export { getNetworkConfig, getAllNetworks } from "./config";
+export { getNetworkConfig, getAllNetworks, getPrivateKey, getPrivateKeys } from "./config";
 
-export { getDeploymentConfig, isLocalNetwork, isInstantMiningNetwork, DEPLOYMENT_CONFIGS } from "./networkConfig";
-export type { DeploymentConfig } from "./networkConfig";
+// ============================================================================
+// Signer
+// ============================================================================
+
+export { createNetworkSigner } from "./signer";
+export type { NetworkSignerResult } from "./signer";
+
+export {
+  getDeploymentConfig,
+  isLocalNetwork,
+  isInstantMiningNetwork,
+  DEPLOYMENT_CONFIGS,
+  KNOWN_NETWORKS,
+} from "./networkConfig";
+export type { DeploymentConfig, KnownNetwork } from "./networkConfig";
 
 // ============================================================================
 // Operations
@@ -114,19 +152,13 @@ export type { DeployProxyOptions, DeployProxyResult } from "./operations/deployP
 
 export { deployTransparentProxy } from "./operations/transparentProxyDeployment";
 
-export { upgradeProxy } from "./operations/upgradeProxy";
+export { upgradeProxy, upgradeMultipleProxies, proxyNeedsUpgrade, prepareUpgrade } from "./operations/upgradeProxy";
 
 export { registerFacets, type RegisterFacetsOptions, type RegisterFacetsResult } from "./operations/registerFacets";
 
 export { registerAdditionalFacets, type RegisterAdditionalFacetsOptions } from "./operations/registerAdditionalFacets";
 
-export {
-  createBatchConfiguration,
-  type FacetConfiguration,
-  type CreateBlrConfigurationResult,
-  type ConfigurationData,
-  type ConfigurationError,
-} from "./operations/blrConfigurations";
+export { createBatchConfiguration } from "./operations/blrConfigurations";
 
 export { deployBlr, type DeployBlrOptions, type DeployBlrResult } from "./operations/blrDeployment";
 
@@ -137,7 +169,12 @@ export {
   verifyProxyAdminControls,
 } from "./operations/proxyAdminDeployment";
 
-export { deployFacets, type DeployFacetsOptions, type DeployFacetsResult } from "./operations/facetDeployment";
+export {
+  deployFacets,
+  getFacetDeploymentSummary,
+  type DeployFacetsOptions,
+  type DeployFacetsResult,
+} from "./operations/facetDeployment";
 
 export {
   deployResolverProxy,
@@ -147,20 +184,51 @@ export {
 } from "./operations/deployResolverProxy";
 
 export {
-  generateRegistryPipeline,
-  DEFAULT_REGISTRY_CONFIG,
-  type RegistryGenerationConfig,
-  type RegistryGenerationStats,
-  type RegistryGenerationResult,
-} from "./operations/generateRegistryPipeline";
+  ResolverProxyUpdateType,
+  ResolverProxyUpdateOptions,
+  updateResolverProxyVersion,
+  updateResolverProxyConfig,
+  updateResolverProxyResolver,
+  getResolverProxyConfigInfo,
+  type UpdateResolverProxyVersionOptions,
+  type UpdateResolverProxyConfigOptions,
+  type UpdateResolverProxyResolverOptions,
+  type UpdateResolverProxyConfigResult,
+  type ResolverProxyConfigInfo,
+} from "./operations/updateResolverProxyConfig";
+
+// NOTE: generateRegistryPipeline moved to standalone module at @scripts/tools/registry-generator
+// Import from @scripts or @scripts/tools instead for the faster standalone generator
 
 // ============================================================================
 // Utilities
 // ============================================================================
 
-export { validateAddress, validateBytes32 } from "./utils/validation";
+export {
+  isValidAddress,
+  validateAddress,
+  isValidBytes32,
+  validateBytes32,
+  isValidContractId,
+  validateContractId,
+  validateFacetName,
+  validateNetwork,
+  validatePositiveNumber,
+  validateNonNegativeInteger,
+} from "./utils/validation";
 
-export { loadDeployment, findLatestDeployment, listDeploymentFiles } from "./utils/deploymentFiles";
+export { getDeploymentsDir, getCheckpointsDir, getTestCheckpointsDir, getTestDeploymentsDir } from "./paths";
+
+export {
+  saveDeploymentOutput,
+  loadDeployment,
+  loadDeploymentByWorkflow,
+  findLatestDeployment,
+  listDeploymentsByWorkflow,
+  listDeploymentFiles,
+  getNetworkDeploymentDir,
+  generateDeploymentFilename,
+} from "./utils/deploymentFiles";
 
 export {
   waitForTransaction,
@@ -187,7 +255,18 @@ export {
 
 export type { VerificationOptions, VerificationResult } from "./utils/verification";
 
-export { info, success, error, warn, section, debug, table, configureLogger, LogLevel } from "./utils/logging";
+export {
+  info,
+  success,
+  error,
+  warn,
+  section,
+  debug,
+  table,
+  configureLogger,
+  resetLogger,
+  LogLevel,
+} from "./utils/logging";
 export type { LoggerConfig } from "./utils/logging";
 
 export {
@@ -201,6 +280,11 @@ export {
 export { fetchHederaContractId, getMirrorNodeUrl, isHederaNetwork } from "./utils/hedera";
 
 export { getSelector } from "./utils/selector";
+
+export { dateToUnixTimestamp, generateTimestamp } from "./utils/time";
+
+export { withRetry, withRetryFn, DEFAULT_RETRYABLE_ERRORS } from "./utils/retry";
+export type { WithRetryOptions } from "./utils/retry";
 
 // ============================================================================
 // Checkpoint System
@@ -217,6 +301,9 @@ export {
   formatCheckpointStatus,
   formatDuration,
   formatTimestamp,
+  confirmFailedCheckpointResume,
+  selectCheckpointToResume,
+  resolveCheckpointForResume,
 } from "./checkpoint/utils";
 
 // Checkpoint converters for resumability
@@ -230,3 +317,21 @@ export {
   isSuccess,
   isFailure,
 } from "./checkpoint/converters";
+
+// ============================================================================
+// Testing Utilities
+// ============================================================================
+
+export {
+  parseFailureConfig,
+  resetFailureConfig,
+  shouldFailAtStep,
+  shouldFailAtFacet,
+  createTestFailureMessage,
+  isTestFailureError,
+  SUPPORTED_STEPS,
+  CHECKPOINT_TEST_FAIL_AT_ENV,
+  LEGACY_FAIL_AT_FACET_ENV,
+  type FailureConfig,
+  type SupportedStep,
+} from "./testing";

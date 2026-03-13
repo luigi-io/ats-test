@@ -1,5 +1,161 @@
 # @hashgraph/asset-tokenization-sdk
 
+## 5.0.0
+
+### Major Changes
+
+- 77aa333: Migrate to HWC 2
+
+### Minor Changes
+
+- 77aa333: Implement comprehensive bond tokenization SDK with KPI-linked rates and coupon management:
+  - Add CreateBondFixedRate and CreateBondKpiLinkedRate commands for bond creation
+  - Implement setInterestRate, setRate, getRate, and getInterestRate for rate management
+  - Add KPI data infrastructure: addKpiData, getLatestKpiData, getMinDate, getIsCheckPointDate, setImpactData
+  - Implement coupon management: getCouponsOrdered, GetCouponFromOrderedListAt, getOrderedLiistTotal
+  - Add scheduled coupon distribution: GetScheduledCouponListing, getScheduledCouponListingCount
+  - Enhance RPC and Hedera transaction adapters for bond operations
+
+### Patch Changes
+
+- 77aa333: Fix failing tests in web app and SDK:
+  - Mock ESM-only packages (@hashgraph/hedera-wallet-connect, @reown/appkit) in web jest config to resolve CJS/ESM incompatibility
+  - Fix HederaWalletConnectTransactionAdapter unit test: use jest.spyOn for read-only rpcProvider property
+  - Update environmentMock paths for custodial adapters (hs/hts/custodial → hs/custodial) following file restructure
+  - Remove mocks for deleted HederaTransactionAdapter and abstract CustodialTransactionAdapter
+  - Add register() and createBond() mocks to DFNS, Fireblocks, and AWSKMS custodial adapter mocks
+  - Grant \_KPI_MANAGER_ROLE to bond creator in createBond mock to enable addKpiData tests
+
+- Updated dependencies [f809d77]
+  - @hashgraph/asset-tokenization-contracts@5.0.0
+
+## 4.3.0
+
+### Minor Changes
+
+- 5ba3560: Implement comprehensive bond tokenization SDK with KPI-linked rates and coupon management:
+  - Add CreateBondFixedRate and CreateBondKpiLinkedRate commands for bond creation
+  - Implement setInterestRate, setRate, getRate, and getInterestRate for rate management
+  - Add KPI data infrastructure: addKpiData, getLatestKpiData, getMinDate, getIsCheckPointDate, setImpactData
+  - Implement coupon management: getCouponsOrdered, GetCouponFromOrderedListAt, getOrderedLiistTotal
+  - Add scheduled coupon distribution: GetScheduledCouponListing, getScheduledCouponListingCount
+  - Enhance RPC and Hedera transaction adapters for bond operations
+
+### Patch Changes
+
+- Updated dependencies [5de99bd]
+  - @hashgraph/asset-tokenization-contracts@4.3.0
+
+## 4.2.0
+
+### Minor Changes
+
+- c5b2a50: Add support for multiple bond types (Variable Rate, Fixed Rate, KPI Linked, SPT)
+
+  This release introduces comprehensive support for multiple bond asset types across the Asset Tokenization Studio:
+
+  **Breaking Changes:**
+  - Refactored Solidity contracts to check for Equity type instead of Bond type, as Bond is no longer a single type but a family of types (Variable Rate, Fixed Rate, KPI Linked Rate, SPT Rate)
+  - Updated asset type filtering logic to use enum values (BOND_VARIABLE_RATE, BOND_FIXED_RATE, BOND_KPI_LINKED_RATE, BOND_SPT_RATE, EQUITY) instead of display strings
+
+  **Contract Changes:**
+  - Updated LifeCycleCashFlowStorageWrapper.sol to invert AssetType checks: now validates if asset is Equity (special case) with bond types as the default behavior
+  - Added comprehensive test coverage for all bond types in lifecycle cash flow tests
+
+  **SDK Changes:**
+  - Extended asset type system to support four distinct bond types plus equity
+  - Maintained backward compatibility for existing integrations
+
+  This is a **minor** version bump as it adds new functionality (multiple bond types) while maintaining backward compatibility through the enum-based approach.
+
+- 2a26b41: Migrate from ether 5 to ether 6
+
+### Patch Changes
+
+- Updated dependencies [35fde1c]
+- Updated dependencies [33e8046]
+- Updated dependencies [04e7366]
+- Updated dependencies [c81bab9]
+- Updated dependencies [e378e82]
+- Updated dependencies [ad45d49]
+- Updated dependencies [c5b2a50]
+- Updated dependencies [a942765]
+- Updated dependencies [fe7032f]
+- Updated dependencies [2a26b41]
+  - @hashgraph/asset-tokenization-contracts@4.2.0
+
+## 4.1.1
+
+### Patch Changes
+
+- Updated dependencies
+  - @hashgraph/asset-tokenization-contracts@4.1.1
+
+## 4.1.0
+
+### Patch Changes
+
+- 8ffc87f: Fixed all linting issues and applied code formatting across the codebase. Updated license headers in all source files to use standardized SPDX format (`// SPDX-License-Identifier: Apache-2.0`). Added automated license header validation script (`check-license.js`) that runs during pre-commit to ensure all `.sol`, `.ts`, and `.tsx` files include the required SPDX license identifier.
+- Updated dependencies [60f35fc]
+- Updated dependencies [5f579dc]
+- Updated dependencies [f1bac7a]
+- Updated dependencies [8ffc87f]
+- Updated dependencies [bde618b]
+  - @hashgraph/asset-tokenization-contracts@4.1.0
+
+## 4.0.1
+
+### Patch Changes
+
+- Updated dependencies [171b22b]
+- Updated dependencies [d1552c7]
+  - @hashgraph/asset-tokenization-contracts@4.0.1
+
+## 4.0.0
+
+### Major Changes
+
+- 3ba32c9: Audit issues fixes: compliance with ERC1400 standard, pause bypasses removed, dividends calculations errors fixed, hold data stale data updated, duplicated CA not accepted anymore, batch freeze operations and external lists do not accept zero addresses anymore, gas optimizations
+- 6950d41: Code refactor plus Coupon fixing, start and end date added. Four type of bonds exist : standard, fixed rate, kpi linked rate and sustainability performance target rate
+
+### Minor Changes
+
+- 902fea1: Added Docusaurus and project documentation, renamed the MP package organization, and added a Claude documentation command.
+- 8f7487a: EIP712 standard fixed. Now single name (ERC20 token name) and version (BLR version number) used for all facets methods. Nonce facet created to centralized to nonce per user management.
+- cbcc1db: Protected Transfer and Lock methods removed from smart contracts and sdk.
+
+### Patch Changes
+
+- 650874b: Set `collectCoverage` to `false` by default and enable it only in CI
+- c10a8ee: Replaced the Hashgraph SDK with the Hiero Ledger SDK
+- Updated dependencies [3ba32c9]
+- Updated dependencies [2d5495e]
+- Updated dependencies [902fea1]
+- Updated dependencies [1f51771]
+- Updated dependencies [dff883d]
+- Updated dependencies [b802e88]
+- Updated dependencies [6950d41]
+- Updated dependencies [7f92cd7]
+- Updated dependencies [8f7487a]
+- Updated dependencies [c10a8ee]
+- Updated dependencies [1ecd8ee]
+- Updated dependencies [fa07c70]
+- Updated dependencies [c7ff16f]
+- Updated dependencies [cbcc1db]
+  - @hashgraph/asset-tokenization-contracts@4.0.0
+
+## 3.1.0
+
+### Patch Changes
+
+- Updated dependencies [1f51771]
+- Updated dependencies [b802e88]
+- Updated dependencies [7f92cd7]
+- Updated dependencies [1ecd8ee]
+- Updated dependencies [fa07c70]
+- Updated dependencies [c7ff16f]
+  - @hashgraph/asset-tokenization-contracts@3.1.0
+
 ## 3.0.0
 
 ### Major Changes

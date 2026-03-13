@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 import { TASK_COMPILE } from "hardhat/builtin-tasks/task-names";
 import { task } from "hardhat/config";
 import fs from "fs";
@@ -65,7 +67,14 @@ task("erc3643-clone-interfaces", async (_, hre) => {
     { original: "IResolverProxy" },
     { original: "IStaticFunctionSelectors" },
     {
-      original: "contracts/layer_1/interfaces/ERC1400/IERC20.sol:IERC20",
+      original: "contracts/facets/layer_1/ERC1400/ERC20/IERC20.sol:IERC20",
+      removeImports: false,
+    },
+    // Coupon Interest Rates interfaces
+    { original: "IFixedRate" },
+    { original: "IKpiLinkedRate" },
+    {
+      original: "IScheduledCouponListing",
       removeImports: false,
     },
   ];
@@ -78,15 +87,19 @@ task("erc3643-clone-interfaces", async (_, hre) => {
   }));
 
   const constants = [
-    { src: "layer_3/constants/regulation", dst: "regulation" },
-    { src: "layer_1/constants/roles", dst: "roles" },
+    { src: "constants/regulation", dst: "regulation" },
+    { src: "constants/roles", dst: "roles" },
+    {
+      src: "facets/layer_2/scheduledTask/scheduledTasksCommon/IScheduledTasksCommon",
+      dst: "IScheduledTasksCommon",
+    },
   ];
 
   function rewriteImports(source: string): string {
-    // 1. Eliminar cualquier import a ficheros *StorageWrapper.sol
+    // 1. Remove any imports to *StorageWrapper.sol files
     source = source.replace(/^\s*import\s+[^;]*StorageWrapper\.sol['"];\s*$/gm, "");
 
-    // 2. Reescribir el resto de imports
+    // 2. Rewrite the rest of the imports
     return source.replace(
       /import\s*\{([^}]+)\}\s*from\s*['"](.+\/)?([^/]+)\.sol['"];/gm,
       (_match, names, _path, filePath) => {
@@ -102,7 +115,7 @@ task("erc3643-clone-interfaces", async (_, hre) => {
           })
           .join(", ");
 
-        return `import {${rewritten}} from './${fileNoExt}.sol';`;
+        return `import {${rewritten}} from "./${fileNoExt}.sol";`;
       },
     );
   }
@@ -138,7 +151,7 @@ task("erc3643-clone-interfaces", async (_, hre) => {
         source = source.replace(/^pragma solidity\s+[^;]+;/m, "pragma solidity ^0.8.17;");
       }
 
-      // Renombrar interface/contract y eliminar herencia en un solo paso
+      // Rename interface/contract and remove inheritance in a single step
       source = source.replace(
         new RegExp(`(contract|interface)\\s+${originalArtifact.contractName}\\b(\\s+is[^\\{]+)?`, "m"),
         `$1 TRex${originalArtifact.contractName}`,

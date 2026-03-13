@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 import type { ReactNode } from "react";
 import clsx from "clsx";
 import Heading from "@theme/Heading";
@@ -35,8 +37,8 @@ const FeatureList: FeatureItem[] = [
     icon: "📚",
     description: (
       <>
-        Transparent documentation living with the code. Architecture Decision Records (ADRs) and Enhancement Proposals
-        (EPs) enable community contribution and AI-assisted development.
+        Transparent documentation living with the code. Comprehensive guides and API references enable community
+        contribution and seamless integration.
       </>
     ),
   },

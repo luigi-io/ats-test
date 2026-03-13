@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: Apache-2.0
 pragma solidity >=0.8.0 <0.9.0;
 
-import { ITimeTravelStorageWrapper } from "../interfaces/ITimeTravelStorageWrapper.sol";
-import { LocalContext } from "../../../layer_0/context/LocalContext.sol";
+import { ITimeTravelStorageWrapper } from "../ITimeTravelStorageWrapper.sol";
+import { LocalContext } from "../../../infrastructure/utils/LocalContext.sol";
 import { _TIME_TRAVEL_RESOLVER_KEY } from "../constants/resolverKeys.sol";
 
 abstract contract TimeTravelStorageWrapper is ITimeTravelStorageWrapper, LocalContext {
@@ -46,11 +46,11 @@ abstract contract TimeTravelStorageWrapper is ITimeTravelStorageWrapper, LocalCo
     }
 
     function _blockTimestamp() internal view virtual override returns (uint256) {
-        return _timestamp == 0 ? block.timestamp : _timestamp;
+        return _timestamp == 0 ? super._blockTimestamp() : _timestamp;
     }
 
     function _blockNumber() internal view virtual override returns (uint256 blockNumber_) {
-        return _blocknumber == 0 ? block.number : _blocknumber;
+        return _blocknumber == 0 ? super._blockNumber() : _blocknumber;
     }
 
     function _checkBlockChainid(uint256 chainId) internal pure {

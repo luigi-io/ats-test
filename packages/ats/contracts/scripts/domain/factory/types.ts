@@ -1,7 +1,9 @@
+// SPDX-License-Identifier: Apache-2.0
+
 import { ethers } from "ethers";
-import { AtsRoleName, AtsRoleHash } from "@scripts/domain";
+import { AtsRoleName, AtsRoleHash } from "../constants";
 export interface Rbac {
-  role: AtsRoleName | AtsRoleHash;
+  role: AtsRoleName | AtsRoleHash | (string & {});
   members: string[];
 }
 
@@ -97,7 +99,15 @@ export interface FactoryRegulationDataParams {
   };
 }
 
+export interface FixedRateDataParams {
+  rate: number;
+  rateDecimals: number;
+}
+
 export enum SecurityType {
-  BOND = 0,
+  BOND_VARIABLE_RATE = 0,
   EQUITY = 1,
+  BOND_FIXED_RATE = 2,
+  BOND_KPI_LINKED_RATE = 3,
+  BOND_SPT_RATE = 4,
 }

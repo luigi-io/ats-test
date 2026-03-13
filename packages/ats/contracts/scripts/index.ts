@@ -52,7 +52,16 @@ export * from "./infrastructure/operations/blrDeployment";
 export * from "./infrastructure/operations/proxyAdminDeployment";
 export * from "./infrastructure/operations/facetDeployment";
 export * from "./infrastructure/operations/deployResolverProxy";
-export * from "./infrastructure/operations/generateRegistryPipeline";
+export * from "./infrastructure/operations/updateResolverProxyConfig";
+// NOTE: generateRegistryPipeline moved to standalone module (./tools/registry-generator/)
+
+// Infrastructure paths
+export {
+  getDeploymentsDir,
+  getCheckpointsDir,
+  getTestCheckpointsDir,
+  getTestDeploymentsDir,
+} from "./infrastructure/paths";
 
 // Infrastructure utilities
 export * from "./infrastructure/utils/validation";
@@ -72,8 +81,10 @@ export type {
   ConfigurationResult,
   CheckpointStatus,
   WorkflowType,
+  AtsWorkflowType,
   ResumeOptions,
 } from "./infrastructure/types/checkpoint";
+export { isSaveSuccess, isSaveFailure, isAtsWorkflow } from "./infrastructure/types/checkpoint";
 export { CheckpointManager } from "./infrastructure/checkpoint/CheckpointManager";
 export { NullCheckpointManager } from "./infrastructure/checkpoint/NullCheckpointManager";
 export type { CreateCheckpointParams } from "./infrastructure/checkpoint/CheckpointManager";
@@ -126,13 +137,19 @@ export * from "./domain/factory/deployBondToken";
 // Complete deployment workflows
 export * from "./workflows/deploySystemWithNewBlr";
 export * from "./workflows/deploySystemWithExistingBlr";
+export * from "./workflows/upgradeConfigurations";
+export * from "./workflows/upgradeTupProxies";
 
 // ========================================
 // Registry Generation Tools (for extending ATS)
 // ========================================
 
-// Registry generation
-export * from "./tools/generators/registryGenerator";
+// Standalone Registry Generator (Fast, Recommended for downstream projects)
+export { generateRegistryPipeline, DEFAULT_CONFIG, CacheManager } from "./tools/registry-generator/exports";
+
+export type { RegistryConfig, RegistryResult, CacheEntry, RegistryCache } from "./tools/registry-generator/exports";
+
+// NOTE: Legacy registryGenerator.ts removed - use the standalone generator above
 
 // Contract scanning
 export * from "./tools/scanner/contractFinder";

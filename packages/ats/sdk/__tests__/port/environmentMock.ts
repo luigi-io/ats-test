@@ -1,212 +1,8 @@
-/*
-                                 Apache License
-                           Version 2.0, January 2004
-                        http://www.apache.org/licenses/
-
-   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
-
-   1. Definitions.
-
-      "License" shall mean the terms and conditions for use, reproduction,
-      and distribution as defined by Sections 1 through 9 of this document.
-
-      "Licensor" shall mean the copyright owner or entity authorized by
-      the copyright owner that is granting the License.
-
-      "Legal Entity" shall mean the union of the acting entity and all
-      other entities that control, are controlled by, or are under common
-      control with that entity. For the purposes of this definition,
-      "control" means (i) the power, direct or indirect, to cause the
-      direction or management of such entity, whether by contract or
-      otherwise, or (ii) ownership of fifty percent (50%) or more of the
-      outstanding shares, or (iii) beneficial ownership of such entity.
-
-      "You" (or "Your") shall mean an individual or Legal Entity
-      exercising permissions granted by this License.
-
-      "Source" form shall mean the preferred form for making modifications,
-      including but not limited to software source code, documentation
-      source, and configuration files.
-
-      "Object" form shall mean any form resulting from mechanical
-      transformation or translation of a Source form, including but
-      not limited to compiled object code, generated documentation,
-      and conversions to other media types.
-
-      "Work" shall mean the work of authorship, whether in Source or
-      Object form, made available under the License, as indicated by a
-      copyright notice that is included in or attached to the work
-      (an example is provided in the Appendix below).
-
-      "Derivative Works" shall mean any work, whether in Source or Object
-      form, that is based on (or derived from) the Work and for which the
-      editorial revisions, annotations, elaborations, or other modifications
-      represent, as a whole, an original work of authorship. For the purposes
-      of this License, Derivative Works shall not include works that remain
-      separable from, or merely link (or bind by name) to the interfaces of,
-      the Work and Derivative Works thereof.
-
-      "Contribution" shall mean any work of authorship, including
-      the original version of the Work and any modifications or additions
-      to that Work or Derivative Works thereof, that is intentionally
-      submitted to Licensor for inclusion in the Work by the copyright owner
-      or by an individual or Legal Entity authorized to submit on behalf of
-      the copyright owner. For the purposes of this definition, "submitted"
-      means any form of electronic, verbal, or written communication sent
-      to the Licensor or its representatives, including but not limited to
-      communication on electronic mailing lists, source code control systems,
-      and issue tracking systems that are managed by, or on behalf of, the
-      Licensor for the purpose of discussing and improving the Work, but
-      excluding communication that is conspicuously marked or otherwise
-      designated in writing by the copyright owner as "Not a Contribution."
-
-      "Contributor" shall mean Licensor and any individual or Legal Entity
-      on behalf of whom a Contribution has been received by Licensor and
-      subsequently incorporated within the Work.
-
-   2. Grant of Copyright License. Subject to the terms and conditions of
-      this License, each Contributor hereby grants to You a perpetual,
-      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
-      copyright license to reproduce, prepare Derivative Works of,
-      publicly display, publicly perform, sublicense, and distribute the
-      Work and such Derivative Works in Source or Object form.
-
-   3. Grant of Patent License. Subject to the terms and conditions of
-      this License, each Contributor hereby grants to You a perpetual,
-      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
-      (except as stated in this section) patent license to make, have made,
-      use, offer to sell, sell, import, and otherwise transfer the Work,
-      where such license applies only to those patent claims licensable
-      by such Contributor that are necessarily infringed by their
-      Contribution(s) alone or by combination of their Contribution(s)
-      with the Work to which such Contribution(s) was submitted. If You
-      institute patent litigation against any entity (including a
-      cross-claim or counterclaim in a lawsuit) alleging that the Work
-      or a Contribution incorporated within the Work constitutes direct
-      or contributory patent infringement, then any patent licenses
-      granted to You under this License for that Work shall terminate
-      as of the date such litigation is filed.
-
-   4. Redistribution. You may reproduce and distribute copies of the
-      Work or Derivative Works thereof in any medium, with or without
-      modifications, and in Source or Object form, provided that You
-      meet the following conditions:
-
-      (a) You must give any other recipients of the Work or
-          Derivative Works a copy of this License; and
-
-      (b) You must cause any modified files to carry prominent notices
-          stating that You changed the files; and
-
-      (c) You must retain, in the Source form of any Derivative Works
-          that You distribute, all copyright, patent, trademark, and
-          attribution notices from the Source form of the Work,
-          excluding those notices that do not pertain to any part of
-          the Derivative Works; and
-
-      (d) If the Work includes a "NOTICE" text file as part of its
-          distribution, then any Derivative Works that You distribute must
-          include a readable copy of the attribution notices contained
-          within such NOTICE file, excluding those notices that do not
-          pertain to any part of the Derivative Works, in at least one
-          of the following places: within a NOTICE text file distributed
-          as part of the Derivative Works; within the Source form or
-          documentation, if provided along with the Derivative Works; or,
-          within a display generated by the Derivative Works, if and
-          wherever such third-party notices normally appear. The contents
-          of the NOTICE file are for informational purposes only and
-          do not modify the License. You may add Your own attribution
-          notices within Derivative Works that You distribute, alongside
-          or as an addendum to the NOTICE text from the Work, provided
-          that such additional attribution notices cannot be construed
-          as modifying the License.
-
-      You may add Your own copyright statement to Your modifications and
-      may provide additional or different license terms and conditions
-      for use, reproduction, or distribution of Your modifications, or
-      for any such Derivative Works as a whole, provided Your use,
-      reproduction, and distribution of the Work otherwise complies with
-      the conditions stated in this License.
-
-   5. Submission of Contributions. Unless You explicitly state otherwise,
-      any Contribution intentionally submitted for inclusion in the Work
-      by You to the Licensor shall be under the terms and conditions of
-      this License, without any additional terms or conditions.
-      Notwithstanding the above, nothing herein shall supersede or modify
-      the terms of any separate license agreement you may have executed
-      with Licensor regarding such Contributions.
-
-   6. Trademarks. This License does not grant permission to use the trade
-      names, trademarks, service marks, or product names of the Licensor,
-      except as required for reasonable and customary use in describing the
-      origin of the Work and reproducing the content of the NOTICE file.
-
-   7. Disclaimer of Warranty. Unless required by applicable law or
-      agreed to in writing, Licensor provides the Work (and each
-      Contributor provides its Contributions) on an "AS IS" BASIS,
-      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
-      implied, including, without limitation, any warranties or conditions
-      of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
-      PARTICULAR PURPOSE. You are solely responsible for determining the
-      appropriateness of using or redistributing the Work and assume any
-      risks associated with Your exercise of permissions under this License.
-
-   8. Limitation of Liability. In no event and under no legal theory,
-      whether in tort (including negligence), contract, or otherwise,
-      unless required by applicable law (such as deliberate and grossly
-      negligent acts) or agreed to in writing, shall any Contributor be
-      liable to You for damages, including any direct, indirect, special,
-      incidental, or consequential damages of any character arising as a
-      result of this License or out of the use or inability to use the
-      Work (including but not limited to damages for loss of goodwill,
-      work stoppage, computer failure or malfunction, or any and all
-      other commercial damages or losses), even if such Contributor
-      has been advised of the possibility of such damages.
-
-   9. Accepting Warranty or Additional Liability. While redistributing
-      the Work or Derivative Works thereof, You may choose to offer,
-      and charge a fee for, acceptance of support, warranty, indemnity,
-      or other liability obligations and/or rights consistent with this
-      License. However, in accepting such obligations, You may act only
-      on Your own behalf and on Your sole responsibility, not on behalf
-      of any other Contributor, and only if You agree to indemnify,
-      defend, and hold each Contributor harmless for any liability
-      incurred by, or claims asserted against, such Contributor by reason
-      of your accepting any such warranty or additional liability.
-
-   END OF TERMS AND CONDITIONS
-
-   APPENDIX: How to apply the Apache License to your work.
-
-      To apply the Apache License to your work, attach the following
-      boilerplate notice, with the fields enclosed by brackets "[]"
-      replaced with your own identifying information. (Don't include
-      the brackets!)  The text should be enclosed in the appropriate
-      comment syntax for the file format. We also recommend that a
-      file or class name and description of purpose be included on the
-      same "printed page" as the copyright notice for easier
-      identification within third-party archives.
-
-   Copyright [yyyy] [name of copyright owner]
-
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
-
-*/
+// SPDX-License-Identifier: Apache-2.0
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import BigDecimal from "@domain/context/shared/BigDecimal";
-import { BigNumber } from "ethers";
 import { SecurityRole } from "@domain/context/security/SecurityRole";
 import { EquityDetails } from "@domain/context/equity/EquityDetails";
 import { BondDetails } from "@domain/context/bond/BondDetails";
@@ -233,7 +29,6 @@ import { CastRegulationSubType, CastRegulationType } from "@domain/context/facto
 import { ScheduledBalanceAdjustment } from "@domain/context/equity/ScheduledBalanceAdjustment";
 import { DividendFor } from "@domain/context/equity/DividendFor";
 import { VotingFor } from "@domain/context/equity/VotingFor";
-import DfnsSettings from "@core/settings/custodialWalletSettings/DfnsSettings";
 import { Kyc } from "@domain/context/kyc/Kyc";
 import { KycAccountData } from "@domain/context/kyc/KycAccountData";
 import {
@@ -243,6 +38,7 @@ import {
   ClearingTransfer,
 } from "@domain/context/security/Clearing";
 import { HoldDetails } from "@domain/context/security/Hold";
+import { RateStatus } from "@domain/context/bond/RateStatus";
 
 //* Mock console.log() method
 global.console.log = jest.fn();
@@ -300,7 +96,7 @@ const lastLockIds = new Map<string, number>();
 const lastHoldIds = new Map<string, number>();
 const lastClearingIds = new Map<string, number>();
 const scheduledBalanceAdjustments: ScheduledBalanceAdjustment[] = [];
-const nonces = new Map<string, BigNumber>();
+const nonces = new Map<string, bigint>();
 const kycAccountsData = new Map<string, Kyc>();
 const kycAccountsByStatus = new Map<number, string[]>();
 
@@ -355,31 +151,25 @@ function increaseHeldBalance(targetId: EvmAddress, amount: BigDecimal): void {
   const account = identifiers(targetId.toString())[1];
   let accountHeldBalance = heldBalances.get(account);
   if (accountHeldBalance) {
-    accountHeldBalance = BigDecimal.fromString(accountHeldBalance).toBigNumber().add(amount.toBigNumber()).toString();
+    accountHeldBalance = (BigInt(accountHeldBalance) + amount.toBigInt()).toString();
     heldBalances.set(account, accountHeldBalance);
-  } else heldBalances.set(account, amount.toString());
+  } else heldBalances.set(account, amount.toBigInt().toString());
 }
 
 function increaseClearedBalance(targetId: EvmAddress, amount: BigDecimal): void {
   const account = identifiers(targetId.toString())[1];
   let accountClearedBalance = clearedBalances.get(account);
   if (accountClearedBalance) {
-    accountClearedBalance = BigDecimal.fromString(accountClearedBalance)
-      .toBigNumber()
-      .add(amount.toBigNumber())
-      .toString();
+    accountClearedBalance = (BigInt(accountClearedBalance) + amount.toBigInt()).toString();
     clearedBalances.set(account, accountClearedBalance);
-  } else clearedBalances.set(account, amount.toString());
+  } else clearedBalances.set(account, amount.toBigInt().toString());
 }
 
 function decreaseClearedBalance(targetId: EvmAddress, amount: BigDecimal): void {
   const account = identifiers(targetId.toString())[1];
   let accountClearedBalance = clearedBalances.get(account);
   if (accountClearedBalance) {
-    accountClearedBalance = BigDecimal.fromString(accountClearedBalance)
-      .toBigNumber()
-      .sub(amount.toBigNumber())
-      .toString();
+    accountClearedBalance = (BigInt(accountClearedBalance) - amount.toBigInt()).toString();
     clearedBalances.set(account, accountClearedBalance);
   }
 }
@@ -419,7 +209,7 @@ function decreaseHeldBalance(targetId: EvmAddress, amount: BigDecimal): void {
   const account = identifiers(targetId.toString())[1];
   let accountHeldBalance = heldBalances.get(account);
   if (accountHeldBalance) {
-    accountHeldBalance = BigDecimal.fromString(accountHeldBalance).toBigNumber().sub(amount.toBigNumber()).toString();
+    accountHeldBalance = (BigInt(accountHeldBalance) - amount.toBigInt()).toString();
     heldBalances.set(account, accountHeldBalance);
   }
 }
@@ -428,22 +218,16 @@ function increaseLockedBalance(targetId: EvmAddress, amount: BigDecimal): void {
   const account = identifiers(targetId.toString())[1];
   let accountLockedBalance = lockedBalances.get(account);
   if (accountLockedBalance) {
-    accountLockedBalance = BigDecimal.fromString(accountLockedBalance)
-      .toBigNumber()
-      .add(amount.toBigNumber())
-      .toString();
+    accountLockedBalance = (BigInt(accountLockedBalance) + amount.toBigInt()).toString();
     lockedBalances.set(account, accountLockedBalance);
-  } else lockedBalances.set(account, amount.toString());
+  } else lockedBalances.set(account, amount.toBigInt().toString());
 }
 
 function decreaseLockedBalance(targetId: EvmAddress, amount: BigDecimal): void {
   const account = identifiers(targetId.toString())[1];
   let accountLockedBalance = lockedBalances.get(account);
   if (accountLockedBalance) {
-    accountLockedBalance = BigDecimal.fromString(accountLockedBalance)
-      .toBigNumber()
-      .sub(amount.toBigNumber())
-      .toString();
+    accountLockedBalance = (BigInt(accountLockedBalance) - amount.toBigInt()).toString();
     lockedBalances.set(account, accountLockedBalance);
   }
 }
@@ -452,16 +236,16 @@ function increaseBalance(targetId: EvmAddress, amount: BigDecimal): void {
   const account = identifiers(targetId.toString())[1];
   let accountBalance = balances.get(account);
   if (accountBalance) {
-    accountBalance = BigDecimal.fromString(accountBalance).toBigNumber().add(amount.toBigNumber()).toString();
+    accountBalance = (BigInt(accountBalance) + amount.toBigInt()).toString();
     balances.set(account, accountBalance);
-  } else balances.set(account, amount.toString());
+  } else balances.set(account, amount.toBigInt().toString());
 }
 
 function decreaseBalance(targetId: EvmAddress, amount: BigDecimal): void {
   const account = identifiers(targetId.toString())[1];
   let accountBalance = balances.get(account);
   if (accountBalance) {
-    accountBalance = BigDecimal.fromString(accountBalance).toBigNumber().sub(amount.toBigNumber()).toString();
+    accountBalance = (BigInt(accountBalance) - amount.toBigInt()).toString();
     balances.set(account, accountBalance);
   }
 }
@@ -484,7 +268,7 @@ function createBondMockImplementation(
   const ids = identifiers(securityEvmAddress);
   securityInfo.diamondAddress = HederaId.from(ids[0]);
   securityInfo.evmDiamondAddress = new EvmAddress(ids[1]);
-  securityInfo.type = SecurityType.BOND;
+  securityInfo.type = SecurityType.BOND_VARIABLE_RATE;
   securityInfo.regulation = {
     type: _securityInfo.regulationType ?? "",
     subType: _securityInfo.regulationsubType ?? "",
@@ -509,8 +293,22 @@ function createBondMockImplementation(
 
   for (let i = 0; i < numberOfCoupons; i++) {
     const timeStamp = couponInfo.firstCouponDate + couponInfo.couponFrequency * i;
-    const coupon = new Coupon(timeStamp, timeStamp, couponInfo.couponRate, couponInfo.couponRateDecimals, 0);
+    const coupon = new Coupon(
+      timeStamp,
+      timeStamp,
+      couponInfo.couponRate,
+      couponInfo.couponRateDecimals,
+      timeStamp,
+      timeStamp,
+      timeStamp,
+      RateStatus.PENDING,
+    );
     coupons.push(coupon);
+  }
+
+  if (user_account) {
+    const accountEvm = identifiers(user_account.id)[1];
+    grantRole(accountEvm, SecurityRole._KPI_MANAGER_ROLE);
   }
 
   return Promise.resolve({
@@ -541,8 +339,8 @@ const createHold = async (
 
   accountHolds.set(newLastHoldId, [
     new HoldDetails(
-      expirationDate.toBigNumber().toNumber(),
-      amount,
+      expirationDate.toUnsafeFloat(),
+      amount.toBigInt(),
       escrow.toString(),
       account,
       sourceId.toString(),
@@ -585,26 +383,20 @@ const createClearing = async (
     case ClearingOperationType.HoldCreation:
       clearing = new ClearingHoldCreation(
         amount,
-        clearingExpirationDate.toBigNumber().toNumber(),
+        clearingExpirationDate.toUnsafeFloat(),
         "0x",
         "0x",
         escrow!.toString(),
-        holdExpirationDate!.toBigNumber().toNumber(),
+        holdExpirationDate!.toUnsafeFloat(),
         target.toString(),
         "0x",
       );
       break;
     case ClearingOperationType.Redeem:
-      clearing = new ClearingRedeem(amount, clearingExpirationDate.toBigNumber().toNumber(), "0x", "0x");
+      clearing = new ClearingRedeem(amount, clearingExpirationDate.toUnsafeFloat(), "0x", "0x");
       break;
     default:
-      clearing = new ClearingTransfer(
-        amount,
-        clearingExpirationDate.toBigNumber().toNumber(),
-        targetId!.toString(),
-        "0x",
-        "0x",
-      );
+      clearing = new ClearingTransfer(amount, clearingExpirationDate.toUnsafeFloat(), targetId!.toString(), "0x", "0x");
       break;
   }
 
@@ -631,10 +423,10 @@ jest.mock("@port/out/rpc/RPCQueryAdapter", () => {
     return {}; // Return a mock object as needed
   });
 
-  singletonInstance.balanceOf = jest.fn(async (address: EvmAddress, target: EvmAddress): Promise<BigNumber> => {
+  singletonInstance.balanceOf = jest.fn(async (address: EvmAddress, target: EvmAddress): Promise<bigint> => {
     const balance = balances.get("0x" + target.toString().toUpperCase().substring(2));
-    if (balance) return BigNumber.from(BigDecimal.fromString(balance, securityInfo.decimals));
-    return BigNumber.from(BigDecimal.fromString("0", securityInfo.decimals));
+    if (balance) return BigInt(BigDecimal.fromString(balance, securityInfo.decimals).toFixedNumber());
+    return BigInt(0);
   });
 
   singletonInstance.balanceOfByPartition = jest.fn(
@@ -650,13 +442,13 @@ jest.mock("@port/out/rpc/RPCQueryAdapter", () => {
 
   singletonInstance.balanceOfAtSnapshot = jest.fn(
     async (address: EvmAddress, target: EvmAddress, snapshotId: number) => {
-      return BigNumber.from(0);
+      return BigInt(0);
     },
   );
 
   singletonInstance.balanceOfAtSnapshotByPartition = jest.fn(
     async (address: EvmAddress, target: EvmAddress, partitionId: string, snapshotId: number) => {
-      return BigNumber.from(0);
+      return BigInt(0);
     },
   );
 
@@ -671,11 +463,11 @@ jest.mock("@port/out/rpc/RPCQueryAdapter", () => {
   );
 
   singletonInstance.totalSupply = jest.fn(async (address: EvmAddress) => {
-    return BigNumber.from(0);
+    return BigInt(0);
   });
 
   singletonInstance.totalSupplyAtSnapshot = jest.fn(async (address: EvmAddress, snapshotId: number) => {
-    return BigNumber.from(0);
+    return BigInt(0);
   });
 
   singletonInstance.getRolesFor = jest.fn(
@@ -847,6 +639,34 @@ jest.mock("@port/out/rpc/RPCQueryAdapter", () => {
     return coupons.length;
   });
 
+  singletonInstance.getCouponsOrderedList = jest.fn(
+    async (address: EvmAddress, pageIndex?: number, pageLength?: number) => {
+      const allCoupons = coupons.map((_, index) => index + 1); // Return 1-based coupon IDs
+
+      // If pagination parameters are provided, return paginated result
+      if (pageIndex !== undefined && pageLength !== undefined) {
+        const start = pageIndex * pageLength;
+        const end = start + pageLength;
+        return allCoupons.slice(start, end);
+      }
+
+      // Otherwise return all coupons
+      return allCoupons;
+    },
+  );
+
+  singletonInstance.getCouponsOrderedListTotal = jest.fn(async (address: EvmAddress) => {
+    return coupons.length;
+  });
+
+  singletonInstance.getCouponFromOrderedListAt = jest.fn(async (address: EvmAddress, pos: number) => {
+    if (pos >= coupons.length || pos < 0) {
+      // Return a default value instead of throwing error for tests
+      return pos + 1;
+    }
+    return pos + 1;
+  });
+
   singletonInstance.getAccountSecurityRelationship = jest.fn(async (address: EvmAddress, target: EvmAddress) => {});
 
   singletonInstance.isPaused = jest.fn(async (address: EvmAddress) => {
@@ -1014,7 +834,7 @@ jest.mock("@port/out/rpc/RPCQueryAdapter", () => {
   );
 
   singletonInstance.getDocument = jest.fn(async (address: EvmAddress, name: string) => {
-    return ["", "", BigNumber.from(0)];
+    return ["", "", BigInt(0)];
   });
 
   singletonInstance.getAllDocuments = jest.fn(async (address: EvmAddress) => {
@@ -1032,7 +852,7 @@ jest.mock("@port/out/rpc/RPCQueryAdapter", () => {
   });
 
   singletonInstance.getScheduledSnapshots = jest.fn(async (address: EvmAddress, start: number, end: number) => {
-    return [new ScheduledSnapshot(BigNumber.from("43756347647"), "data")];
+    return [new ScheduledSnapshot(BigInt("43756347647"), "data")];
   });
 
   singletonInstance.scheduledSnapshotCount = jest.fn(async (address: EvmAddress) => {
@@ -1060,8 +880,8 @@ jest.mock("@port/out/rpc/RPCQueryAdapter", () => {
 
   singletonInstance.getLockedBalanceOf = jest.fn(async (address: EvmAddress, target: EvmAddress) => {
     const lockedBalance = lockedBalances.get("0x" + target.toString().toUpperCase().substring(2));
-    if (lockedBalance) return BigNumber.from(BigDecimal.fromString(lockedBalance, securityInfo.decimals));
-    return BigNumber.from(BigDecimal.fromString("0", securityInfo.decimals));
+    if (lockedBalance) return BigInt(BigDecimal.fromString(lockedBalance, securityInfo.decimals).toFixedNumber());
+    return BigInt(0);
   });
 
   singletonInstance.getLockCount = jest.fn(async (address: EvmAddress, target: EvmAddress) => {
@@ -1074,9 +894,9 @@ jest.mock("@port/out/rpc/RPCQueryAdapter", () => {
     async (address: EvmAddress, target: EvmAddress, start: number, end: number) => {
       const lockIds = locksIds.get("0x" + target.toString().toUpperCase().substring(2));
       if (!lockIds) return [];
-      const returnedLocksId: BigNumber[] = [];
+      const returnedLocksId: bigint[] = [];
       for (let i = start; i < end; i++) {
-        returnedLocksId.push(BigNumber.from(lockIds[i]));
+        returnedLocksId.push(BigInt(lockIds[i]));
       }
       return returnedLocksId;
     },
@@ -1084,9 +904,9 @@ jest.mock("@port/out/rpc/RPCQueryAdapter", () => {
 
   singletonInstance.getLock = jest.fn(async (address: EvmAddress, target: EvmAddress, lockId: number) => {
     const accountLocks = locks.get("0x" + target.toString().toUpperCase().substring(2));
-    if (!accountLocks) return [BigNumber.from(0), BigNumber.from(0)];
+    if (!accountLocks) return [BigInt(0), BigInt(0)];
     const accountLock = accountLocks.get(lockId);
-    if (!accountLock) return [BigNumber.from(0), BigNumber.from(0)];
+    if (!accountLock) return [BigInt(0), BigInt(0)];
     return accountLock;
   });
 
@@ -1128,9 +948,9 @@ jest.mock("@port/out/rpc/RPCQueryAdapter", () => {
     return securityInfo.arePartitionsProtected ?? false;
   });
 
-  singletonInstance.getNounceFor = jest.fn(async (address: EvmAddress, target: EvmAddress) => {
+  singletonInstance.getNonceFor = jest.fn(async (address: EvmAddress, target: EvmAddress) => {
     const account = "0x" + target.toString().toUpperCase().substring(2);
-    return nonces.get(account) ?? new BigDecimal("0").toBigNumber();
+    return nonces.get(account) ?? BigInt(0);
   });
 
   singletonInstance.getKycStatusFor = jest.fn(async (address: EvmAddress, target: EvmAddress) => {
@@ -1239,7 +1059,7 @@ jest.mock("@port/out/rpc/RPCQueryAdapter", () => {
   singletonInstance.getHoldForByPartition = jest.fn(
     async (address: EvmAddress, partitionId: string, targetId: EvmAddress, holdId: number) => {
       const accountHolds = holds.get("0x" + targetId.toString().toUpperCase().substring(2));
-      const emptyHold = new HoldDetails(0, new BigDecimal(BigNumber.from(0)), "", "", "", "", "");
+      const emptyHold = new HoldDetails(0, BigInt(0), "", "", "", "", "");
       if (!accountHolds) return emptyHold;
       const accountHold = accountHolds.get(holdId);
       if (!accountHold) return emptyHold;
@@ -1259,7 +1079,7 @@ jest.mock("@port/out/rpc/RPCQueryAdapter", () => {
   singletonInstance.getClearingRedeemForByPartition = jest.fn(
     async (address: EvmAddress, partitionId: string, targetId: EvmAddress, clearingId: number) => {
       const accountClearings = clearings.get("0x" + targetId.toString().toUpperCase().substring(2));
-      const emptyClearingRedeem = new ClearingRedeem(new BigDecimal(BigNumber.from(0)), 0, "", "");
+      const emptyClearingRedeem = new ClearingRedeem(new BigDecimal(BigInt(0)), 0, "", "");
       if (!accountClearings) return emptyClearingRedeem;
       const accountClearingRedeem = accountClearings.get(clearingId);
       if (!accountClearingRedeem) return emptyClearingRedeem;
@@ -1270,16 +1090,7 @@ jest.mock("@port/out/rpc/RPCQueryAdapter", () => {
   singletonInstance.getClearingCreateHoldForByPartition = jest.fn(
     async (address: EvmAddress, partitionId: string, targetId: EvmAddress, clearingId: number) => {
       const accountClearings = clearings.get("0x" + targetId.toString().toUpperCase().substring(2));
-      const emptyClearingCreateHold = new ClearingHoldCreation(
-        new BigDecimal(BigNumber.from(0)),
-        0,
-        "",
-        "",
-        "",
-        0,
-        "",
-        "",
-      );
+      const emptyClearingCreateHold = new ClearingHoldCreation(new BigDecimal(BigInt(0)), 0, "", "", "", 0, "", "");
       if (!accountClearings) return emptyClearingCreateHold;
       const accountClearingCreateHold = accountClearings.get(clearingId);
       if (!accountClearingCreateHold) return emptyClearingCreateHold;
@@ -1290,7 +1101,7 @@ jest.mock("@port/out/rpc/RPCQueryAdapter", () => {
   singletonInstance.getClearingTransferForByPartition = jest.fn(
     async (address: EvmAddress, partitionId: string, targetId: EvmAddress, clearingId: number) => {
       const accountClearings = clearings.get("0x" + targetId.toString().toUpperCase().substring(2));
-      const emptyClearingTransfer = new ClearingTransfer(new BigDecimal(BigNumber.from(0)), 0, "", "", "");
+      const emptyClearingTransfer = new ClearingTransfer(new BigDecimal(BigInt(0)), 0, "", "", "");
       if (!accountClearings) return emptyClearingTransfer;
       const accountClearingTransfer = accountClearings.get(clearingId);
       if (!accountClearingTransfer) return emptyClearingTransfer;
@@ -1421,7 +1232,7 @@ jest.mock("@port/out/rpc/RPCTransactionAdapter", () => {
     ): Promise<TransactionResponse<any, Error>> => {
       increaseBalance(targetId, amount);
       const totalSupply = securityInfo.totalSupply ? securityInfo.totalSupply : BigDecimal.fromString("0");
-      securityInfo.totalSupply = BigDecimal.fromString(totalSupply.toBigNumber().add(amount.toBigNumber()).toString());
+      securityInfo.totalSupply = BigDecimal.fromString((totalSupply.toBigInt() + amount.toBigInt()).toString());
 
       return {
         status: "success",
@@ -1458,10 +1269,10 @@ jest.mock("@port/out/rpc/RPCTransactionAdapter", () => {
       }
       if (!accountLocks) {
         const newLock: lock = new Map();
-        newLock.set(newLastLockId, [expirationDate.toString(), amount.toString()]);
+        newLock.set(newLastLockId, [expirationDate.toBigInt().toString(), amount.toBigInt().toString()]);
         locks.set(account, newLock);
       } else {
-        accountLocks.set(newLastLockId, [expirationDate.toString(), amount.toString()]);
+        accountLocks.set(newLastLockId, [expirationDate.toBigInt().toString(), amount.toBigInt().toString()]);
         locks.set(account, accountLocks);
       }
 
@@ -1601,13 +1412,25 @@ jest.mock("@port/out/rpc/RPCTransactionAdapter", () => {
   });
 
   singletonInstance.setCoupon = jest.fn(
-    async (address: EvmAddress, recordDate: BigDecimal, executionDate: BigDecimal, rate: BigDecimal) => {
+    async (
+      address: EvmAddress,
+      recordDate: BigDecimal,
+      executionDate: BigDecimal,
+      rate: BigDecimal,
+      startDate: BigDecimal,
+      endDate: BigDecimal,
+      fixingDate: BigDecimal,
+      rateStatus: RateStatus,
+    ) => {
       const coupon = new Coupon(
         parseInt(recordDate.toString()),
         parseInt(executionDate.toString()),
         rate,
         rate.decimals,
-        0,
+        parseInt(startDate.toString()),
+        parseInt(endDate.toString()),
+        parseInt(fixingDate.toString()),
+        rateStatus,
       );
       coupons.push(coupon);
       return {
@@ -1697,7 +1520,7 @@ jest.mock("@port/out/rpc/RPCTransactionAdapter", () => {
 
   singletonInstance.release = jest.fn(async (address: EvmAddress, sourceId: EvmAddress, lockIdBd: BigDecimal) => {
     const account = "0x" + sourceId.toString().toUpperCase().substring(2);
-    const lockId = lockIdBd.toBigNumber().toNumber();
+    const lockId = lockIdBd.toUnsafeFloat();
 
     const accountLocks = locks.get(account);
     let lockIds = locksIds.get(account);
@@ -1923,50 +1746,6 @@ jest.mock("@port/out/rpc/RPCTransactionAdapter", () => {
     },
   );
 
-  singletonInstance.protectedTransferAndLockByPartition = jest.fn(
-    async (
-      security: EvmAddress,
-      partitionId: string,
-      amount: BigDecimal,
-      sourceId: EvmAddress,
-      targetId: EvmAddress,
-      expirationDate: BigDecimal,
-      deadline: BigDecimal,
-      nounce: BigDecimal,
-      signature: string,
-    ) => {
-      const account = "0x" + targetId.toString().toUpperCase().substring(2);
-
-      const accountLocks = locks.get(account);
-      const lockIds = locksIds.get(account);
-      const lastLockId = lastLockIds.get(account) ?? 0;
-
-      const newLastLockId = lastLockId + 1;
-
-      if (!lockIds) locksIds.set(account, [newLastLockId]);
-      else {
-        lockIds.push(newLastLockId);
-        locksIds.set(account, lockIds);
-      }
-      if (!accountLocks) {
-        const newLock: lock = new Map();
-        newLock.set(newLastLockId, [expirationDate.toString(), amount.toString()]);
-        locks.set(account, newLock);
-      } else {
-        accountLocks.set(newLastLockId, [expirationDate.toString(), amount.toString()]);
-        locks.set(account, accountLocks);
-      }
-
-      increaseLockedBalance(targetId, amount);
-      decreaseBalance(sourceId, amount);
-
-      return {
-        status: "success",
-        id: transactionId,
-      } as TransactionResponse;
-    },
-  );
-
   singletonInstance.grantKyc = jest.fn(
     async (
       security: EvmAddress,
@@ -2056,7 +1835,8 @@ jest.mock("@port/out/rpc/RPCTransactionAdapter", () => {
       const accountHolds = holds.get("0x" + targetId.toString().toUpperCase().substring(2));
       const holdEntry = accountHolds?.get(holdId);
 
-      const heldAmount = holdEntry && holdEntry.length > 0 ? holdEntry[0].amount : BigDecimal.fromString("0");
+      const rawAmount = holdEntry && holdEntry.length > 0 ? holdEntry[0].amount : BigInt(0);
+      const heldAmount = typeof rawAmount === "bigint" ? BigDecimal.fromValue(rawAmount) : rawAmount;
 
       decreaseHeldBalance(targetId, heldAmount);
       const currentAccount = new EvmAddress(identifiers(user_account.id)[1]);
@@ -2305,13 +2085,22 @@ jest.mock("@port/out/rpc/RPCTransactionAdapter", () => {
     } as TransactionResponse;
   });
 
+  singletonInstance.addKpiData = jest.fn(
+    async (security: EvmAddress, date: number, value: string, project: EvmAddress) => {
+      return {
+        status: "success",
+        id: transactionId,
+      } as TransactionResponse;
+    },
+  );
+
   return {
     RPCTransactionAdapter: jest.fn(() => singletonInstance),
   };
 });
 
-jest.mock("@port/out/hs/hts/custodial/DFNSTransactionAdapter", () => {
-  const actual = jest.requireActual("@port/out/hs/hts/custodial/DFNSTransactionAdapter.ts");
+jest.mock("@port/out/hs/custodial/DFNSTransactionAdapter", () => {
+  const actual = jest.requireActual("@port/out/hs/custodial/DFNSTransactionAdapter");
 
   const singletonInstance = new actual.DFNSTransactionAdapter();
 
@@ -2319,13 +2108,20 @@ jest.mock("@port/out/hs/hts/custodial/DFNSTransactionAdapter", () => {
     return network;
   });
 
+  singletonInstance.register = jest.fn(async () => {
+    Injectable.registerTransactionHandler(singletonInstance);
+    return {} as InitializationData;
+  });
+
+  singletonInstance.createBond = jest.fn(createBondMockImplementation);
+
   return {
     DFNSTransactionAdapter: jest.fn(() => singletonInstance),
   };
 });
 
-jest.mock("@port/out/hs/hts/custodial/FireblocksTransactionAdapter", () => {
-  const actual = jest.requireActual("@port/out/hs/hts/custodial/FireblocksTransactionAdapter.ts");
+jest.mock("@port/out/hs/custodial/FireblocksTransactionAdapter", () => {
+  const actual = jest.requireActual("@port/out/hs/custodial/FireblocksTransactionAdapter");
 
   const singletonInstance = new actual.FireblocksTransactionAdapter();
 
@@ -2333,13 +2129,20 @@ jest.mock("@port/out/hs/hts/custodial/FireblocksTransactionAdapter", () => {
     return network;
   });
 
+  singletonInstance.register = jest.fn(async () => {
+    Injectable.registerTransactionHandler(singletonInstance);
+    return {} as InitializationData;
+  });
+
+  singletonInstance.createBond = jest.fn(createBondMockImplementation);
+
   return {
     FireblocksTransactionAdapter: jest.fn(() => singletonInstance),
   };
 });
 
-jest.mock("@port/out/hs/hts/custodial/AWSKMSTransactionAdapter", () => {
-  const actual = jest.requireActual("@port/out/hs/hts/custodial/AWSKMSTransactionAdapter.ts");
+jest.mock("@port/out/hs/custodial/AWSKMSTransactionAdapter", () => {
+  const actual = jest.requireActual("@port/out/hs/custodial/AWSKMSTransactionAdapter");
 
   const singletonInstance = new actual.AWSKMSTransactionAdapter();
 
@@ -2347,29 +2150,10 @@ jest.mock("@port/out/hs/hts/custodial/AWSKMSTransactionAdapter", () => {
     return network;
   });
 
-  return {
-    AWSKMSTransactionAdapter: jest.fn(() => singletonInstance),
-  };
-});
-
-jest.mock("@port/out/hs/hts/custodial/CustodialTransactionAdapter", () => {
-  const actual = jest.requireActual("@port/out/hs/hts/custodial/CustodialTransactionAdapter.ts");
-
-  const singletonInstance = new actual.CustodialTransactionAdapter();
-
-  singletonInstance.register = jest.fn(async (settings: DfnsSettings) => {
+  singletonInstance.register = jest.fn(async () => {
     Injectable.registerTransactionHandler(singletonInstance);
     return {} as InitializationData;
   });
-  return {
-    CustodialTransactionAdapter: jest.fn(() => singletonInstance),
-  };
-});
-
-jest.mock("@port/out/hs/HederaTransactionAdapter", () => {
-  const actual = jest.requireActual("@port/out/hs/HederaTransactionAdapter.ts");
-
-  const singletonInstance = new actual.HederaTransactionAdapter();
 
   singletonInstance.createBond = jest.fn(createBondMockImplementation);
 
@@ -2377,8 +2161,17 @@ jest.mock("@port/out/hs/HederaTransactionAdapter", () => {
     return true;
   });
 
+  singletonInstance.addKpiData = jest.fn(
+    async (security: EvmAddress, date: number, value: string, project: EvmAddress) => {
+      return {
+        status: "success",
+        id: transactionId,
+      } as TransactionResponse;
+    },
+  );
+
   return {
-    HederaTransactionAdapter: jest.fn(() => singletonInstance),
+    AWSKMSTransactionAdapter: jest.fn(() => singletonInstance),
   };
 });
 
@@ -2441,7 +2234,8 @@ jest.mock("@port/out/mirror/MirrorNodeAdapter", () => {
 
   MirrorNodeAdapterMock.getContractResults = jest.fn(
     async (transactionId: string, numberOfResultItems: number, timeout = 15, requestInterval = 2) => {
-      return ["123", "1"];
+      if (numberOfResultItems == 1) return ["1"];
+      else return ["123", "1"];
     },
   );
 

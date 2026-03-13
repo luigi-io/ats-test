@@ -8,6 +8,9 @@ import {
   GetBondDetailsRequest,
   GetCouponRequest,
   GetAllCouponsRequest,
+  GetCouponsOrderedListRequest,
+  GetCouponsOrderedListTotalRequest,
+  GetCouponFromOrderedListAtRequest,
   SupportedWallets,
   Network,
   Bond,
@@ -16,6 +19,7 @@ import {
   RoleRequest,
   SetCouponRequest,
   UpdateMaturityDateRequest,
+  AddKpiDataRequest,
 } from "@port/in";
 import { CLIENT_ACCOUNT_ECDSA, FACTORY_ADDRESS, RESOLVER_ADDRESS } from "@test/config";
 import { TIME_PERIODS_S } from "@core/Constants";
@@ -37,6 +41,7 @@ import { MirrorNodeAdapter } from "@port/out/mirror/MirrorNodeAdapter";
 import { RPCTransactionAdapter } from "@port/out/rpc/RPCTransactionAdapter";
 import { Wallet, ethers } from "ethers";
 import BaseError from "@core/error/BaseError";
+import { CastRateStatus, RateStatus } from "@domain/context/bond/RateStatus";
 
 SDK.log = { level: "ERROR", transports: new LoggerTransports.Console() };
 
@@ -97,7 +102,7 @@ describe("🧪 Bond test", () => {
     //await th.register(undefined, true);
 
     const url = "http://127.0.0.1:7546";
-    const customHttpProvider = new ethers.providers.JsonRpcProvider(url);
+    const customHttpProvider = new ethers.JsonRpcProvider(url);
 
     th.setSignerOrProvider(new Wallet(CLIENT_ACCOUNT_ECDSA.privateKey?.key ?? "", customHttpProvider));
 
@@ -169,6 +174,7 @@ describe("🧪 Bond test", () => {
     const couponRate = "3";
     const couponRecordDate = startingDate + 30;
     const couponExecutionDate = startingDate + 35;
+    const couponFixingDate = startingDate + 25;
 
     await Bond.setCoupon(
       new SetCouponRequest({
@@ -176,7 +182,10 @@ describe("🧪 Bond test", () => {
         rate: couponRate,
         recordTimestamp: couponRecordDate.toString(),
         executionTimestamp: couponExecutionDate.toString(),
-        period: TIME_PERIODS_S.DAY.toString(),
+        startTimestamp: "0",
+        endTimestamp: TIME_PERIODS_S.DAY.toString(),
+        fixingTimestamp: couponFixingDate.toString(),
+        rateStatus: CastRateStatus.toNumber(RateStatus.SET),
       }),
     );
 
@@ -234,6 +243,7 @@ describe("🧪 Bond test", () => {
     const rate = "1";
     const recordTimestamp = Math.ceil(new Date().getTime() / 1000) + 1000;
     const executionTimestamp = recordTimestamp + 1000;
+    const couponFixingDate = recordTimestamp - 1000;
 
     await Bond.setCoupon(
       new SetCouponRequest({
@@ -241,7 +251,10 @@ describe("🧪 Bond test", () => {
         rate: rate,
         recordTimestamp: recordTimestamp.toString(),
         executionTimestamp: executionTimestamp.toString(),
-        period: TIME_PERIODS_S.DAY.toString(),
+        startTimestamp: "0",
+        endTimestamp: TIME_PERIODS_S.DAY.toString(),
+        fixingTimestamp: couponFixingDate.toString(),
+        rateStatus: CastRateStatus.toNumber(RateStatus.PENDING),
       }),
     );
 
@@ -290,4 +303,96 @@ describe("🧪 Bond test", () => {
     }
     expect(thrownError).toBeInstanceOf(BaseError);
   }, 600_000);
+
+  it("Get coupons ordered list correctly", async () => {
+    const request = new GetCouponsOrderedListRequest({
+      securityId: bond.evmDiamondAddress!.toString(),
+      pageIndex: 0,
+      pageLength: 10,
+    });
+
+    const result = await Bond.getCouponsOrderedList(request);
+
+    expect(Array.isArray(result)).toBe(true);
+    result.forEach((couponId) => {
+      expect(typeof couponId).toBe("number");
+      expect(couponId).toBeGreaterThan(0);
+    });
+  }, 600_000);
+
+  it("Get coupons ordered list with pagination", async () => {
+    const request1 = new GetCouponsOrderedListRequest({
+      securityId: bond.evmDiamondAddress!.toString(),
+      pageIndex: 0,
+      pageLength: 5,
+    });
+
+    const result1 = await Bond.getCouponsOrderedList(request1);
+    expect(Array.isArray(result1)).toBe(true);
+
+    const request2 = new GetCouponsOrderedListRequest({
+      securityId: bond.evmDiamondAddress!.toString(),
+      pageIndex: 1,
+      pageLength: 5,
+    });
+
+    const result2 = await Bond.getCouponsOrderedList(request2);
+    expect(Array.isArray(result2)).toBe(true);
+  }, 600_000);
+
+  it("Get coupons ordered list with empty page", async () => {
+    const request = new GetCouponsOrderedListRequest({
+      securityId: bond.evmDiamondAddress!.toString(),
+      pageIndex: 100,
+      pageLength: 10,
+    });
+
+    const result = await Bond.getCouponsOrderedList(request);
+    expect(Array.isArray(result)).toBe(true);
+    expect(result.length).toBe(0);
+  }, 600_000);
+
+  it("Get coupon from ordered list at", async () => {
+    const request = new GetCouponFromOrderedListAtRequest({
+      securityId: bond.evmDiamondAddress!.toString(),
+      pos: 0,
+    });
+
+    const result = await Bond.getCouponFromOrderedListAt(request);
+    expect(typeof result).toBe("number");
+    expect(result).toBe(1);
+  }, 600_000);
+
+  it("Get coupons ordered list total", async () => {
+    const request = new GetCouponsOrderedListTotalRequest({
+      securityId: bond.evmDiamondAddress!.toString(),
+    });
+
+    const result = await Bond.getCouponsOrderedListTotal(request);
+
+    expect(typeof result).toBe("number");
+    expect(result).toBeGreaterThanOrEqual(0);
+  }, 600_000);
+
+  it("addKpiData", async () => {
+    await Role.grantRole(
+      new RoleRequest({
+        securityId: bond.evmDiamondAddress!.toString(),
+        targetId: CLIENT_ACCOUNT_ECDSA.evmAddress!.toString(),
+        role: SecurityRole._KPI_MANAGER_ROLE,
+      }),
+    );
+
+    const request = new AddKpiDataRequest({
+      securityId: bond.evmDiamondAddress!.toString(),
+      date: Math.floor(Date.now() / 1000),
+      value: "1000",
+      project: "0x0000000000000000000000000000000000000001",
+    });
+
+    const result = await Bond.addKpiData(request);
+
+    expect(result).toHaveProperty("transactionId");
+    expect(typeof result.transactionId).toBe("string");
+  }, 60_000);
 });
