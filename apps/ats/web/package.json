@@ -11,7 +11,7 @@
     "start": "vite preview",
     "clean:node": "npx --yes rimraf node_modules",
     "clean:build": "npx --yes rimraf dist",
-    "clean:lock": "npx --yes rimraf package-lock.json yarn.lock",
+    "clean:lock": "npx --yes rimraf package-lock.json",
     "test:update": "NODE_ENV=test jest --updateSnapshot",
     "test:clear:cache": "npx jest --clearCache",
     "theme": "chakra-cli tokens src/theme/index.ts",
